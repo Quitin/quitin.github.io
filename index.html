@@ -8,7 +8,42 @@
 	</head>
 	<body>
 	<h1 style="font-family: Consolas">Quitin's Home Page</h1>
-	<img src = "https://cdn.discordapp.com/attachments/905465775253499936/905835135537147934/quitins_animated_pfp.gif"/>
-	<p style="font-family: Consolas">hi i is quitin</p>
+	<img src = "https://cdn.discordapp.com/attachments/905465775253499936/905835135537147934/quitins_animated_pfp.gif"
+	width = "50"
+	height = auto/>
+	<p style="font-family: Consolas">Welcome to my homepage! I'm Deca Quitin, or you can just call me Quitin.</p>
+	<p style="font-family: Consolas">I'm a 16 year old Lithuanian who likes to do random stuff.</p>
+	<p style="font-family: Consolas">I play Everybody Edits, make games, videos and whatever stuff.</p>
+	<p style="font-family: Consolas">‎</p>
+	<h2 style="font-family: Consolas">Stuff</h2>
+	<p style="font-family: Arial">click button for boston :3</p>
+	<button onclick="alert('IVICA BOSTON') type="button">disguised button</button><img src = "https://cdn.discordapp.com/attachments/905465775253499936/905848762084229171/disguised_face.png" width = "30",height = "auto"/><img src = "https://cdn.discordapp.com/attachments/905465775253499936/905848762084229171/disguised_face.png" width = "30",height = "auto"/><img src = "https://cdn.discordapp.com/attachments/905465775253499936/905848762084229171/disguised_face.png" width = "30",height = "auto"/>
+	<p style="font-family: Consolas">‎</p>
+	<p style="font-family: Consolas">‎</p>
+	<p style="font-family: Consolas">Incremental</p>
+	<div id='test'></div>
+	<script>
+		var score = 0;
+		var power = 1;
+		var cost = 10;
+		function action1() {
+		score = score + power;
+		document.getElementById("score").innerHTML = score;
+		document.getElementById("cost").innerHTML = cost}
+		function action2() {
+		if (score >= cost) {
+			score = score - cost;
+			power = Math.floor(power * 1.1 + ((power * 0.01) ** 1.01)) + 1;
+			cost = Math.floor(cost * 1.1 + (cost * 0.25) ** 0.75);
+			document.getElementById("score").innerHTML = score;
+			document.getElementById("cost").innerHTML = cost;
+			document.getElementById("power").innerHTML = power
+		}
+		}
+	</script>
+	<p style="font-family: Consolas">The current number is: <span id=score>0</span></p>
+	<p style="font-family: Consolas">Power: +<span id=power>1</span></p>
+	<button type="button" onclick="action1()">Increase!</button>
+	<button type="button" onclick="action2()">Upgrade!</button> <p style="font-family: Consolas">Upgrade Cost: <span id=cost>10</p>
 	</body>
 </html>
