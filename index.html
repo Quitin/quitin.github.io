@@ -1,9 +1,6 @@
 	<!DOCTYPE html>
 <html>
 	<head>
-	<script data-ad-client="ca-pub-8064045126519167" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-	<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8064045126519167"
-     crossorigin="anonymous"></script>
 	  <style>
    body{
  background:
@@ -14,11 +11,96 @@
         /* bottom, image */
         url(https://cdn.discordapp.com/attachments/905465775253499936/907219589237198898/Quitin_YT_Banner_2020.07.02_-_Background_only.png);
 		background-size:cover;
-		color:#99faff
+		color:#22eeff
 	};
 	title{color:white}
-	h1{color:#fdff22}
-	h2{color:#fdff22}
+	h1{color:#fdff22; font-size:72px; color: white; text-shadow: 0px 0px 10px cyan}
+	h2{color:#fdff22; font-size:48px}
+#logo {
+  padding: 0;
+  margin-top: 20px;
+  text-align: center;
+}
+#logo img {
+  vertical-align: middle;
+}
+.border{
+border: 2px solid white;
+border-radius: 5px;
+text-align: center;
+}
+
+progress {
+  border-radius: 3px; 
+  height: 22px;
+  margin-left: auto;
+  margin-right: auto;
+  box-shadow: 0px 0px 1px 1px rgba( 0, 220, 255, 1 );
+}
+progress::-webkit-progress-bar {
+  background-color: rgba(0,110,128,0.1);
+  border-radius: 3px;
+}
+progress::-webkit-progress-value {
+  background-color: cyan;
+  border-radius: 3px;
+  box-shadow: 0px 0px 10px 1px rgba( 0, 220, 255, 0.5 );
+}
+progress::-moz-progress-bar {
+}
+
+.smallbar {width: 25%}
+.bigbar {width: 100%}
+
+.button {
+font-size: 16px;
+background-color: black;
+color: white;
+border-radius: 5px;
+font-family: Rubik;
+border: 2px solid white;
+transition-duration: 0.5s;
+width: 160px;
+height: 40px;
+}
+
+.button:hover {
+background-color:white;
+transition-duration: 0.25s;
+color:black;
+}
+
+.button:active {
+transition-duration:0.25s;
+background-color: #BBBBBB;
+}
+
+a:link, a:visited {
+font-size: 16px;
+background-color: black;
+color: white;
+border-radius: 5px;
+font-family: Rubik;
+border: 2px solid white;
+transition-duration: 0.5s;
+width: 160px;
+padding: 15px 25px;
+text-align:center;
+text-decoration: none;
+display: inline-block;
+}
+
+.a:link:hover, a:visited:hover {
+background-color:white;
+transition-duration: 0.25s;
+color:black;
+}
+
+.a:link:active, a:visited:active {
+transition-duration:0.25s;
+background-color: #BBBBBB;
+}
+	
   </style>
 		<meta charset="utf-8">
 		<link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
@@ -26,32 +108,70 @@
 		<title>Quitin's Homepage</title>
 	</head>
 	<body>
-	<img src = "https://cdn.discordapp.com/attachments/905465775253499936/905835135537147934/quitins_animated_pfp.gif"
-	width = "100"
-	height = auto/>
-		<img src = "https://cdn.discordapp.com/attachments/905465775253499936/905888820174680074/Quitin_logo_colorized_cyan_red_yellow.png"
-	width = "auto"
-	height = "100"/>
-	<p style="font-family: Bahnschrift;font-size:48px;color:yellow;font-weight:bold">Quitin's Home Page</p>
-	<p style="font-family: Rubik">Welcome to my homepage! I'm Deca Quitin, or you can just call me Quitin.<br/>I'm a 16 year old Lithuanian who likes to do random stuff.</br>
-I play Everybody Edits, make games, videos and whatever stuff.</p>
-	<p style="font-family: Consolas">‎</p>
+	
+	<h1 style="font-family: Rubik;text-align:center;font-size:72px;color:#FFFFFF">Quitin's Home Page</h1>
+	
+	<div id="logo">
+	<img src = "https://cdn.discordapp.com/attachments/905465775253499936/905835135537147934/quitins_animated_pfp.gif" width="150px" height="auto">
+	<img src = "https://cdn.discordapp.com/attachments/905465775253499936/905888820174680074/Quitin_logo_colorized_cyan_red_yellow.png" width="auto" height="150px">
+	</div></br>
+	
+	<p style="font-family:Rubik;text-align:center;font-size:20px;color:#FFFFFF" class='border'></br>
+	
+	Welcome to my homepage! I'm <span style="color:#00ffff">Deca Quitin</span>, or you can just call me <span style="color:#00ffff">Quitin</span>.</br>
+	I'm a 16 year old Lithuanian who likes to do random stuff. Also I'm male.</br>
+	I play Everybody Edits, make games, videos and whatever stuff.</br></br>
+	Since Everybody Edits doesn't exist since Jan 2021, I now play Every Build Exists,</br>
+	a remake of Everybody Edits which is very similar to 2016 EE and is still multiplayer.</br></br>
+	
+	</p></br></br></br></br>
+	
+	<h2 style="font-family: Rubik">Progress</h2>
+<p id="subCount" style="color:rgb(0,0,0,0)"></p><p style="color:rgb(0,0,0,0)">DISGUISED FACE</p>
+    <script>
+	const youtubeKey = "AIzaSyBV6iQa_Y4rBcLOUtykAUkwOAXEZHogloE";
+    const youtubeUser = "UCbyYGDg7isVWn3qadcP4nrA";
+    const subCount = document.getElementById('subCount');
+
+    let getSubscribers = () => {
+
+        fetch(`https://www.googleapis.com/youtube/v3/channels?part=statistics&id=${youtubeUser}&key=${youtubeKey}`)
+        .then(response => {
+            return response.json()
+        })
+        .then(data => {
+            subCount.innerHTML = data["items"][0].statistics.subscriberCount;
+			document.getElementById("sub progress bar1").value = subCount.innerHTML;
+			document.getElementById("sub progress bar2").value = subCount.innerHTML;
+			document.getElementById("subs").innerHTML = subCount.innerHTML;
+			document.getElementById("subs to 1500").innerHTML = Math.floor((subCount.innerHTML / 1500)*10000)/100;
+			document.getElementById("subs to 100000").innerHTML = Math.floor((subCount.innerHTML / 100000)*10000)/100;
+        })
+
+    }
+	getSubscribers();
+    </script>
+	<p style="font-family: Rubik;font-size:40px;font-family:Roboto">Deca Quitin</p>
+	<p style="font-family: Rubik">Amount of Subscribers: <span id="subs"></span><br><span id="subs to 1500"></span>% to 1,500 Subscribers</p>
+	<progress class="smallbar" value="0" id="sub progress bar1" max="1500">0</progress>
+	
+	<p style="font-family: Rubik"><span id="subs to 100000"></span>% to 100,000 Subscribers</p>
+	<progress class="bigbar" value="0" id="sub progress bar2" max="100000">0</progress>
+	
+	
 	<h2 style="font-family: Rubik">Stuff</h2>
 	<p style="font-family: Arial">click button for boston :3</p>
-	<button onclick="alert('IVICA BOSTON')" type="button" style='font-family: Impact;font-weight:normal;font-size:22px'>disguised button</button>
+	<button class='button' onclick="alert('IVICA BOSTON')" type="button">disguised button</button>
 	<img src = "https://cdn.discordapp.com/attachments/905465775253499936/905848762084229171/disguised_face.png" width = "30",height = "auto"/>
 	<img src = "https://cdn.discordapp.com/attachments/905465775253499936/905848762084229171/disguised_face.png" width = "30",height = "auto"/>
-	<img src = "https://cdn.discordapp.com/attachments/905465775253499936/905848762084229171/disguised_face.png" width = "30",height = "auto"/>
-	<p style="font-family: Consolas">‎</p>
+	<img src = "https://cdn.discordapp.com/attachments/905465775253499936/905848762084229171/disguised_face.png" width = "30",height = "auto"/></br>
 	<h2 style="font-family: Rubik">Additional Pages</h2>
-	<p style="font-family:Consolas"><a title="Contact & Support" href="https://quitin.github.io/support">Contact & Support</a></p>
-	<p style="font-family:Consolas"><a title="My Incremental Games" href="https://quitin.github.io/incrementals">My Incrementals</a></p>
-	<p style="font-family:Consolas"><a title="My Projects" href="https://quitin.github.io/projects">My Scratch/Snap Projects</a></p>
-	<p style="font-family: Consolas">‎</p>
+	<p style="font-family:Rubik"><a title="Contact & Support" href="https://quitin.github.io/support">Contact & Support</a></p>
+	<p style="font-family:Rubik"><a title="My incremental games" href="https://quitin.github.io/incrementals">My Incrementals</a></p></br>
+
+	
 		<h2 style="font-family: Rubik">Incremental</h2>
-	<p style="font-family: Rubik">A small incremental game you can play in this page. (also i have a separate page for that)</p>
-	<div id='test'></div>
-	<script>
+		<script>
 		var score = 0;
 		var power = 1;
 		var cost = 10;
@@ -70,16 +190,10 @@ I play Everybody Edits, make games, videos and whatever stuff.</p>
 		}
 		}
 	</script>
-	<p style="font-family: MS Gothic;font-size:24px">The current number is <span id=score, style=color:white;font-weight:bold>0</span>.</p>
-	<p style="font-family: Rubik;font-style:italic">Power: +<span id=power>1</span></p>
-	<button type="button" onclick="action1()" style="font-family: Rubik;font-weight:bold;font-size:15px">Increase!</button>
-	<button type="button" onclick="action2()" style="font-family: Rubik;font-weight:bold;font-size:15px">Upgrade!</button> <p style="font-family: Rubik;font-style:italic">Upgrade Cost: <span id=cost>10</p>
-	<p style="font-family: Consolas">‎</p>
-	<p style="font-family: Consolas">‎</p>
-	<p style="font-family: Consolas">‎</p>
-	<p style="font-family: Consolas">‎</p>
-	<p style="font-family: Consolas">‎</p>
-		<h2 style="font-family: Consolas">Advertisements</h2>
-		<p style="font-family: Consolas">Ads are shown in the bottom of the page because I monetized my YT Channel.</p>
+	<p style="font-family: Rubik">A small incremental game you can play in this page. (also i have a separate page for that)</br></br>
+The current number is: <span id=score>0</span></br></br>
+Power: +<span id=power>1</span></p>
+	<button type="button" class="button" onclick="action1()">Increase!</button>
+	<button type="button" class="button" onclick="action2()">Upgrade!</button> <p style="font-family: Rubik">Upgrade Cost: <span id=cost>10</p></br></br>
 	</body>
 </html>
