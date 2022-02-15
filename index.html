@@ -100,7 +100,12 @@ color:black;
 transition-duration:0.25s;
 background-color: #BBBBBB;
 }
-	
+
+@font-face {
+    font-family: Rubik;
+    src: url('../fonts/Rubik/Rubik-Regular.ttf')
+}		  
+
   </style>
 		<meta charset="utf-8">
 		<link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
@@ -109,14 +114,14 @@ background-color: #BBBBBB;
 	</head>
 	<body>
 	
-	<h1 style="font-family: Rubik;text-align:center;font-size:72px;color:#FFFFFF">Quitin's Home Page</h1>
+	<h1 style="font-family:'Rubik';text-align:center;font-size:72px;color:#FFFFFF">Quitin's Home Page</h1>
 	
 	<div id="logo">
 	<img src = "https://cdn.discordapp.com/attachments/905465775253499936/905835135537147934/quitins_animated_pfp.gif" width="150px" height="auto">
 	<img src = "https://cdn.discordapp.com/attachments/905465775253499936/905888820174680074/Quitin_logo_colorized_cyan_red_yellow.png" width="auto" height="150px">
 	</div></br>
 	
-	<p style="font-family:Rubik;text-align:center;font-size:20px;color:#FFFFFF" class='border'></br>
+	<p style="font-family:'Rubik';text-align:center;font-size:20px;color:#FFFFFF" class='border'></br>
 	
 	Welcome to my homepage! I'm <span style="color:#00ffff">Deca Quitin</span>, or you can just call me <span style="color:#00ffff">Quitin</span>.</br>
 	I'm a 16 year old Lithuanian who likes to do random stuff. Also I'm male.</br>
@@ -126,7 +131,7 @@ background-color: #BBBBBB;
 	
 	</p></br></br></br></br>
 	
-	<h2 style="font-family: Rubik">Progress</h2>
+	<h2 style="font-family:'Rubik'">Progress</h2>
 <p id="subCount" style="color:rgb(0,0,0,0)"></p><p style="color:rgb(0,0,0,0)">DISGUISED FACE</p>
     <script>
 	const youtubeKey = "AIzaSyBV6iQa_Y4rBcLOUtykAUkwOAXEZHogloE";
@@ -151,26 +156,26 @@ background-color: #BBBBBB;
     }
 	getSubscribers();
     </script>
-	<p style="font-family: Rubik;font-size:40px;font-family:Roboto">Deca Quitin</p>
-	<p style="font-family: Rubik">Amount of Subscribers: <span id="subs"></span><br><span id="subs to 1500"></span>% to 1,500 Subscribers</p>
+	<p style="font-family:'Rubik';font-size:40px;font-family:Roboto">Deca Quitin</p>
+	<p style="font-family:'Rubik'">Amount of Subscribers: <span id="subs"></span><br><span id="subs to 1500"></span>% to 1,500 Subscribers</p>
 	<progress class="smallbar" value="0" id="sub progress bar1" max="1500">0</progress>
 	
-	<p style="font-family: Rubik"><span id="subs to 100000"></span>% to 100,000 Subscribers</p>
+	<p style="font-family:'Rubik'"><span id="subs to 100000"></span>% to 100,000 Subscribers</p>
 	<progress class="bigbar" value="0" id="sub progress bar2" max="100000">0</progress>
 	
 	
-	<h2 style="font-family: Rubik">Stuff</h2>
-	<p style="font-family: Arial">click button for boston :3</p>
+	<h2 style="font-family:'Rubik'">Stuff</h2>
+	<p style="font-family:Arial">click button for boston :3</p>
 	<button class='button' onclick="alert('IVICA BOSTON')" type="button">disguised button</button>
 	<img src = "https://cdn.discordapp.com/attachments/905465775253499936/905848762084229171/disguised_face.png" width = "30",height = "auto"/>
 	<img src = "https://cdn.discordapp.com/attachments/905465775253499936/905848762084229171/disguised_face.png" width = "30",height = "auto"/>
 	<img src = "https://cdn.discordapp.com/attachments/905465775253499936/905848762084229171/disguised_face.png" width = "30",height = "auto"/></br>
-	<h2 style="font-family: Rubik">Additional Pages</h2>
-	<p style="font-family:Rubik"><a title="Contact & Support" href="https://quitin.github.io/support">Contact & Support</a></p>
-	<p style="font-family:Rubik"><a title="My incremental games" href="https://quitin.github.io/incrementals">My Incrementals</a></p></br>
+	<h2 style="font-family:'Rubik'">Additional Pages</h2>
+	<p style="font-family:'Rubik'"><a title="Contact & Support" href="https://quitin.github.io/support">Contact & Support</a></p>
+	<p style="font-family:'Rubik'"><a title="My incremental games" href="https://quitin.github.io/incrementals">My Incrementals</a></p></br>
 
 	
-		<h2 style="font-family: Rubik">Incremental</h2>
+		<h2 style="font-family:'Rubik'">Incremental</h2>
 		<script>
 		var score = 0;
 		var power = 1;
@@ -190,7 +195,7 @@ background-color: #BBBBBB;
 		}
 		}
 	</script>
-	<p style="font-family: Rubik">A small incremental game you can play in this page. (also i have a separate page for that)</br></br>
+	<p style="font-family:'Rubik'">A small incremental game you can play in this page. (also i have a separate page for that)</br></br>
 The current number is: <span id=score>0</span></br></br>
 Power: +<span id=power>1</span></p>
 	<button type="button" class="button" onclick="action1()">Increase!</button>
