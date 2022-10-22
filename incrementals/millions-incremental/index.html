@@ -87,14 +87,12 @@
     },
     };
 
-    var SAVE_KEY = 'save';
-
-    function save(game) {
-    localStorage.setItem(SAVE_KEY, JSON.stringify(game))
+    function save() {
+    localStorage.setItem('MillionsIncrementalSave', JSON.stringify(game))
     };
 
     function load() {
-    game = JSON.parse(localStorage.getItem('game'))
+    game = JSON.parse(localStorage.getItem('MillionsIncrementalSave'))
     };
 
     function buyup1() {
