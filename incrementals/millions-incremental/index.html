@@ -1,27 +1,35 @@
 <!DOCTYPE html>
 <html>
-    <link rel="stylesheet" href="style.css">
-    <script src="media/lnls/OmegaNum.js"></script>
+    <head>
+        <link rel="stylesheet" href="style.css">
+        <script src="media/lnls/OmegaNum.js"></script>
+        <script defer src="main.js"></script>
+        <script src="saveload.js"></script>
+        <meta name="description" content="[description for game]">
+        <meta http-equiv="X-UA-Compatible" content="IE=7">
+        <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+        <title>Millions Incremental</title>
+    </head>
     <body>
         <p style="font-size:larger">The number is:</p>
         <p style="font-size:48px;font-family:Helvetica;margin-top:-24px"><span id="number" class="number"></span></p>
     
-    <div class='tab' style="margin-top:-36px">
-        <button class='tablinks white button' onclick="openTab(event, 'General')">General</button>
-        <button class='tablinks white button' onclick="openTab(event, 'Options')">Options</button>
-        <div id="upgradestab">
-        <button class='tablinks cyan button' onclick="openTab(event, 'Upgrades')">Upgrades</button>
+        <div class='tab' style="margin-top:-36px">
+            <button class='tablinks white button' onclick="openTab('General')">General</button>
+            <button class='tablinks white button' onclick="openTab('Options')">Options</button>
+            <div id="upgradestab">
+                <button class='tablinks cyan button' onclick="openTab('Upgrades')">Upgrades</button>
+            </div>
         </div>
-    </div>
         <br><br>
         <div style="border-top:3px solid white;width:100%;position:relative;top:10px"></div>
         <br><br>
         <div id="General" class="tabcontent">
         <p style="font-size:larger">Doublers</p>
-        <button class='white button' onclick='buyup1()'>Double the production <br> (Cost: <span id='up1cost'></span>)</button>
-        <button class='white button' onclick='buyup2()'>Double the production <br> (Cost: <span id='up2cost'></span>)</button>
-        <button class='white button' onclick='buyup3()'>Double the production <br> (Cost: <span id='up3cost'></span>)</button>
-        <button class='white button' onclick='buyup4()'>Double the production <br> (Cost: <span id='up4cost'></span>)</button>
+        <button class='white button' onclick='g.up[0].buy()'>Double the production <br> (Cost: <span id='up-cost-0'></span>)</button>
+        <button class='white button' onclick='g.up[1].buy()'>Double the production <br> (Cost: <span id='up-cost-1'></span>)</button>
+        <button class='white button' onclick='g.up[2].buy()'>Double the production <br> (Cost: <span id='up-cost-2'></span>)</button>
+        <button class='white button' onclick='g.up[3].buy()'>Double the production <br> (Cost: <span id='up-cost-3'></span>)</button>
         <br>
         <p style="font-size:larger">The number is capped at 1,000,000. Reach 1,000,000 to prestige.</p>
         <br>
@@ -38,8 +46,8 @@
             <p style="font-size:48px;margin-top:-24px">Upgrades</p>
             <p style="font-size:larger;margin-top:-50px">Your level is <span id="lvl"></span>. <span style="color:red">It is dividing your production by 2<sup>n-1<sup></sup>.</span></p>
             <p style="font-size:larger;margin-top:-30px">You have <span id="mp"></span> Million Points.</p>
-            <button class='cyan button' id="mpup1" style="width:256px;height:72px" onclick='buympup1()'>Reduce doubler cost scaling by 4 <br><br> (Cost: 1 MP)</button>
-            <button class='cyan button' id="mpup2" style="width:256px;height:72px" onclick='buympup2()'>Multiply effect of each <br> doubler by 1.5 <br> (Cost: 1 MP)</button>
+            <button class='cyan button' id="mpup1" style="width:256px;height:72px" onclick='g.mp[0].buy()'>Reduce doubler cost scaling by 4 <br><br> (Cost: 1 MP)</button>
+            <button class='cyan button' id="mpup2" style="width:256px;height:72px" onclick='g.mp[1].buy()'>Multiply effect of each <br> doubler by 1.5 <br> (Cost: 1 MP)</button>
         </div>
     
     
@@ -51,170 +59,4 @@
     
     
     </body>
-    <head>
-
-<script>
-
-    var game = {
-    pts: '1',
-    ptsf: undefined,
-    lvl: '1',
-    mp: '0',
-    upg1to4scaling: 10,
-    multiplier: 2,
-    up1: {
-    mul: '1',
-    cost: '10'
-    },
-    up2: {
-    mul: '1',
-    cost: '100'
-    },
-    up3: {
-    mul: '1',
-    cost: '1000'
-    },
-    up4: {
-    mul: '1',
-    cost: '10000'
-    },
-    mpups: {
-    up1: false,
-    up2: false,
-    up3: false,
-    up4: false,
-    up5: false
-    },
-    };
-
-    function save() {
-    localStorage.setItem('MillionsIncrementalSave', JSON.stringify(game))
-    };
-
-    function load() {
-    game = JSON.parse(localStorage.getItem('MillionsIncrementalSave'))
-    };
-
-    function buyup1() {
-        if (O.gte(g.pts, g.up1.cost) == 1)
-        {up1.mul = O.mul(g.up1.mul,g.multiplier);
-        g.pts = O.sub(g.pts,g.up1.cost);
-        up1.cost = O.mul(g.up1.cost,g.upg1to4scaling)};
-    };
-    function buyup2() {
-        if (O.gte(g.pts, g.up2.cost) == 1)
-        {up2.mul = O.mul(g.up2.mul,g.multiplier);
-        g.pts = O.sub(g.pts,g.up2.cost);
-        up2.cost = O.mul(g.up2.cost,g.upg1to4scaling)};
-    };
-    function buyup3() {
-        if (O.gte(g.pts, g.up3.cost) == 1)
-        {up3.mul = O.mul(g.up3.mul,g.multiplier);
-        g.pts = O.sub(g.pts,g.up3.cost);
-        up3.cost = O.mul(g.up3.cost,g.upg1to4scaling)};
-    };
-    function buyup4() {
-        if (O.gte(g.pts, g.up4.cost) == 1)
-        {up4.mul = O.mul(g.up4.mul,g.multiplier);
-        g.pts = O.sub(g.pts,g.up4.cost);
-        up4.cost = O.mul(g.up4.cost,g.upg1to4scaling)};
-    };
-    function buympup1() {
-        if (O.gte(g.mp, 1) == 1 && !g.mpups.up1) {
-        g.mp = O.sub(g.mp,1);
-        g.upg1to4scaling -= 4;
-        g.mpups.up1 = true};
-    };
-    function buympup2() {
-        if (O.gte(g.mp, 1) == 1 && !g.mpups.up2) {
-        g.mp = O.sub(g.mp,1);
-        g.multiplier *= 1.5;
-        g.mpups.up2 = true};
-    };
-
-    function lvlup() {
-        g.pts = '1';
-        g.ptsp = '1';
-        g.lvl = O.add(g.lvl,'1');
-        g.mp = O.add(g.mp,'1');
-        g.up1 = {
-        mul: '1',
-        cost: '10'
-        };
-        g.up2 = {
-        mul: '1',
-        cost: '100'
-        };
-        g.up3 = {
-        mul: '1',
-        cost: '1000'
-        };
-        g.up4 = {
-        mul: '1',
-        cost: '10000'
-        };
-    };
-    var O = OmegaNum;
-    var g = game;
-
-    const HSLToRGB = (h, s, l) => {
-  s /= 100;
-  l /= 100;
-  const k = n => (n + h / 30) % 12;
-  const a = s * Math.min(l, 1 - l);
-  const f = n =>
-    l - a * Math.max(-1, Math.min(k(n) - 3, Math.min(9 - k(n), 1)));
-  return [255 * f(0), 255 * f(8), 255 * f(4)];
-};
-
-function openTab(evt, TabName) {
-  // Declare all variables
-  var i, tabcontent, tablinks;
-
-  // Get all elements with class="tabcontent" and hide them
-  tabcontent = document.getElementsByClassName("tabcontent");
-  for (i = 0; i < tabcontent.length; i++) {
-    tabcontent[i].style.display = "none";
-  }
-
-  // Get all elements with class="tablinks" and remove the class "active"
-  tablinks = document.getElementsByClassName("tablinks");
-  for (i = 0; i < tablinks.length; i++) {
-    tablinks[i].className = tablinks[i].className.replace(" active", "");
-  }
-
-  // Show the current tab, and add an "active" class to the button that opened the tab
-  document.getElementById(TabName).style.display = "block";
-  evt.currentTarget.className += " active";
-};
-
-function hsvcsv(arr) {return 'rgb('+arr[0]+','+arr[1]+','+arr[2]+')'};
-
-    setInterval(function gameupdate() {
-        g.pts = O.min(O.add(g.pts, O.mul(O.mul(O.mul(O.mul(O.div(O.div(1, 60),O.pow(2,O.sub(g.lvl,1))),g.up1.mul),g.up2.mul),g.up3.mul),g.up4.mul)),'1e6');
-        g.ptsf = O.floor(g.pts);
-        numbercolor = hsvcsv(HSLToRGB(O.mod(O.mul(O.log10(g.pts),60),360),100,50));
-        document.getElementById("number").innerHTML = g.ptsf.toString();
-        document.getElementById("number").style.color = numbercolor;
-        document.getElementById('up1cost').innerHTML = g.up1.cost;
-        document.getElementById('up2cost').innerHTML = g.up2.cost;
-        document.getElementById('up3cost').innerHTML = g.up3.cost;
-        document.getElementById('up4cost').innerHTML = g.up4.cost;
-        document.getElementById('mp').innerHTML = g.mp;
-        document.getElementById('lvl').innerHTML = g.lvl;
-        if (g.mpups.up1) {
-        document.getElementById('mpup1').style = 'background-color:cyan;color:black'};
-        if (g.mpups.up2) {
-        document.getElementById('mpup2').style = 'background-color:cyan;color:black'};
-
-        if (g.lvl < 2) {document.getElementById('upgradestab').style.display = 'none'}
-        else {document.getElementById('upgradestab').style.display = 'inline'};
-        if (g.pts < 1e6) {document.getElementById('levelupbutton').style.display = 'none'}
-                    else {document.getElementById('levelupbutton').style.display = 'inline'};
-
-    }, 16);
-</script>
-
-
-</head>
 </html>
