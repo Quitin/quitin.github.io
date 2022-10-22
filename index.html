@@ -1,38 +1,10 @@
 <!DOCTYPE html>
 <html>
 	<head>
+		<link rel="stylesheet" href="stylesheets/style.css">
+		</head>
+		<body>
 	  <style>
-body{
-background:
-linear-gradient(
-rgba(0, 0, 0, 0.9), 
-rgba(0, 0, 0, 0.9)
-),
-url(https://cdn.discordapp.com/attachments/905465775253499936/907219589237198898/Quitin_YT_Banner_2020.07.02_-_Background_only.png);
-background-size:cover;
-z-index: -1000;
-background-attachment: fixed;
-background-position: center;
-color:#22eeff;
-};
-
-title{color:white}
-h1{color:#fdff22; font-size:72px; color: white; text-shadow: 0px 0px 10px cyan}
-h2{color:#fdff22; font-size:48px}
-
-#logo {
-padding: 0;
-margin-top: 20px;
-text-align: center;
-}
-#logo img {
-vertical-align: middle;
-}
-.border{
-border: 2px solid white;
-border-radius: 5px;
-text-align: center;
-}
 
 progress {
 border-radius: 3px; 
@@ -52,73 +24,16 @@ background-color: cyan;
 border-radius: 3px;
 box-shadow: 0px 0px 10px 1px rgba( 0, 220, 255, 0.5 );
 }
-progress::-moz-progress-bar {
-}
 
 .smallbar {width: 25%}
 .bigbar {width: 100%}
 
-.button {
-font-size: 16px;
-background-color: black;
-color: white;
-border-radius: 5px;
-font-family: Rubik;
-border: 2px solid white;
-transition-duration: 0.5s;
-width: 160px;
-height: 40px;
-}
-
-.button:hover {
-background-color:white;
-transition-duration: 0.25s;
-color:black;
-}
-
-.button:active {
-transition-duration:0.25s;
-background-color: #BBBBBB;
-}
-
-a:link, a:visited {
-font-size: 16px;
-background-color: black;
-color: white;
-border-radius: 5px;
-font-family: Rubik;
-border: 2px solid white;
-transition-duration: 0.5s;
-width: 160px;
-padding: 15px 25px;
-text-align:center;
-text-decoration: none;
-display: inline-block;
-}
-
-.a:link:hover, a:visited:hover {
-background-color:white;
-transition-duration: 0.25s;
-color:black;
-}
-
-.a:link:active, a:visited:active {
-transition-duration:0.25s;
-background-color: #BBBBBB;
-}
-
-	@font-face {
-    font-family: Rubik;
-    src: url('../fonts/Rubik/Rubik-Regular.ttf')
-}
 
   </style>
 		<meta charset="utf-8">
 		<link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 		<title>Quitin's Homepage</title>
-	</head>
-	<body>
 	
 <div id="body">
   <div id="main">
@@ -127,14 +42,16 @@ background-color: #BBBBBB;
 <style>
 #news-container {
   border: 2px solid white;
-  background: rgba(0,255,255,0.1);
-  border-radius: 30px;
-  width: 98.5%;
+  background: rgba(0,25,25,1);
+  border-radius: 10px;
+  width: 120%;
   height: 30px;
   overflow: hidden;
   position: fixed;
   margin-top: -40px;
-  margin-left: 0px;
+  margin-right: 0px;
+  top: 40px;
+  right:-10px;
 }
 
 #news {
@@ -146,6 +63,17 @@ background-color: #BBBBBB;
   -moz-animation: my-animation 15s linear infinite;
   -webkit-animation: my-animation 15s linear infinite;
   animation: my-animation 15s linear infinite;
+}
+
+#navigation-bar{
+	background-color: black;
+	border: 2px solid white;
+	width: 120%;
+	height: 50px;
+	text-align: left;
+	position: fixed;
+	top: 32px;
+	right:-10px;
 }
 
 /* for Firefox */
@@ -170,8 +98,8 @@ background-color: #BBBBBB;
     -moz-transform: translateX(-200%);
     -webkit-transform: translateX(-200%);
     transform: translateX(-200%);
-  }
-</style>
+  }}
+  </style>
 <script>
 var newsmessages =
 [
@@ -208,16 +136,38 @@ var newsmessages =
 "Next news message in 15 seconds.", // By Quitin
 "i have beat 38,249 hookjumps in a row and now i will complete 84,487,473 tjumps", // By Quitin
 "spongebob spongebob patrick patrick sandy sandy sandy mr krabs mr krabs mr krabs squidward squidward squidward plankton plankton plankton plankton plankton plankton gary gary", // By Quitin
+"What I if told you that you read this sentence wrong?" // By Quitin
 ];
 var currentnewsmessage = newsmessages[Math.floor(Math.random()*newsmessages.length)];
 setInterval(function changeNewsMessage() {
 currentnewsmessage = newsmessages[Math.floor(Math.random()*newsmessages.length)];
 document.getElementById("changeNewsMessage").innerHTML = currentnewsmessage;
 },15e3);
-</script>
-<div id="news-container"><div id="news"><p style="font-family:'Pixeleum 48';font-size:20px;margin-top:0px;width:400%"><span id="changeNewsMessage">Welcome to the Quitin's Home page! This is a news ticker, and it will show many random things. Also the news messages will change every 15 seconds. Anyways I hope that my news messages will entertain you.</span></p></div></div>
 
-	<h1 style="font-family:'Pixeleum 48';text-align:center;font-size:72px;color:#FFFFFF">Quitin's Home Page</h1>
+function timein(loc) {
+const date = new Date();
+return date.toLocaleTimeString('en-GB', {timeZone: loc})};
+setInterval(function funcarA() {
+	document.getElementById('quitinstime').innerHTML = timein('Europe/Vilnius')
+},10)
+
+</script>
+
+<!--Navigation bar-->
+
+<div id="navigation-bar">
+</div>
+
+
+<!--News ticker-->
+
+<div id="news-container"><div id="news"><p style="font-family:'Pixeleum 48';font-size:20px;margin-top:0px;width:400%"><span id="changeNewsMessage">Welcome to Quitin's Home page! This is a news ticker, and it will show many random things. Also the news messages will change every 15 seconds. Anyways I hope that my news messages will entertain you.</span></p></div></div>
+
+
+
+<!--Quitin's Home Page-->
+
+<br><br><br><h1 style="font-family:'Pixeleum 48';text-align:center;font-size:72px;color:#FFFFFF">Quitin's Home Page</h1>
 	
 	<div id="logo">
 	<img src = "https://cdn.discordapp.com/attachments/905465775253499936/905835135537147934/quitins_animated_pfp.gif" width="150px" height="auto">
@@ -227,15 +177,29 @@ document.getElementById("changeNewsMessage").innerHTML = currentnewsmessage;
 	<p style="font-family:Rubik;text-align:center;font-size:20px;color:#FFFFFF" class='border'></br>
 	
 	Welcome to my homepage! I'm <span style="color:#00ffff">Deca Quitin</span>, or you can just call me <span style="color:#00ffff">Quitin</span>.</br>
-	I'm a 16 year old Lithuanian who likes to do random stuff. Also I'm male.</br>
+	I'm a 17 year old Lithuanian who likes to do random stuff. I'm male by the way.</br>
 	I play Everybody Edits, make games, videos and whatever stuff.</br></br>
 	Since Everybody Edits doesn't exist since Jan 2021, I now play Every Build Exists,</br>
 	a remake of Everybody Edits which is very similar to 2016 EE and is still multiplayer.</br></br>
 	
 	</p></br></br></br></br>
 	
+
+
+	<!--Current time for Deca Quitin-->
+
+	<div id="center">
+		<h2 style='font-family: Rubik'>Time</h2>
+		<p style='font-family: "Pixeleum 48";font-size:24px'>The time is currently <span id="quitinstime" style="color:white;font-family:Helvetica;font-size:40px"></span> for Deca Quitin.</p>
+	</div>
+	
+</br></br></br></br>
+	
+	
+<!--Progress-->
+	
 	<h2 style="font-family: Rubik">Progress</h2>
-<p id="subCount" style="color:rgb(0,0,0,0)"></p><p style="color:rgb(0,0,0,0)">DISGUISED FACE</p>
+<p hidden id="subCount" style="color:rgb(0,0,0,0)"></p><p style="color:rgb(0,0,0,0)"></p>
     <script>
 	const youtubeKey = "AIzaSyBV6iQa_Y4rBcLOUtykAUkwOAXEZHogloE";
     const youtubeUser = "UCbyYGDg7isVWn3qadcP4nrA";
@@ -252,32 +216,47 @@ document.getElementById("changeNewsMessage").innerHTML = currentnewsmessage;
 			document.getElementById("sub progress bar1").value = subCount.innerHTML;
 			document.getElementById("sub progress bar2").value = subCount.innerHTML;
 			document.getElementById("subs").innerHTML = subCount.innerHTML;
-			document.getElementById("subs to 1500").innerHTML = Math.floor((subCount.innerHTML / 1500)*10000)/100;
+			document.getElementById("subs to 2000").innerHTML = Math.floor((subCount.innerHTML / 2000)*10000)/100;
 			document.getElementById("subs to 100000").innerHTML = Math.floor((subCount.innerHTML / 100000)*10000)/100;
         })
 
     }
 	getSubscribers();
     </script>
-	<p style="font-family: Rubik;font-size:40px;font-family:Roboto">Deca Quitin</p>
-	<p style="font-family: Rubik">Amount of Subscribers: <span id="subs"></span><br><span id="subs to 1500"></span>% to 1,500 Subscribers</p>
-	<progress class="smallbar" value="0" id="sub progress bar1" max="1500">0</progress>
+	<p style="font-size:40px;font-family:Roboto">Deca Quitin</p>
+	<p style="font-family: Rubik">Amount of Subscribers on YouTube: <span id="subs"></span><br><span id="subs to 2000"></span>% to 2,000 Subscribers</p>
+	<progress class="smallbar" value="0" id="sub progress bar1" max="2000">0</progress>
 	
 	<p style="font-family: Rubik"><span id="subs to 100000"></span>% to 100,000 Subscribers</p>
 	<progress class="bigbar" value="0" id="sub progress bar2" max="100000">0</progress>
 	
+<!--Pages-->
+
+	<div class="center">
+	<h2 style="font-family: Rubik">Pages</h2>
+	<button class="button" onclick="document.location='incrementals/index.html'">My Incrementals</button><button class="button" onclick="document.location='projects/index.html'">My Stuff</button><br>
+	<button class="button" onclick="document.location='support/index.html'">Contact & Support</button>
+	</div>
 	
+	
+	
+<!--Disguise-->
+	
+
 	<h2 style="font-family: Rubik">Stuff</h2>
 	<p style="font-family: Arial">click button for boston :3</p>
 	<button class='button' onclick="alert('IVICA BOSTON')" type="button">disguised button</button>
 	<img src = "https://cdn.discordapp.com/attachments/905465775253499936/905848762084229171/disguised_face.png" width = "30",height = "auto"/>
 	<img src = "https://cdn.discordapp.com/attachments/905465775253499936/905848762084229171/disguised_face.png" width = "30",height = "auto"/>
 	<img src = "https://cdn.discordapp.com/attachments/905465775253499936/905848762084229171/disguised_face.png" width = "30",height = "auto"/></br>
-	<h2 style="font-family: Rubik">Additional Pages</h2>
-	<p style="font-family:Rubik"><a title="Contact & Support" href="https://quitin.github.io/support">Contact & Support</a></p>
-	<p style="font-family:Rubik"><a title="My incremental games" href="https://quitin.github.io/incrementals">My Incrementals</a></p></br>
 
-	
+
+
+
+
+<!--Mini Incremental-->
+
+
 		<h2 style="font-family: Rubik">Incremental</h2>
 		<script>
 		var score = 0;
@@ -297,11 +276,15 @@ document.getElementById("changeNewsMessage").innerHTML = currentnewsmessage;
 			document.getElementById("power").innerHTML = power
 		}
 		}
-	</script>
-	<p style="font-family: Rubik">A small incremental game you can play in this page. (also i have a separate page for that)</br></br>
+		</script>
+	<p style="font-family:Rubik">A small incremental game you can play in this page. (also i have a separate page for that)</br></br>
 The current number is: <span id=score>0</span></br></br>
 Power: +<span id=power>1</span></p>
-	<button type="button" class="button" onclick="action1()">Increase!</button>
-	<button type="button" class="button" onclick="action2()">Upgrade!</button> <p style="font-family: Rubik">Upgrade Cost: <span id=cost>10</p></br></br>
-	</body>
+	<button class="button" onclick="action1()">Increase!</button>
+	<button class="button" onclick="action2()">Upgrade!</button> <p style="font-family: Rubik">Upgrade Cost: <span id=cost>10</p></br></br>
+
+
+
+
+</body>
 	</html>

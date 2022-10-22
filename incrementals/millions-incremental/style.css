@@ -1,0 +1,78 @@
+body{
+background-color: black;
+text-align: center;
+}
+
+p{
+    font-family: 'Shin Go';
+    color: white;
+}
+
+#number{
+    color: hsl(60, 10, 10)
+}
+
+.button {
+    font-size: 16px;
+    background-color: black;
+    color: white;
+    border-radius: 5px;
+    font-family: "Arial";
+    border: 2px solid white;
+    transition-duration: 0.5s;
+    width: 240px;
+    height: 60px;
+    }
+    .button:hover {
+    background-color:white;
+    transition-duration: 0.25s;
+    color:black;
+    }
+    .button:active {
+    transition-duration:0.25s;
+    background-color: #BBBBBB;
+    }
+title{color:white}
+
+
+.button.red{border: 2px solid red; color: red}
+.button.red:hover{background-color:red; color: white}
+.button.red:active{background-color:#BB0000}
+
+.button.button.yellow{border: 2px solid yellow; color: yellow}
+.button.yellow:hover{background-color:yellow; color: black}
+.button.yellow:active{background-color:#BBBB00}
+
+.button.green{border: 2px solid lime; color: lime}
+.button.green:hover{background-color:lime; color: black}
+.button.green:active{background-color:#00BB00}
+
+.button.cyan{border: 2px solid cyan; color: cyan}
+.button.cyan:hover{background-color:cyan; color: black}
+.button.cyan:active{background-color:#00BBBB}
+
+.button.blue{border: 2px solid blue; color: blue}
+.button.blue:hover{background-color:blue; color: white}
+.button.blue:active{background-color:#0000BB}
+
+.button.magenta{border: 2px solidmagenta; color: magenta}
+.button.magenta:hover{background-color:magenta; color: white}
+.button.magenta:active{background-color:#BB00BB}
+
+.button.white{border: 2px solid white; color: white}
+.button.white:hover{background-color:white; color: black}
+.button.white:active{background-color:#BBBBBB}
+
+.button.black{border: 2px solid #323232; color: #323232}
+.button.black:hover{background-color:#323232; color: black}
+.button.black:active{background-color:#242424}
+
+
+    @font-face {
+        font-family: 'Shin Go';
+        src: url(media/fonts/AOTFShinGoProMedium.otf);
+    };
+    @font-face {
+        font-family: 'Pixeleum 48';
+        src: url(media/fonts/PIXELEUM-48.TTF);
+    };

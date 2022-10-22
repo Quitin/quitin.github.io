@@ -1,24 +1,14 @@
 <!DOCTYPE html>
 <html>
-<head><style>
-   body{
- background:
-        linear-gradient(
-          rgba(0, 0, 0, 0.9), 
-          rgba(0, 0, 0, 0.9)
-        ),
-        /* bottom, image */
-        url(https://cdn.discordapp.com/attachments/905465775253499936/907219589237198898/Quitin_YT_Banner_2020.07.02_-_Background_only.png);
-        background-size:cover;
-        color:#22eeff
-    };
-    title{color:white}
-    h1{color:#fdff22}
-    h2{color:#fdff22}
-  </style></head>
+	<head>
+		<link rel="stylesheet" href="../../stylesheets/style.css"></link>
+	</head>
 <body>	
 <h2 style="font-family: Consolas">Mini Incremental</h2>
-	<p style="font-family: Consolas">A small incremental game you can play.</p>
+	<p style="font-family: Consolas">A very small incremental game you can play.<br>
+	Reach Infinity (1.79e308) points to complete the game.<br>
+	It's easy enough and shouldnt take more than a hour to do.</p>
+	<p style="font-family: Consolas;color:rgba(0,200,255,0.03)">(just hold enter lol)</p>
 	<div id='test'></div>
 	<script>
 		var score = 0;
@@ -41,11 +31,11 @@
 	</script>
 	<p style="font-family: Consolas">The current number is: <span id=score>0</span></p>
 	<p style="font-family: Consolas">Power: +<span id=power>1</span></p>
-	<button type="button" onclick="action1()">Increase!</button>
-	<button type="button" onclick="action2()">Upgrade!</button> <p style="font-family: Consolas">Upgrade Cost: <span id=cost>10</p>
+	<button class="button" type="button" onclick="action1()">Increase!</button>
+	<button class="button" type="button" onclick="action2()">Upgrade!</button> <p style="font-family: Consolas">Upgrade Cost: <span id=cost>10</p>
 	<p style="font-family: Consolas">‎</p>
 	<p style="font-family: Consolas">‎</p>
-	<p style="font-family:Consolas"><a title="Home Page" href="https://quitin.github.io">Main Page</a></p>
-	<p style="font-family:Consolas"><a title="More Incrementals" href="https://quitin.github.io">More Incrementals!</a></p>
+	<button class="button" onclick="document.location='../../index.html'">Main Page</button>
+	<button class="button" onclick="document.location='../index.html'">More Incrementals!</button>
 	</body>
 </html>
