@@ -55,87 +55,83 @@
 
 <script>
 
-    var g = {
+    var game = {
     pts: '1',
     ptsf: undefined,
     lvl: '1',
-    mp: '0'
-    };
-    
-    var upg1to4scaling = 10;
-    var multiplier = 2;
-
-    var up1 = {
+    mp: '0',
+    upg1to4scaling: 10,
+    multiplier: 2,
+    up1: {
     mul: '1',
     cost: '10'
-    };
-    var up2 = {
+    },
+    up2: {
     mul: '1',
     cost: '100'
-    };
-    var up3 = {
+    },
+    up3: {
     mul: '1',
     cost: '1000'
-    };
-    var up4 = {
+    },
+    up4: {
     mul: '1',
     cost: '10000'
-    };
-    mpups = {
+    },
+    mpups: {
     up1: false,
     up2: false,
     up3: false,
     up4: false,
     up5: false
+    },
     };
 
-    game = [g, up1, up2, up3, up4, mpups];
+    var SAVE_KEY = 'save';
 
-    function save() {
-    for (i = 0; i < game.length; i++) {
-    localStorage.setItem(game[i], JSON.stringify(game[i]))}
+    function save(game) {
+    localStorage.setItem(SAVE_KEY, JSON.stringify(game))
     };
 
     function load() {
-    for (i = 0; i < game.length; i++) {
-    game[i] = JSON.parse(localStorage.getItem(`game${[i]}`))}
+    game = JSON.parse(localStorage.getItem('game'))
     };
 
     function buyup1() {
-        if (O.gte(g.pts, up1.cost) == 1)
-        {up1.mul = O.mul(up1.mul,multiplier);
-        g.pts = O.sub(g.pts,up1.cost);
-        up1.cost = O.mul(up1.cost,upg1to4scaling)};
+        if (O.gte(g.pts, g.up1.cost) == 1)
+        {up1.mul = O.mul(g.up1.mul,g.multiplier);
+        g.pts = O.sub(g.pts,g.up1.cost);
+        up1.cost = O.mul(g.up1.cost,g.upg1to4scaling)};
     };
     function buyup2() {
-        if (O.gte(g.pts, up2.cost) == 1)
-        {up2.mul = O.mul(up2.mul,multiplier);
-        g.pts = O.sub(g.pts,up2.cost);
-        up2.cost = O.mul(up2.cost,upg1to4scaling)};
+        if (O.gte(g.pts, g.up2.cost) == 1)
+        {up2.mul = O.mul(g.up2.mul,g.multiplier);
+        g.pts = O.sub(g.pts,g.up2.cost);
+        up2.cost = O.mul(g.up2.cost,g.upg1to4scaling)};
     };
     function buyup3() {
-        if (O.gte(g.pts, up3.cost) == 1)
-        {up3.mul = O.mul(up3.mul,multiplier);
-        g.pts = O.sub(g.pts,up3.cost);
-        up3.cost = O.mul(up3.cost,upg1to4scaling)};
+        if (O.gte(g.pts, g.up3.cost) == 1)
+        {up3.mul = O.mul(g.up3.mul,g.multiplier);
+        g.pts = O.sub(g.pts,g.up3.cost);
+        up3.cost = O.mul(g.up3.cost,g.upg1to4scaling)};
     };
     function buyup4() {
-        if (O.gte(g.pts, up4.cost) == 1)
-        {up4.mul = O.mul(up4.mul,multiplier);
-        g.pts = O.sub(g.pts,up4.cost);
-        up4.cost = O.mul(up4.cost,upg1to4scaling)};
+        if (O.gte(g.pts, g.up4.cost) == 1)
+        {up4.mul = O.mul(g.up4.mul,g.multiplier);
+        g.pts = O.sub(g.pts,g.up4.cost);
+        up4.cost = O.mul(g.up4.cost,g.upg1to4scaling)};
     };
     function buympup1() {
-        if (O.gte(g.mp, 1) == 1 && !mpups.up1) {
+        if (O.gte(g.mp, 1) == 1 && !g.mpups.up1) {
         g.mp = O.sub(g.mp,1);
-        upg1to4scaling -= 4;
-        mpups.up1 = true};
+        g.upg1to4scaling -= 4;
+        g.mpups.up1 = true};
     };
     function buympup2() {
-        if (O.gte(g.mp, 1) == 1 && !mpups.up2) {
+        if (O.gte(g.mp, 1) == 1 && !g.mpups.up2) {
         g.mp = O.sub(g.mp,1);
-        multiplier *= 1.5;
-        mpups.up2 = true};
+        g.multiplier *= 1.5;
+        g.mpups.up2 = true};
     };
 
     function lvlup() {
@@ -143,24 +139,25 @@
         g.ptsp = '1';
         g.lvl = O.add(g.lvl,'1');
         g.mp = O.add(g.mp,'1');
-        up1 = {
+        g.up1 = {
         mul: '1',
         cost: '10'
         };
-        up2 = {
+        g.up2 = {
         mul: '1',
         cost: '100'
         };
-        up3 = {
+        g.up3 = {
         mul: '1',
         cost: '1000'
         };
-        up4 = {
+        g.up4 = {
         mul: '1',
         cost: '10000'
         };
     };
     var O = OmegaNum;
+    var g = game;
 
     const HSLToRGB = (h, s, l) => {
   s /= 100;
@@ -196,20 +193,20 @@ function openTab(evt, TabName) {
 function hsvcsv(arr) {return 'rgb('+arr[0]+','+arr[1]+','+arr[2]+')'};
 
     setInterval(function gameupdate() {
-        g.pts = O.min(O.add(g.pts, O.mul(O.mul(O.mul(O.mul(O.div(O.div(1, 60),O.pow(2,O.sub(g.lvl,1))),up1.mul),up2.mul),up3.mul),up4.mul)),'1e6');
+        g.pts = O.min(O.add(g.pts, O.mul(O.mul(O.mul(O.mul(O.div(O.div(1, 60),O.pow(2,O.sub(g.lvl,1))),g.up1.mul),g.up2.mul),g.up3.mul),g.up4.mul)),'1e6');
         g.ptsf = O.floor(g.pts);
         numbercolor = hsvcsv(HSLToRGB(O.mod(O.mul(O.log10(g.pts),60),360),100,50));
         document.getElementById("number").innerHTML = g.ptsf.toString();
         document.getElementById("number").style.color = numbercolor;
-        document.getElementById('up1cost').innerHTML = up1.cost;
-        document.getElementById('up2cost').innerHTML = up2.cost;
-        document.getElementById('up3cost').innerHTML = up3.cost;
-        document.getElementById('up4cost').innerHTML = up4.cost;
+        document.getElementById('up1cost').innerHTML = g.up1.cost;
+        document.getElementById('up2cost').innerHTML = g.up2.cost;
+        document.getElementById('up3cost').innerHTML = g.up3.cost;
+        document.getElementById('up4cost').innerHTML = g.up4.cost;
         document.getElementById('mp').innerHTML = g.mp;
         document.getElementById('lvl').innerHTML = g.lvl;
-        if (mpups.up1) {
+        if (g.mpups.up1) {
         document.getElementById('mpup1').style = 'background-color:cyan;color:black'};
-        if (mpups.up2) {
+        if (g.mpups.up2) {
         document.getElementById('mpup2').style = 'background-color:cyan;color:black'};
 
         if (g.lvl < 2) {document.getElementById('upgradestab').style.display = 'none'}
