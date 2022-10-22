@@ -76,3 +76,7 @@ title{color:white}
         font-family: 'Pixeleum 48';
         src: url(media/fonts/PIXELEUM-48.TTF);
     };
+    @font-face {
+        font-family: 'Orbitron';
+        src: url(media/fonts/ORBITRON-BOLD.TTF);
+    };

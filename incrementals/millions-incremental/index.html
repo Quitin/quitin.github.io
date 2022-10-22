@@ -25,21 +25,21 @@
         <br>
         <p style="font-size:larger">The number is capped at 1,000,000. Reach 1,000,000 to prestige.</p>
         <br>
-        <button class='yellow button' id='levelupbutton' onclick='lvlup()' style='width:800px;height:128px;font-family:Orbitron' onclick='lvlup()'><span style="font-size:36px;font-family:'Pixeleum 48'">LEVEL UP</span>
+        <button class='yellow button' id='levelupbutton' onclick='lvlup()' style='width:800px;height:128px;font-family:"Orbitron"' onclick='lvlup()'><span style="font-size:36px;font-family:'Pixeleum 48'">LEVEL UP</span>
             <br>Reset everything to gain a Million Point.<br>WARNING: Each Level Up halves your production!!!</button>
         </div>
 
-        <div id="Options" class="tabcontent">
+        <div id="Options" class="tabcontent" style="display:none">
             <p style="font-size:larger">Options and progress saving coming soon lol</p>
             <button class="white button" onclick="document.location='../millions-incremental/changelog/index.html'">Go to the changelog</p>
             </div>
 
         <div id="Upgrades" class="tabcontent" id="upgradestab" style="display:none;text-align:center">
             <p style="font-size:48px;margin-top:-24px">Upgrades</p>
-            <p style="font-size:larger;margin-top:-50px">Your level is <span id="lvl"></span>. <span style="color:red">It is dividing your production by 2^n.</span></p>
+            <p style="font-size:larger;margin-top:-50px">Your level is <span id="lvl"></span>. <span style="color:red">It is dividing your production by 2<sup>n-1<sup></sup>.</span></p>
             <p style="font-size:larger;margin-top:-30px">You have <span id="mp"></span> Million Points.</p>
-            <button class='cyan button' id="mpup1" style="width:256px;height:72px" onclick='buympup1()'>Reduce doubler cost scaling by 4 <br> (Cost: 1 MP)</button>
-            <button class='cyan button' id="mpup2" style="width:256px;height:72px" onclick='buympup2()'>Multiply doubler effect by 1.5 <br> (Cost: 1 MP)</button>
+            <button class='cyan button' id="mpup1" style="width:256px;height:72px" onclick='buympup1()'>Reduce doubler cost scaling by 4 <br><br> (Cost: 1 MP)</button>
+            <button class='cyan button' id="mpup2" style="width:256px;height:72px" onclick='buympup2()'>Multiply effect of each <br> doubler by 1.5 <br> (Cost: 1 MP)</button>
         </div>
     
     
@@ -55,7 +55,7 @@
 
 <script>
 
-    var game = {
+    var g = {
     pts: '1',
     ptsf: undefined,
     lvl: '1',
@@ -87,8 +87,19 @@
     up3: false,
     up4: false,
     up5: false
-    }
+    };
 
+    game = [g, up1, up2, up3, up4, mpups];
+
+    function save() {
+    for (i = 0; i < game.length; i++) {
+    localStorage.setItem(game[i], JSON.stringify(game[i]))}
+    };
+
+    function load() {
+    for (i = 0; i < game.length; i++) {
+    game[i] = JSON.parse(localStorage.getItem(`game${[i]}`))}
+    };
 
     function buyup1() {
         if (O.gte(g.pts, up1.cost) == 1)
@@ -131,7 +142,7 @@
         g.pts = '1';
         g.ptsp = '1';
         g.lvl = O.add(g.lvl,'1');
-        g.mp = O.sub(g.lvl,'1');
+        g.mp = O.add(g.mp,'1');
         up1 = {
         mul: '1',
         cost: '10'
@@ -149,8 +160,6 @@
         cost: '10000'
         };
     };
-
-    var g = game;
     var O = OmegaNum;
 
     const HSLToRGB = (h, s, l) => {
