@@ -3,8 +3,9 @@
     <head>
         <link rel="stylesheet" href="style.css">
         <script src="media/lnls/OmegaNum.js"></script>
+        <script src="class.js"></script>
         <script defer src="main.js"></script>
-        <script src="saveload.js"></script>
+        <script defer src="saveload.js"></script>
         <meta name="description" content="[description for game]">
         <meta http-equiv="X-UA-Compatible" content="IE=7">
         <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
@@ -46,17 +47,9 @@
             <p style="font-size:48px;margin-top:-24px">Upgrades</p>
             <p style="font-size:larger;margin-top:-50px">Your level is <span id="lvl"></span>. <span style="color:red">It is dividing your production by 2<sup>n-1<sup></sup>.</span></p>
             <p style="font-size:larger;margin-top:-30px">You have <span id="mp"></span> Million Points.</p>
-            <button class='cyan button' id="mpup1" style="width:256px;height:72px" onclick='g.mpup[0].buy()'>Reduce doubler cost scaling by 4 <br><br> (Cost: 1 MP)</button>
-            <button class='cyan button' id="mpup2" style="width:256px;height:72px" onclick='g.mpup[1].buy()'>Multiply effect of each <br> doubler by 1.5 <br> (Cost: 1 MP)</button>
+            <button class='cyan button mpup' id="mpup-0" onclick='g.mpup[0].buy()'>Reduce doubler cost scaling by 4 <br><br> (Cost: 1 MP)</button>
+            <button class='cyan button mpup' id="mpup-1" onclick='g.mpup[1].buy()'>Multiply effect of each <br> doubler by 1.5 <br> (Cost: 1 MP)</button>
         </div>
-    
-    
-    
-    
-    
-    
-    
-    
     
     </body>
 </html>

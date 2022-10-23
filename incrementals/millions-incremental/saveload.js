@@ -1,5 +1,12 @@
 function data(obj, prop, assign, on) {
 
+    /**
+     * obj: Get data from obj to assign (required)
+     * prop: List of selected properties to be assigned (null = all)
+     * assign: Assign data to this object (default = empty object)
+     * on: Are all of the values OmegaNum? (default = false)
+     */
+
     if (!obj) return
     let o = assign ?? {}
     prop ??= Object.keys(obj)
@@ -12,52 +19,62 @@ function data(obj, prop, assign, on) {
 
 }
 
-function save(savefile = 'MillionsIncrementalSave') {
-    localStorage.setItem(savefile, btoa(encodeURIComponent(JSON.stringify(game))));
+function save(local, savefile = 'MillionsIncrementalSave') {
+    // use local parameter if you have textarea exporting/importing
+
+    const l = {
+        parent: ['lvl','mp','multiplier','pts','spd','upgScaling','lastTick'],
+        up: ['mul','cost'],
+        mpup: ['cost','paid']
+    }
+    let o = data(g, l.parent)
+    o.up = g.up.map(v => data(v, l.up))
+    o.mpup = g.mpup.map(v => data(v, l.mpup))
+
+    const out = btoa(JSON.stringify(o));
+    localStorage.setItem(savefile, out)
+
 }
 
-function load(savefile = 'MillionsIncrementalSave') {
-    game = new Game();
-    /** @type {Game} */
+function load(local, savefile = 'MillionsIncrementalSave') {
 
-    const savedGame = JSON.parse(decodeURIComponent(atob(localStorage.getItem(savefile))));
+    const c = localStorage.getItem(savefile)
+    if (!c) return true
+
+    let i
+    try {i = JSON.parse(atob(c))}
+    catch (e) {
+        alert('Error: Could not decode save data. It might be invalid.\n' + e)
+        return false
+    } try {
+
+        const saved = new Game // make new object just in case loading fails
+
+        data(i, ['upgScaling','lastTick'], saved, false) // import non-class
+        data(i, ['lvl','mp','multiplier','pts','spd'], saved, true) // import class
     
-    for (const stat in savedGame) {
-        game[stat] = savedGame[stat];
-    }
+        saved.up = i.up.map(v => data(v, null, new Upgrade, true))
+        saved.mpup = i.mpup.map((v,i) => {
+            v = data(v, ['cost','paid'], new MillionUpgrade, true)
+            v.onBuy = g.mpup[i].onBuy
+            v.id = i
+            return v
+        })
 
-    // the save has been reconstructed but the omeganums are broken, fix them here
+        g = game = saved
 
-    // 1. flatten the object
-    function flatten(data, c) {
-        var result = {};
-        for (var i in data) {
-            if (typeof data[i] == 'object' && !data[i].array) Object.assign(result, flatten(data[i], c + '.' + i));
-            else result[(c + '.' + i).replace(/^\./, "")] = data[i];
-        }
-        return result;
-    }
-    game = flatten(game, '');
+        g.mpup.forEach(v => {
+            if (v.paid) $('mpup-' + v.id).setAttribute('paid', '')
+            else $('mpup-' + v.id).removeAttribute('paid')
+        })
 
-    // 2. replace everything that should be an omeganum with an omeganum
-    for (const value in game) {
-        if (game[value].array) game[value] = new OmegaNum(game[value])
+        return true
+
+    } catch (e) {
+        alert('Error: Invalid or missing data in save code.\n' + e)
+        throw e
     }
-    
-    // 3. unflatten the object
-    function unflatten(data) {
-        var result = {}
-        for (var i in data) {
-            var keys = i.split('.')
-            keys.reduce(function(r, e, j) {
-                return r[e] || (r[e] = isNaN(Number(keys[j + 1])) ? (keys.length - 1 == j ? data[i] : {}) : [])
-            }, result)
-        }
-        return result;
-    }
-    game = unflatten(game);
-    
-    // omeganums are back!! yay :D
 }
 
-console.log('its working')
+load()
+setInterval(save, 1e4)

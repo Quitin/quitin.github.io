@@ -67,6 +67,15 @@ title{color:white}
 .button.black:hover{background-color:#323232; color: black}
 .button.black:active{background-color:#242424}
 
+.mpup {
+    width: 256px;
+    height: 72px;
+}
+.mpup[paid] {
+    background-color: cyan;
+    color: black
+}
+
 
     @font-face {
         font-family: 'Shin Go';
