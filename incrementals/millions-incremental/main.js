@@ -12,7 +12,7 @@ class Game {
     spd = O(1)
     mpup = [
         new MillionUpgrade(1, () => g.upgScaling -= 4, 0),
-        new MillionUpgrade(1, () => g.multiplier.mul(1.5), 1)
+        new MillionUpgrade(1, () => g.multiplier = g.multiplier.mul(1.5), 1)
     ]
 
     lastTick = Date.now()
@@ -62,16 +62,17 @@ class MillionUpgrade {
 
     constructor(cost, onBuy, id) {
         this.cost = O(cost)
-        this.onBuy = O(onBuy)
+        this.onBuy = onBuy
         this.id = id
     }
 
     buy() {
         if (g.pts.gte(this.cost)) {
-            g.mpup = g.mpup.sub(1)
+            g.mp = g.mp.sub(this.cost)
             this.paid = true
             this.onBuy(this)
-            $('mpup' + this.id).style = 'background-color:cyan;color:black'
+            $('mpup'+(this.id+1)).style = 'background-color:cyan;color:black'
+            console.log(this)
         }
     }
 
@@ -84,7 +85,8 @@ const g = game
 function lvlup() {
     g.pts = O(1)
     g.lvl = g.lvl.add(1);
-    g.mp = g.mp.add(1)
+    g.mp = g.mp.add(1);
+    g.spd = O.pow(2,O(g.lvl).sub(1).neg());
     g.resetUpgs()
 }
 
@@ -114,7 +116,7 @@ function hsvcsv(arr) {return `rgb(${arr})`};
 function tick() {
 
     const delay = (Date.now() - g.lastTick) / 1e3
-    g.pts = g.pts.add(O.mul(g.spd, delay))
+    g.pts = g.pts.add(O.mul(g.spd, delay)).min(1e6)
     DOMUpdate()
     g.lastTick = Date.now()
 
@@ -131,7 +133,7 @@ function DOMUpdate() {
     $('lvl').innerHTML = g.lvl;
 
     $('upgradestab').style.display = g.lvl.lt(2) ? 'none' : 'inline'
-    $('levelupbutton').style.display = g.pts.lte(1e6) ? 'none' : 'inline'
+    $('levelupbutton').style.display = g.pts.lt(1e6) ? 'none' : 'inline'
 
 }
 
