@@ -1,12 +1,11 @@
 const O = OmegaNum
 const $ = i => document.getElementById(i)
 
-let game = new Game
-let g = game
-
+let game = new Game;
+let g = game;
 
 function lvlup() {
-    g.pts = O(1)
+    g.pts = g.startpts;
     g.lvl = g.lvl.add(1);
     g.mp = g.mp.add(1);
     g.spd = O.pow(2,O(g.lvl).sub(1).neg());
@@ -58,6 +57,14 @@ function DOMUpdate() {
     $('upgradestab').style.display = g.lvl.lt(2) ? 'none' : 'inline'
     $('levelupbutton').style.display = g.pts.lt(1e6) ? 'none' : 'inline'
 
+    for (let index = 0; index < g.mpup.length; index++) {
+        $('mpup-'+index).innerHTML = g.mpup[index].desc + `\n` + '(Cost: ' + g.mpup[index].cost + ' MP)'
+        if (g.mpup[index].paid == true) {
+            $('mpup-'+[index]).setAttribute('paid', '')
+        } else {
+            $('mpup-'+[index]).removeAttribute('paid')
+        }
+    }
 }
 
 setInterval(tick, 17)

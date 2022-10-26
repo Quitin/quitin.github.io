@@ -20,7 +20,7 @@ function data(obj, prop, assign, on) {
 }
 
 function save(local, savefile = 'MillionsIncrementalSave') {
-    // use local parameter if you have textarea exporting/importing
+    // use local (boolean) parameter if you have textarea exporting/importing
 
     const l = {
         parent: ['lvl','mp','multiplier','pts','spd','upgScaling','lastTick'],
@@ -56,7 +56,7 @@ function load(local, savefile = 'MillionsIncrementalSave') {
         saved.up = i.up.map(v => data(v, null, new Upgrade, true))
         saved.mpup = i.mpup.map((v,i) => {
             v = data(v, ['cost','paid'], new MillionUpgrade, true)
-            v.onBuy = g.mpup[i].onBuy
+            data(g.mpup[i], ['desc', 'predicate'], v)
             v.id = i
             return v
         })

@@ -1,25 +1,30 @@
 'use strict'
 class Game {
 
+    startpts = O(1)
     pts = O(1)
     lvl = O(1)
     mp = O(0)
-    upgScaling = 10
+    upgScaling = O(10)
     multiplier = O(2)
     up = []
     spd = O(1)
     mpup = [
-        new MillionUpgrade(1, () => g.upgScaling -= 4, 0),
-        new MillionUpgrade(1, () => g.multiplier = g.multiplier.mul(1.5), 1)
+        // you can space arguments like this if you want, it's easier to read
+        new MillionUpgrade('Reduce scaling by 4',                   1, true),
+        new MillionUpgrade("Multiply each doubler's effect by 1.5", 1, true),
+        new MillionUpgrade('Points reset to 1000 instead of 1',     1, () => g.mpup[0].paid && g.mpup[1].paid)
     ]
 
     lastTick = Date.now()
 
     constructor() {this.resetUpgs()}
+
     resetUpgs() {
         this.up = []
         for (let i = 0; i < 4; i++)
             this.up.push(new Upgrade(10 ** (i + 1)))
+        this.mpup = this.mpup.map((v, i) => (v.id = i, v))
     }
     updateSpd() {
         this.spd = this.up.reduce((a,b) =>
@@ -58,20 +63,29 @@ class MillionUpgrade {
 
     paid = false
 
-    constructor(cost, onBuy, id) {
-        this.cost = O(cost)
-        this.onBuy = onBuy
+    constructor(desc, cost, predicate=()=>true, id) {
+        this.desc = desc // Description of the upgrade that you see in-game.
+        this.cost = O(cost) // Cost of the upgrade.
         this.id = id
-    }
+        this.predicate = predicate === true ? () => true : predicate // Function that returns true if buyable/unlocked
+        }
 
     buy() {
-        if (g.pts.gte(this.cost)) {
+        if (g.mp.gte(this.cost) & !this.paid & this.predicate() == 1) {
+            console.log(this)
             g.mp = g.mp.sub(this.cost)
             this.paid = true
-            this.onBuy(this)
+            MillionUpgrade.effects[this.id]() // The "this" is the MillionUpgrade object. Just in case the object should be used
             $('mpup-' + this.id).setAttribute('paid', '')
-            console.log(this)
         }
     }
+
+    
+    static effects = [
+        /* Upg 1 */ () => {g.upgScaling = O(g.upgScaling).sub(4)},
+        /* Upg 2 */ () => {g.multiplier = O(g.multiplier).mul(1.5)},
+        /* Upg 3 */ () => {g.startpts = O(1e3)}
+        // function (thisArg) {...}
+    ]
 
 }
