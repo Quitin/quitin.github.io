@@ -13,7 +13,7 @@ class Game {
         // you can space arguments like this if you want, it's easier to read
         new MillionUpgrade('Reduce scaling by 4',                   1, true),
         new MillionUpgrade("Multiply each doubler's effect by 1.5", 1, true),
-        new MillionUpgrade('Points reset to 1000 instead of 1',     1, () => g.mpup[0].paid && g.mpup[1].paid)
+        new MillionUpgrade('Points reset to 1000 instead of 1, point gain multiplies by level^2',     1, () => g.mpup[0].paid.eq(1) && g.mpup[1].paid.eq(1))
     ]
 
     lastTick = Date.now()
@@ -61,20 +61,20 @@ class Upgrade {
 
 class MillionUpgrade {
 
-    paid = false
+    paid = O(0)
 
     constructor(desc, cost, predicate=()=>true, id) {
         this.desc = desc // Description of the upgrade that you see in-game.
         this.cost = O(cost) // Cost of the upgrade.
         this.id = id
-        this.predicate = predicate === true ? () => true : predicate // Function that returns true if buyable/unlocked
-        }
+        this.predicate = predicate === true ? () => true : predicate // Function that returns true if buyable/unlocked    
+    }
 
     buy() {
-        if (g.mp.gte(this.cost) & !this.paid & this.predicate() == 1) {
+        if (O.gte(g.mp, this.cost) && !(this.paid.eq(1)) && this.predicate()) {
             console.log(this)
             g.mp = g.mp.sub(this.cost)
-            this.paid = true
+            this.paid = O(1)
             MillionUpgrade.effects[this.id]() // The "this" is the MillionUpgrade object. Just in case the object should be used
             $('mpup-' + this.id).setAttribute('paid', '')
         }

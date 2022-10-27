@@ -12,6 +12,7 @@
         <title>Millions Incremental</title>
     </head>
     <body>
+        <img src="../millions-incremental/media/images/millionsincrementallogo.png" style="position:absolute;width:200px;height:auto;left:0%;top:0%"></img>
         <p style="font-size:larger">The number is:</p>
         <p style="font-size:48px;font-family:Helvetica;margin-top:-24px"><span id="number" class="number"></span></p>
     
@@ -23,8 +24,10 @@
             </div>
         </div>
         <br><br>
-        <div style="border-top:3px solid white;width:100%;position:relative;top:10px"></div>
+        <div style="border-top:3px solid white;width:100%;position:static;margin-top:10px"></div>
         <br><br>
+        <div style="margin-top:-24px">
+
         <div id="General" class="tabcontent">
         <p style="font-size:larger">Doublers</p>
         <button class='white button' onclick='g.up[0].buy()'>Double the production <br> (Cost: <span id='up-cost-0'></span>)</button>
@@ -39,9 +42,12 @@
         </div>
 
         <div id="Options" class="tabcontent" style="display:none">
-            <p style="font-size:larger">Options and progress saving coming soon lol</p>
-            <button class="white button" onclick="document.location='../millions-incremental/changelog/index.html'">Go to the changelog</p>
-            </div>
+            <p style="font-size:larger;">Options</p>
+            <button class="white button" onclick="document.location='../millions-incremental/changelog/index.html'">Changelog</button>
+            <p style="font-size:large">Save Data. Copy and paste them into somewhere safe.<br><span style='color:red'>It is impossible to recover your progress without save data.</span></p>
+            <textarea id="loadinput" style="background-color:black;border:solid 1px;color:white;font-family:'Courier New';width:474px;height:80px"></textarea><br>
+            <button class="white button" onclick="save(false)">Save</button><button class="white button" onclick="load(false)">Import save data</button><button class="red button" onclick="confirm('You are about to wipe your progress, and ALL UNSAVED PROGRESS WILL BE LOST! Are you sure you want to do this?'); g.wipe()">WIPE PROGRESS</button>
+        </div>
 
         <div id="Upgrades" class="tabcontent" id="upgradestab" style="display:none;text-align:center">
             <p style="font-size:48px;margin-top:-24px">Upgrades</p>
@@ -51,6 +57,6 @@
             <button class='cyan button mpup' id="mpup-1" onclick='g.mpup[1].buy()'><span id="mpup-1"></span><br></button><br>
             <button class='cyan button mpup' id="mpup-2" onclick='g.mpup[2].buy()'><span id="mpup-2"></span><br></button>
         </div>
-    
+    </div>
     </body>
 </html>

@@ -38,7 +38,18 @@ function hsvcsv(arr) {return `rgb(${arr})`};
 function tick() {
 
     const delay = (Date.now() - g.lastTick) / 1e3
-    g.pts = g.pts.add(O.mul(g.spd, delay)).min(1e6)
+    g.pts = g.pts.add(O.mul(g.spd
+        
+    .mul(g.mpup[2].paid.eq(1) ? g.lvl.pow(2):1)
+        
+        
+    , delay))
+
+    
+    
+    
+    .min(1e6) // Cap
+    
     DOMUpdate()
     g.lastTick = Date.now()
 
@@ -59,7 +70,7 @@ function DOMUpdate() {
 
     for (let index = 0; index < g.mpup.length; index++) {
         $('mpup-'+index).innerHTML = g.mpup[index].desc + `\n` + '(Cost: ' + g.mpup[index].cost + ' MP)'
-        if (g.mpup[index].paid == true) {
+        if (g.mpup[index].paid.eq(1)) {
             $('mpup-'+[index]).setAttribute('paid', '')
         } else {
             $('mpup-'+[index]).removeAttribute('paid')

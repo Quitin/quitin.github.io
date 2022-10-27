@@ -23,7 +23,7 @@ function save(local, savefile = 'MillionsIncrementalSave') {
     // use local (boolean) parameter if you have textarea exporting/importing
 
     const l = {
-        parent: ['lvl','mp','multiplier','pts','spd','upgScaling','lastTick'],
+        parent: ['lvl','mp','multiplier','pts','spd','upgScaling','lastTick','startpts'],
         up: ['mul','cost'],
         mpup: ['cost','paid']
     }
@@ -33,12 +33,14 @@ function save(local, savefile = 'MillionsIncrementalSave') {
 
     const out = btoa(JSON.stringify(o));
     localStorage.setItem(savefile, out)
+    
+    if (!local) {document.getElementById('loadinput').value = out}
 
 }
 
 function load(local, savefile = 'MillionsIncrementalSave') {
 
-    const c = localStorage.getItem(savefile)
+    const c = (local)?localStorage.getItem(savefile):document.getElementById('loadinput').value
     if (!c) return true
 
     let i
@@ -51,7 +53,7 @@ function load(local, savefile = 'MillionsIncrementalSave') {
         const saved = new Game // make new object just in case loading fails
 
         data(i, ['upgScaling','lastTick'], saved, false) // import non-class
-        data(i, ['lvl','mp','multiplier','pts','spd'], saved, true) // import class
+        data(i, ['lvl','mp','multiplier','pts','spd','startpts'], saved, true) // import class
     
         saved.up = i.up.map(v => data(v, null, new Upgrade, true))
         saved.mpup = i.mpup.map((v,i) => {
@@ -76,5 +78,5 @@ function load(local, savefile = 'MillionsIncrementalSave') {
     }
 }
 
-load()
-setInterval(save, 1e4)
+load(true)
+setInterval(save(local = true), 1e4)

@@ -55,7 +55,7 @@ title{color:white}
 .button.blue:hover{background-color:blue; color: white}
 .button.blue:active{background-color:#0000BB}
 
-.button.magenta{border: 2px solidmagenta; color: magenta}
+.button.magenta{border: 2px solid magenta; color: magenta}
 .button.magenta:hover{background-color:magenta; color: white}
 .button.magenta:active{background-color:#BB00BB}
 
