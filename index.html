@@ -101,6 +101,69 @@ box-shadow: 0px 0px 10px 1px rgba( 0, 220, 255, 0.5 );
     -webkit-transform: translateX(-200%);
     transform: translateX(-200%);
   }}
+
+  .usericon{
+    font-size: 24px;
+        background-color: black;
+        color: white;
+        border-radius: 10%;
+        font-family: 'Pixeleum 48';
+        font-size: 16px;
+        border: 1px solid white;
+        transition-duration: 0.5s;
+        width: 128px;
+        height: 128px;
+        }
+        .usericon:hover {
+        z-index:10;
+        background-color:white;
+        transition-duration: 0.5s;
+;
+        width: 140px;
+        height: 140px;
+        box-shadow: 0px 0px 20px white;
+        }
+        .usericon:active {
+        transition-duration:0.5s;
+        background-color: #BBBBBB;
+        }
+
+/* below is dropdown content for a thing */
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: black;
+  min-width: 300px;
+  overflow: auto;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+  border-radius: 10px;
+  color:white;
+  border: 2px solid white;
+  font-family:'Pixeleum 48';
+  text-shadow: 0px 0px 5px white
+}
+
+.dropdown-content a {
+  color: white;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  transition-duration:0.5s;
+  border: 0.5px solid white;
+}
+
+.dropdown-content a:hover {background-color: #333;}
+
+.show {display: block;}
+
+
   </style>
 <script>
 var newsmessages =
@@ -218,7 +281,7 @@ setInterval(function funcarA() {
 			document.getElementById("sub progress bar1").value = subCount.innerHTML;
 			document.getElementById("sub progress bar2").value = subCount.innerHTML;
 			document.getElementById("subs").innerHTML = subCount.innerHTML;
-			document.getElementById("subs to 2000").innerHTML = Math.floor((subCount.innerHTML / 2000)*10000)/100;
+			document.getElementById("subs to 3000").innerHTML = Math.floor((subCount.innerHTML / 3000)*10000)/100;
 			document.getElementById("subs to 100000").innerHTML = Math.floor((subCount.innerHTML / 100000)*10000)/100;
         })
 
@@ -226,8 +289,8 @@ setInterval(function funcarA() {
 	getSubscribers();
     </script>
 	<p style="font-size:40px;font-family:Roboto">Deca Quitin</p>
-	<p style="font-family: Rubik">Amount of Subscribers on YouTube: <span id="subs"></span><br><span id="subs to 2000"></span>% to 2,000 Subscribers</p>
-	<progress class="smallbar" value="0" id="sub progress bar1" max="2000">0</progress>
+	<p style="font-family: Rubik">Amount of Subscribers on YouTube: <span id="subs"></span><br><span id="subs to 3000"></span>% to 3,000 Subscribers</p>
+	<progress class="smallbar" value="0" id="sub progress bar1" max="3000">0</progress>
 	
 	<p style="font-family: Rubik"><span id="subs to 100000"></span>% to 100,000 Subscribers</p>
 	<progress class="bigbar" value="0" id="sub progress bar2" max="100000">0</progress>
@@ -287,6 +350,119 @@ Power: +<span id=power>1</span></p>
 
 
 
+		<h2 style="font-family: 'Pixeleum 48'; text-align:center">People that I'd like to support</h2>
+
+		<div style="margin:auto;text-align:center;margin-top:50px;line-height-step:10px">
+			<div class='dropdown'>
+			<div class='usericon' onclick='dropdown(0)' style="display:inline-block;background:url(
+				media/images/pfp_decaquitin.jpg
+			);background-size:cover;"><p style="color:white;font-family:Consolas;text-align:center;font-size:14px;position:relative;top:100%">Deca Quitin</p>
+			</div>
+			<div id="myDropdown" class="dropdown-content">
+				<p style="padding: 4px 12px; font-size:24px">Deca Quitin</p>
+				<a href="#">YT Channel</a>
+				<a href="#">Website</a>
+			</div>
+			</div>
+			
+			<div class='usericon' onclick='dropdown(1)' style="display:inline-block;background:url(
+				media/images/pfp_theegglet.jpg
+			);background-size:cover;"><p style="color:white;font-family:Consolas;text-align:center;font-size:14px;position:relative;top:100%">TheEgglet</p>
+			<div id="myDropdown" class="dropdown-content">
+				<p style="font-size:24px">TheEgglet</p>
+				<a href="#">YT Channel</a>
+				<a href="#">Website</a>
+			</div>
+			</div>
+			
+			<div class='usericon' onclick='dropdown(2)' style="display:inline-block;background:url(
+				media/images/pfp_danidanijr.jpg
+			);background-size:cover;"><p style="color:white;font-family:Consolas;text-align:center;font-size:14px;position:relative;top:100%">Danidanijr</p>
+			<div id="myDropdown" class="dropdown-content">
+				<p style="font-size:24px">Danidanijr</p>
+				<a href="#">YT Channel</a>
+			</div>
+			</div>
+			
+			<div class='usericon' onclick='dropdown(3)' style="display:inline-block;background:url(
+				media/images/pfp_bonesyt.jpg
+			);background-size:cover;"><p style="color:white;font-family:Consolas;text-align:center;font-size:14px;position:relative;top:100%">BonesYT</p>
+			<div id="myDropdown" class="dropdown-content">
+				<p style="font-size:24px">BonesYT</p>
+				<a href="#">YT Channel</a>
+				<a href="#">Website</a>
+			</div>
+			</div>
+			
+			<div style="height:50px"></div>
+			
+			<div class='usericon' onclick='dropdown(4)' style="display:inline-block;background:url(
+				media/images/pfp_orangepaprika67.jpg
+			);background-size:cover;"><p style="color:white;font-family:Consolas;text-align:center;font-size:14px;position:relative;top:100%">Orangepaprika 67</p>
+			<div id="myDropdown" class="dropdown-content">
+				<p style="font-size:24px">Orangepaprika 67</p>
+				<a href="#">YT Channel</a>
+			</div>
+			</div>
+			
+			<div class='usericon' onclick='dropdown(5)' style="display:inline-block;background:url(
+				media/images/pfp_ij9j9j9j99j9.jpg
+			);background-size:cover;"><p style="color:white;font-family:Consolas;text-align:center;font-size:14px;position:relative;top:100%">ij9j9j9j99j9</p>
+			<div id="myDropdown" class="dropdown-content">
+				<p style="font-size:24px">ij9j9j9j99j9</p>
+				<a href="#">YT Channel</a>
+			</div>
+			</div>
+			
+			<div class='usericon' onclick='dropdown(6)' style="display:inline-block;background:url(
+				media/images/pfp_newfall2023.jpg
+			);background-size:cover;"><p style="color:white;font-family:Consolas;text-align:center;font-size:14px;position:relative;top:100%">NewFall 2023</p>
+			<div id="myDropdown" class="dropdown-content">
+				<p style="font-size:24px">NewFall 2023</p>
+				<a href="#">YT Channel</a>
+			</div>
+			</div>
+			
+			<div class='usericon' onclick='dropdown(7)' style="display:inline-block;background:url(
+				media/images/pfp_motdhsgaming.jpg
+			);background-size:cover;"><p style="color:white;font-family:Consolas;text-align:center;font-size:14px;position:relative;top:100%">MotdHS Gaming</p>
+			<div id="myDropdown" class="dropdown-content">
+				<p style="font-size:24px">MotdHS</p>
+				<a href="#">YT Channel</a>
+				<a href="#">Website</a>
+			</div>
+			</div>
+			
+			<script>
+				/* When the user clicks on the button, 
+				toggle between hiding and showing the dropdown content */
+				function dropdown(j) {
+					var dropdowns = document.getElementsByClassName("dropdown-content");
+					var i;
+					for (i = 0; i < dropdowns.length; i++) {
+					  var openDropdown = dropdowns[i];
+					  if (openDropdown.classList.contains('show')) {
+						openDropdown.classList.remove('show');
+					  }
+					}
+				  document.getElementsByClassName("dropdown-content")[j].classList.toggle("show");
+				}
+				
+				// Close the dropdown if the user clicks outside of it
+				window.onclick = function(event) {
+				  if (!event.target.matches('.usericon')) {
+					var dropdowns = document.getElementsByClassName("dropdown-content");
+					var i;
+					for (i = 0; i < dropdowns.length; i++) {
+					  var openDropdown = dropdowns[i];
+					  if (openDropdown.classList.contains('show')) {
+						openDropdown.classList.remove('show');
+					  }
+					}
+				  }
+				}
+				</script>
+<br><br><br><br><br><br>
 
 </body>
 	</html>
