@@ -70,12 +70,33 @@ box-shadow: 0px 0px 10px 1px rgba( 0, 220, 255, 0.5 );
 #navigation-bar{
 	background-color: black;
 	border: 2px solid white;
-	width: 120%;
+	width: 100%;
 	height: 50px;
-	text-align: left;
+	text-align: center;
 	position: fixed;
 	top: 32px;
-	right:-10px;
+	right:-4px;
+	display:block;
+	padding:0px;
+}
+
+#navbar-content{
+	background-color: black;
+	border: 1px solid white;
+	color: white;
+	text-align: center;
+	font-family: "Pixeleum 48";
+	font-size: 20px;
+	margin:5px;
+	padding:5px;
+	transition-duration:0.3s;
+	border-radius: 5px;
+}
+
+#navbar-content:hover{
+	border: 1px solid cyan;
+	background-color: #001010;
+	color: cyan;
 }
 
 /* for Firefox */
@@ -221,6 +242,12 @@ setInterval(function funcarA() {
 <!--Navigation bar-->
 
 <div id="navigation-bar">
+<button id="navbar-content" onclick="document.location='#'">Home</button>
+<button id="navbar-content" onclick="document.location='https://quitin.github.io/incrementals/index.html'">Incrementals</button>
+<button id="navbar-content" onclick="document.location='https://quitin.github.io/projects/index.html'">My Stuff</button>
+<button id="navbar-content" onclick="document.location='https://quitin.github.io/support/'">Support</button>
+<button id="navbar-content" onclick="document.location='https://youtube.com/channel/UCbyYGDg7isVWn3qadcP4nrA'"><span id="subs"></span> Subscribers on YT</button>
+<button id="navbar-content" onclick="document.location='#page_so'" >Support others</button>
 </div>
 
 
@@ -232,7 +259,7 @@ setInterval(function funcarA() {
 
 <!--Quitin's Home Page-->
 
-<br><br><br><h1 style="font-family:'Pixeleum 48';text-align:center;font-size:72px;color:#FFFFFF">Quitin's Home Page</h1>
+<br><br><br><h1 id="page_hp" style="font-family:'Pixeleum 48';text-align:center;font-size:72px;color:#FFFFFF">Quitin's Home Page</h1>
 	
 	<div id="logo">
 	<img src = "https://cdn.discordapp.com/attachments/905465775253499936/905835135537147934/quitins_animated_pfp.gif" width="150px" height="auto">
@@ -350,7 +377,7 @@ Power: +<span id=power>1</span></p>
 
 
 
-		<h2 style="font-family: 'Pixeleum 48'; text-align:center">People that I'd like to support</h2>
+		<h2 id="page_so" style="font-family: 'Pixeleum 48'; text-align:center">People that I'd like to support</h2>
 
 		<div style="margin:auto;text-align:center;margin-top:50px;line-height-step:10px">
 			<div class='dropdown'>
@@ -360,8 +387,8 @@ Power: +<span id=power>1</span></p>
 			</div>
 			<div id="myDropdown" class="dropdown-content">
 				<p style="padding: 4px 12px; font-size:24px">Deca Quitin</p>
-				<a href="#">YT Channel</a>
-				<a href="#">Website</a>
+				<a href="https://youtube.com/channel/UCbyYGDg7isVWn3qadcP4nrA">YT Channel</a>
+				<a href="https://quitin.github.io/">Website</a>
 			</div>
 			</div>
 			
@@ -370,8 +397,8 @@ Power: +<span id=power>1</span></p>
 			);background-size:cover;"><p style="color:white;font-family:Consolas;text-align:center;font-size:14px;position:relative;top:100%">TheEgglet</p>
 			<div id="myDropdown" class="dropdown-content">
 				<p style="font-size:24px">TheEgglet</p>
-				<a href="#">YT Channel</a>
-				<a href="#">Website</a>
+				<a href="https://www.youtube.com/channel/UCbf1F6fTa8XGWEz7DvHBL9w">YT Channel</a>
+				<a href="https://woodstuff.github.io/">Website</a>
 			</div>
 			</div>
 			
@@ -380,7 +407,8 @@ Power: +<span id=power>1</span></p>
 			);background-size:cover;"><p style="color:white;font-family:Consolas;text-align:center;font-size:14px;position:relative;top:100%">Danidanijr</p>
 			<div id="myDropdown" class="dropdown-content">
 				<p style="font-size:24px">Danidanijr</p>
-				<a href="#">YT Channel</a>
+				<a href="https://www.youtube.com/channel/UCYrbUbKbgn2e0GbTDR2C3UQ">YT Channel</a>
+				<a href="https://sites.google.com/view/danidanijr/">Website</a>
 			</div>
 			</div>
 			
@@ -389,8 +417,8 @@ Power: +<span id=power>1</span></p>
 			);background-size:cover;"><p style="color:white;font-family:Consolas;text-align:center;font-size:14px;position:relative;top:100%">BonesYT</p>
 			<div id="myDropdown" class="dropdown-content">
 				<p style="font-size:24px">BonesYT</p>
-				<a href="#">YT Channel</a>
-				<a href="#">Website</a>
+				<a href="https://www.youtube.com/channel/UCj4pAPv81IiOQjtJLQBP77A">YT Channel</a>
+				<a href="https://bonesyt.github.io/">Website</a>
 			</div>
 			</div>
 			
@@ -401,7 +429,7 @@ Power: +<span id=power>1</span></p>
 			);background-size:cover;"><p style="color:white;font-family:Consolas;text-align:center;font-size:14px;position:relative;top:100%">Orangepaprika 67</p>
 			<div id="myDropdown" class="dropdown-content">
 				<p style="font-size:24px">Orangepaprika 67</p>
-				<a href="#">YT Channel</a>
+				<a href="https://www.youtube.com/channel/UCN395iKU0H0NfL-dSTunfYQ">YT Channel</a>
 			</div>
 			</div>
 			
@@ -410,7 +438,7 @@ Power: +<span id=power>1</span></p>
 			);background-size:cover;"><p style="color:white;font-family:Consolas;text-align:center;font-size:14px;position:relative;top:100%">ij9j9j9j99j9</p>
 			<div id="myDropdown" class="dropdown-content">
 				<p style="font-size:24px">ij9j9j9j99j9</p>
-				<a href="#">YT Channel</a>
+				<a href="https://www.youtube.com/channel/UC7XGsGvdmPgMtou7VY1wlPA">YT Channel</a>
 			</div>
 			</div>
 			
@@ -419,7 +447,7 @@ Power: +<span id=power>1</span></p>
 			);background-size:cover;"><p style="color:white;font-family:Consolas;text-align:center;font-size:14px;position:relative;top:100%">NewFall 2023</p>
 			<div id="myDropdown" class="dropdown-content">
 				<p style="font-size:24px">NewFall 2023</p>
-				<a href="#">YT Channel</a>
+				<a href="https://www.youtube.com/channel/UCQlB_3y193h5lvltZaILDBw">YT Channel</a>
 			</div>
 			</div>
 			
@@ -428,8 +456,8 @@ Power: +<span id=power>1</span></p>
 			);background-size:cover;"><p style="color:white;font-family:Consolas;text-align:center;font-size:14px;position:relative;top:100%">MotdHS Gaming</p>
 			<div id="myDropdown" class="dropdown-content">
 				<p style="font-size:24px">MotdHS</p>
-				<a href="#">YT Channel</a>
-				<a href="#">Website</a>
+				<a href="https://www.youtube.com/channel/UCK8lxVxfEUwvU7QA9DxCwbQ">YT Channel</a>
+				<a href="https://motdhs.github.io/">Website</a>
 			</div>
 			</div>
 			
