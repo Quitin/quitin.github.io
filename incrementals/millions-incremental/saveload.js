@@ -23,13 +23,15 @@ function save(local, savefile = 'MillionsIncrementalSave') {
     // use local (boolean) parameter if you have textarea exporting/importing
 
     const l = {
-        parent: ['lvl','mp','multiplier','pts','spd','upgScaling','lastTick','startpts'],
+        parent: ['lvl','mp','multiplier','pts','spd','upgScaling','lastTick','startpts','maxpts','ipow','ipowp','ip','ipup'],
         up: ['mul','cost'],
-        mpup: ['cost','paid']
+        mpup: ['cost','paid'],
+        ipup: ['cost','paid'],
     }
     let o = data(g, l.parent)
     o.up = g.up.map(v => data(v, l.up))
     o.mpup = g.mpup.map(v => data(v, l.mpup))
+    o.ipup = g.ipup.map(v => data(v, l.ipup))
 
     const out = btoa(JSON.stringify(o));
     localStorage.setItem(savefile, out)
@@ -53,12 +55,18 @@ function load(local, savefile = 'MillionsIncrementalSave') {
         const saved = new Game // make new object just in case loading fails
 
         data(i, ['upgScaling','lastTick'], saved, false) // import non-class
-        data(i, ['lvl','mp','multiplier','pts','spd','startpts'], saved, true) // import class
+        data(i, ['lvl','mp','multiplier','pts','spd','startpts','maxpts','ipow','ipowp','ip','ipup'], saved, true) // import class
     
         saved.up = i.up.map(v => data(v, null, new Upgrade, true))
         saved.mpup = i.mpup.map((v,i) => {
             v = data(v, ['cost','paid'], new MillionUpgrade, true)
             data(g.mpup[i], ['desc', 'predicate'], v)
+            v.id = i
+            return v
+        })
+        saved.ipup = i.ipup.map((v,i) => {
+            v = data(v, ['cost','paid'], new IllionUpgrade, true)
+            data(g.ipup[i], ['desc', 'predicate'], v)
             v.id = i
             return v
         })
@@ -68,6 +76,10 @@ function load(local, savefile = 'MillionsIncrementalSave') {
         g.mpup.forEach(v => {
             if (v.paid) $('mpup-' + v.id).setAttribute('paid', '')
             else $('mpup-' + v.id).removeAttribute('paid')
+        })
+        g.ipup.forEach(v => {
+            if (v.paid) $('ipup-' + v.id).setAttribute('paid', '')
+            else $('ipup-' + v.id).removeAttribute('paid')
         })
 
         return true

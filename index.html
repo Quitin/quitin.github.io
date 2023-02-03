@@ -305,18 +305,20 @@ setInterval(function funcarA() {
         })
         .then(data => {
             subCount.innerHTML = data["items"][0].statistics.subscriberCount;
+			subs = subCount.innerHTML;
 			document.getElementById("sub progress bar1").value = subCount.innerHTML;
 			document.getElementById("sub progress bar2").value = subCount.innerHTML;
 			document.getElementById("subs").innerHTML = subCount.innerHTML;
+			document.getElementById("subs2").innerHTML = subCount.innerHTML;
 			document.getElementById("subs to 3000").innerHTML = Math.floor((subCount.innerHTML / 3000)*10000)/100;
-			document.getElementById("subs to 100000").innerHTML = Math.floor((subCount.innerHTML / 100000)*10000)/100;
+			document.getElementById("subs to 100000").innerHTML = Math.floor(((subCount.innerHTML+1) / 100000)*1000)/100;
         })
 
     }
 	getSubscribers();
     </script>
 	<p style="font-size:40px;font-family:Roboto">Deca Quitin</p>
-	<p style="font-family: Rubik">Amount of Subscribers on YouTube: <span id="subs"></span><br><span id="subs to 3000"></span>% to 3,000 Subscribers</p>
+	<p style="font-family: Rubik">Amount of Subscribers on YouTube: <span id="subs2"></span><br><span id="subs to 3000"></span>% to 3,000 Subscribers</p>
 	<progress class="smallbar" value="0" id="sub progress bar1" max="3000">0</progress>
 	
 	<p style="font-family: Rubik"><span id="subs to 100000"></span>% to 100,000 Subscribers</p>

@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <link rel="stylesheet" href="style.css">
-        <script src="media/lnls/OmegaNum.js"></script>
-        <script src="class.js"></script>
-        <script defer src="main.js"></script>
-        <script defer src="saveload.js"></script>
-        <meta name="description" content="[description for game]">
+<head>   
+        <meta name="description" content="An incremental made by Deca Quitin. It is pretty much all about the number 1 000 000, or one million.">
         <meta http-equiv="X-UA-Compatible" content="IE=7">
         <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
         <title>Millions Incremental</title>
     </head>
     <body>
+        <link rel="stylesheet" href="style.css">
+        <script src="media/lnls/OmegaNum.js"></script>
+        <script src="class.js"></script>
+        
+        
         <img src="../millions-incremental/media/images/millionsincrementallogo.png" style="position:absolute;width:200px;height:auto;left:0%;top:0%"></img>
         <p style="font-size:larger">The number is:</p>
         <p style="font-size:48px;font-family:Helvetica;margin-top:-24px"><span id="number" class="number"></span></p>
@@ -20,7 +20,10 @@
             <button class='tablinks white button' onclick="openTab('General')">General</button>
             <button class='tablinks white button' onclick="openTab('Options')">Options</button>
             <div id="upgradestab">
-                <button class='tablinks cyan button' onclick="openTab('Upgrades')">Upgrades</button>
+            <button class='tablinks cyan button' onclick="openTab('Upgrades')">Upgrades</button>
+            </div>
+            <div id="illionizetab">
+            <button class='tablinks illionize button' onclick="openTab('Illionize')">Illionize</button>
             </div>
         </div>
         <br><br>
@@ -44,6 +47,7 @@
         <div id="Options" class="tabcontent" style="display:none">
             <p style="font-size:larger;">Options</p>
             <button class="white button" onclick="document.location='../millions-incremental/changelog/index.html'">Changelog</button>
+            <button class="white button" onclick="document.location='../../index.html'">Quitin's Homepage</button>
             <p style="font-size:large">Save Data. Copy and paste them into somewhere safe.<br><span style='color:red'>It is impossible to recover your progress without save data.</span></p>
             <textarea id="loadinput" style="background-color:black;border:solid 1px;color:white;font-family:'Courier New';width:474px;height:80px"></textarea><br>
             <button class="white button" onclick="save(false)">Save</button><button class="white button" onclick="load(false)">Import save data</button><button class="red button" onclick="confirm('You are about to wipe your progress, and ALL UNSAVED PROGRESS WILL BE LOST! Are you sure you want to do this?'); g.wipe()">WIPE PROGRESS</button>
@@ -53,10 +57,36 @@
             <p style="font-size:48px;margin-top:-24px">Upgrades</p>
             <p style="font-size:larger;margin-top:-50px">Your level is <span id="lvl"></span>. <span style="color:red">It is dividing your production by 2<sup>n-1<sup></sup>.</span></p>
             <p style="font-size:larger;margin-top:-30px">You have <span id="mp"></span> Million Points.</p>
-            <button class='cyan button mpup' id="mpup-0" onclick='g.mpup[0].buy()'><span id="mpup-0"></span><br></button>
-            <button class='cyan button mpup' id="mpup-1" onclick='g.mpup[1].buy()'><span id="mpup-1"></span><br></button><br>
-            <button class='cyan button mpup' id="mpup-2" onclick='g.mpup[2].buy()'><span id="mpup-2"></span><br></button>
+            <p style="font-size:12px">You start with 2 available upgrades. If you want to unlock the next row of upgrades, buy all of them in that row.</p>
+            <button class='cyan button mpup' id="mpup-0" onclick='g.mpup[0].buy()'><span id="mpupd-0"></span><br><span class="costhlight" id='mpupcost-0' ></span></button>
+            <button class='cyan button mpup' id="mpup-1" onclick='g.mpup[1].buy()'><span id="mpupd-1"></span><br><span class="costhlight" id='mpupcost-1' ></span></button><br> <!-- <br> indicates that a new row of MP Upgrades should be loaded -->
+            <button class='cyan button mpup' id="mpup-2" onclick='g.mpup[2].buy()'><span id="mpupd-2"></span><br><span class="costhlight" id='mpupcost-2' ></span></button><br>
+            <button class='cyan button mpup' id="mpup-3" onclick='g.mpup[3].buy()'><span id="mpupd-3"></span><br><span class="costhlight" id='mpupcost-3' ></span></button>     <!-- Multiple MP Upgrades are on the same row -->
+            <button class='cyan button mpup' id="mpup-4" onclick='g.mpup[4].buy()'><span id="mpupd-4"></span><br><span class="costhlight" id='mpupcost-4' ></span></button><br>
+            <button class='cyan button mpup' id="mpup-5" onclick='g.mpup[5].buy()'><span id="mpupd-5"></span><br><span class="costhlight" id='mpupcost-5' ></span></button><br>
+            <button class='cyan button mpup' id="mpup-6" onclick='g.mpup[6].buy()'><span id="mpupd-6"></span><br><span class="costhlight" id='mpupcost-6' ></span></button><br>
+            <button class='cyan button mpup' id="mpup-7" onclick='g.mpup[7].buy()'><span id="mpupd-7"></span><br><span class="costhlight" id='mpupcost-7' ></span></button>
+            <button class='cyan button mpup' id="mpup-8" onclick='g.mpup[8].buy()'><span id="mpupd-8"></span><br><span class="costhlight" id='mpupcost-8' ></span></button><br>
+            <button class='cyan button mpup' id="mpup-9" onclick='g.mpup[9].buy()'><span id="mpupd-9"></span><br><span class="costhlight" id='mpupcost-9' ></span></button><br>
+            <button class='cyan button mpup' id="mpup-10" onclick='g.mpup[10].buy()'><span id="mpupd-10"></span><br><span class="costhlight" id='mpupcost-10' ></span></button><br>
+            <button class='cyan button mpup' id="mpup-11" onclick='g.mpup[11].buy()'><span id="mpupd-11"></span><br><span class="costhlight" id='mpupcost-11' ></span></button><br>
+            <button class='illionize button' id='illionizebutton' onclick='illionize()' style='width:800px;height:128px;font-family:"Orbitron"' onclick='lvlup()'><span style="font-size:36px;font-family:'Pixeleum 48'">ILLIONIZE</span>
+                <br>Reset all previous progress to gain a Illion Point.<br>This layer will remove the point cap, but going past 1,000,000<br>will slow down your progress!</button>
+            </div>     
+        </div>
+
+        <div id="Illionize" class="tabcontent" id="illionizetab" style="display:none;text-align:center">
+            <p style="font-size:48px;margin-top:-24px">Illionize</p>
+            <p style="font-size:larger;margin-top:-50px">You have <span id="ip"></span> Illion Points.</p>
+            <p style="font-size:larger;margin-top:-30px">You have <span id="ipow"></span> Illion Power.</p>
+            <p style="font-size:larger;margin-top:-30px">You are producing <span id="ipowp"></span> Illion Power per second.</p>
+            <button class='illionize button ipup' id="ipup-0" onclick='g.ipup[0].buy()'><span id="ipupd-0"></span><br><span class="costhlight2" id='ipupcost-0' ></span></button><br>
         </div>
     </div>
+    <script src="main.js" defer></script>
+    <script src="saveload.js" defer></script>
+
+        
     </body>
+    
 </html>

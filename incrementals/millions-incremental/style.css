@@ -67,13 +67,46 @@ title{color:white}
 .button.black:hover{background-color:#323232; color: black}
 .button.black:active{background-color:#242424}
 
+.button.illionize{border: 2px solid chartreuse; color: chartreuse}
+.button.illionize:hover{background-color:chartreuse; color: black}
+.button.illionize:active{background-color:#3DDD00}
+
+.costhlight{
+    font-size: 20px;
+    font-family: 'Arial';
+}
+
+.costhlight2{
+    font-size: 20px;
+    font-family: 'Arial';
+}
+
 .mpup {
     width: 256px;
-    height: 72px;
+    height: 100px;
 }
 .mpup[paid] {
-    background-color: cyan;
-    color: black
+    background-color: black;
+    border: 2px solid white;
+    color: white;
+}
+.mpup[paid]:hover {
+    background-color: white;
+    color: black;
+}
+
+.ipup {
+    width: 256px;
+    height: 100px;
+}
+.ipup[paid] {
+    background-color: black;
+    border: 2px solid white;
+    color: white;
+}
+.ipup[paid]:hover {
+    background-color: white;
+    color: black;
 }
 
 
