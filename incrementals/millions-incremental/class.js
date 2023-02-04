@@ -29,7 +29,7 @@ class Game {
         new MillionUpgrade("You gain an additional 0.1% of your total levels and MP per level up (Need: 10000 MP)",                     3600,()=>g.mpup[9].paid.eq(1) && g.mp.gte(10000)),
     ]
     ipup =[
-        new IllionUpgrade("START. Begin producing Illion Power which multiplies point gain", 0, true)
+        new IllionUpgrade("START. Begin producing Illion Power which multiplies point gain", 0, true, 0)
     ]
 
     lastTick = Date.now()
@@ -124,7 +124,6 @@ class MillionUpgrade {
 }
 
 class IllionUpgrade {
-
     paid = O(0)
 
     constructor(desc, cost, predicate=()=>true, id) {
