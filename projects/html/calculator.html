@@ -3,16 +3,106 @@
 <head>
     <script src="../lnls/OmegaNum.js"></script>
     <title>le calculator</title>
-    <script>
+    <script async>
         O = OmegaNum;
-    const $ = (x) => {document.getElementById(x)};
+        $ = i => document.getElementById(i);
+        par = 0;
+        varlistvalues = [];
+        w = [];
+        vv = varlistvalues;
     Ans = 0;
-    </script>
-    <script>
+    
+    setTimeout(()=>{
+        $('input').value = 'welcome to le calculator \nMade by Deca Quitin';
+        $('output').innerHTML = 'have fun'
+    },100);
+
     function parse() {
-        document.getElementById("output").innerHTML = Function('return ' + document.getElementById("input").value)();
-        Ans = document.getElementById("output").innerHTML
+        $("output").innerHTML = Function('return ' + $("input").value)();
+        Ans = $("output").innerHTML
     }
+
+    function newobject(name,value,speed) {
+
+        let id = document.getElementById('objectcontainer').childElementCount;
+        
+        w[id]=document.createElement('p');
+        w[id].classList.add('p');
+        w[id].status = 0
+        w[id].innerHTML =
+        
+        '<span style="font-size:125%" contentEditable=true>'+(name==null?('Variable '+(id+1)):name)+'</span>'+
+        '<textarea class="varvalue">'+(value==null?0:value)+'</textarea>'+
+        '<button class="smaller button objectbutton" style="position:relative;bottom:10px" onclick="togglevar('+id+')">Start</button>'+
+        '<textarea class="varvalue2">'+(speed==null?0:speed)+'</textarea>'+
+        '<button class="smaller button objectbutton" style="position:relative;bottom:10px"'+
+        'onclick="removevar('+id+')">X</button><br>'+
+        '<button class="smaller button objectbutton" style="position:relative;bottom:10px" onclick="appendvar()">Append</button>'
+        w[id].setAttribute('class','object outline');
+        w[id].setAttribute('style','display:inline-block;background-color:hsla('+[(id*30)%360, '100%', '50%']+')');
+        $('objectcontainer').appendChild(w[id]);
+        w[id].c=w[id].children;
+        w[id].c[2].addEventListener('click',()=>{})
+        
+    };
+    if (w.length >= 0) {
+    setInterval(()=>{
+                for (i=0;i<w.length;i++) {
+                    if (w[i].status !== 1) {
+                        w[i].c[2].innerHTML = 'Start'
+                    } else {
+                        w[i].c[2].innerHTML = 'Stop'
+                    };
+
+                    if (w[i].status == 1) {
+                        w[i].c[1].value = w[i].c[1].value * 1 + w[i].c[3].value * 1
+                    }
+                }
+        },50)
+    }
+
+    function togglevar(id) {
+        w[id].status = (w[id].status==0)*1;
+    }
+
+    function removevar(id) {
+        document.activeElement.parentElement.remove();
+        //w = w.filter((i) => {i-1 != w[id-1]})
+        
+    }
+
+    function initvars() {
+        for (i=0;i<w.length;i++) {
+            vv[i] =
+            {
+                name:w[i].c[0].innerHTML,
+                id:i,
+                value:w[i].c[1].value,
+                speed:w[i].c[3].value,
+                status:w[i].status
+            }
+        }
+    }
+
+    function appendvar() {
+        $('input').value += 'v("'+document.activeElement.parentElement.children[0].innerHTML+'")'
+    }
+
+    function v(name) {
+        let arrname = [...document.getElementById('objectcontainer').children].map((a)=>(a.children[0].innerHTML)).indexOf(name);
+        let arrval = [...document.getElementById('objectcontainer').children].map((a)=>(a.children[1].value));
+        return arrval[arrname]*1
+    }
+
+        //<div id="objectcontainer" style="height:100px;border:1px solid white">
+        //    <p class="object">
+        //        <span style="font-size:150%">Variable 1</span><br>
+        //        <textarea class="varvalue">0</textarea>
+        //        <button class="smaller button">Start</button>
+        //        <textarea class="varvalue2">0</textarea>
+        //        <button class="smaller button">X</button>
+        //    </p>
+        //</div>
     
     </script>
 </head>
@@ -29,22 +119,202 @@
         color: white;
     }
 
-    #button{
+    p{
+        font-family:'MonospaceTypewriter';
+        font-size:15px;
+        margin:0px;
+    }
+
+    .button{
         color: white;
-        font-family: verdana;
-        border: 3px solid white;
+        
+        border: 2px solid white;
+        font-family: 'MonospaceTypewriter';
         background-color: black;
-        padding: 10px;
+        padding: 15px;
+        padding-top:5px;
+        padding-bottom:5px;
         font-size: 30px;
+        margin: 5px;
+        box-shadow: 2px 2px 0px white;
+        text-shadow:2px 2px 0px rgba(255, 255, 255, 25%);
+        border-radius:5px;
+    }
+
+    .button:hover{
+        color: black;
+        background-color:white;
+        text-shadow:2px 2px 0px rgba(0, 0, 0, 25%);
+    }
+
+    .button:active{
+    box-shadow:none;
+    position:relative;
+    top: 2px;
+    left: 2px;
+    background-color: lightgray;    
+    }
+
+    .small{
+    font-size:15px;
+    padding:8px;
+    padding-top:1px;
+    padding-bottom:1px;
+    }
+
+    .smaller{
+    font-size:12px;
+    padding:5px;
+    padding-top:1px;
+    padding-bottom:1px;
+    }
+
+    .shadow{
+        text-shadow:2px 2px 0px rgba(255, 255, 255, 25%);
+    }
+
+    .object{
+        width:150px;
+        height:120px;
+        border:1px solid white;
+        text-align: center;
+    }
+
+    .objectbutton:active{
+        top:-8px;
+        left:2px;
+    }
+
+    .varvalue{
+        background: rgba(0,0,0,75%);
+        outline:none;
+        border: 1px solid white;
+        width:90%;
+        height:20px;
+        resize:none;
+        text-align:center;
+        color:white;
+        font-family:'MonospaceTypewriter';
+        overflow:hidden
+    }
+
+    .varvalue2{
+        background: rgba(0,0,0,75%);
+        outline:none;
+        border: 1px solid white;
+        width:90%;
+        height:20px;
+        resize:none;
+        text-align:center;
+        color:white;
+        font-family:'MonospaceTypewriter';
+        width:50px;
+        height:20px;
+        overflow:hidden;
+    }
+
+    .aeiouy{
+        color:white
+    }
+
+    #objectcontainer{
+        display:inline-flex
+    }
+    #occ{
+        width:90%;
+        height:150px;
+        border:1px solid white;
+        overflow:auto
+    }
+
+    .outline{
+        text-shadow: 0px 0px 3px black, 0px 0px 3px black, 0px 0px 3px black, 0px 0px 3px black
     }
 
 </style>
-<div style="border:5px solid white;width:600px;height:500px;position:relative;left:25%;text-align:right">
-<textarea id="input" style="width:594px;height:70px;font-size:30px;resize:none;margin:0px;text-shadow:3px 3px 0px rgba(0, 0, 0, 20%);font-family:'MonospaceTypewriter'">
+<div style="border:4px solid white;width:800px;height:600px;position:relative;left:20%;text-align:right">
+<textarea id="input" style="width:794px;height:80px;font-size:30px;resize:none;margin:0px;text-shadow:3px 3px 0px rgba(0, 0, 0, 20%);font-family:'MonospaceTypewriter'">
 </textarea>
 
 <p id="output" style="font-size:30px;font-family:'MonospaceTypewriter';border:2px solid white;text-shadow:3px 3px 0px rgba(255, 255, 255, 25%);margin:0px;height:40px;overflow:hidden"></p>
-<button id="button" onclick="parse()">=</button>
+    <div style="border:2px solid red;width:65%;position:absolute;right:34%;text-align:left">
+        <div style='border:2px solid white;height:210px;overflow-y:scroll'>
+        <p class="shadow">Basic operations</p>
+        <button class="small button" onclick="(()=>{$('input').value += '+'         })()">+</button>
+        <button class="small button" onclick="(()=>{$('input').value += '-'         })()">-</button>
+        <button class="small button" onclick="(()=>{$('input').value += '*'         })()">*</button>
+        <button class="small button" onclick="(()=>{$('input').value += '/'         })()">/</button>
+        <button class="small button" onclick="(()=>{$('input').value += '**'        })()">^</button>
+        <button class="small button" onclick="(()=>{$('input').value += 'Math.log10('})()">log<sub>10</sub></button>
+        <button class="small button" onclick="(()=>{$('input').value += '%'         })()">%</button>
+        <p class="shadow">Bitwise operations</p>
+        <button class="smaller button" onclick="(()=>{$('input').value += '/'})()">|<span style="font-size:10px">Or</span></button>
+        <button class="smaller button" onclick="(()=>{$('input').value += '/'})()">&<span style="font-size:10px">And</span></button>
+        <button class="smaller button" onclick="(()=>{$('input').value += '/'})()">^<span style="font-size:10px">Xor</span></button>
+        <button class="smaller button" onclick="(()=>{$('input').value += '/'})()">~<span style="font-size:10px">Not</span></button>
+        
+        <button class="smaller button" onclick="(()=>{$('input').value += '<<'})()"><<<span style="font-size:10px">LShift</span></button>
+        <button class="smaller button" onclick="(()=>{$('input').value += '>>'})()">>><span style="font-size:10px">RShift</span></button>
+        <button class="smaller button" onclick="(()=>{$('input').value += '>>>'})()">>>><span style="font-size:10px">Unsigned RShift</span></button>
+        <p class="shadow">Trigonometric functions</p>
+        <button class="small button" onclick="(()=>{$('input').value += 'Math.sin('})()">sin</button>
+        <button class="small button" onclick="(()=>{$('input').value += 'Math.cos('})()">cos</button>
+        <button class="small button" onclick="(()=>{$('input').value += 'Math.tan('})()">tan</button>
+        <button class="smaller button" onclick="(()=>{$('input').value += 'Math.asin('})()">sin<sup>-1</sup></button>
+        <button class="smaller button" onclick="(()=>{$('input').value += 'Math.acos('})()">cos<sup>-1</sup></button>
+        <button class="smaller button" onclick="(()=>{$('input').value += 'Math.atan('})()">tan<sup>-1</sup></button>
+        <br>
+        <button class="small button" onclick="(()=>{$('input').value += 'Math.sinh('})()">sinh</button>
+        <button class="small button" onclick="(()=>{$('input').value += 'Math.cosh('})()">cosh</button>
+        <button class="small button" onclick="(()=>{$('input').value += 'Math.tanh('})()">tanh</button>
+        <button class="smaller button" onclick="(()=>{$('input').value += 'Math.asinh('})()">sinh<sup>-1</sup></button>
+        <button class="smaller button" onclick="(()=>{$('input').value += 'Math.acosh('})()">cosh<sup>-1</sup></button>
+        <button class="smaller button" onclick="(()=>{$('input').value += 'Math.atanh('})()">tanh<sup>-1</sup></button>
+        <p class="shadow">Variables & constants</p>
+        <button class="small button" onclick="(()=>{$('input').value += '((1+5**0.5)/2)'})()">φ</button>
+        <button class="small button" onclick="(()=>{$('input').value += 'Math.PI'})()">π</button>
+        <button class="small button" onclick="(()=>{$('input').value += 'Math.E'})()">e</button>
+        <button class="small button" onclick="(()=>{$('input').value += 'Date.now()'})()">Unix epoch in ms</button>
+        <button class="smaller button" onclick="(()=>{$('input').value += 'Ans'})()">Answer</button>
+        <button class="smaller button" onclick="(()=>{$('input').value += Ans})()">Append Answer</button>
+        </div>
+        <p class="shadow">Custom variables!<br>
+            Use v("var") to return the value of variable var</p>
+
+
+        <div id="occ">
+        <div id="objectcontainer">
+        </div>
+        </div>
+
+
+        <button class="smaller button" onclick="newobject()">New variable</button>
+    </div>
+    <div style="border:2px solid blue;width:30%;position:absolute;left:69%">
+
+        <button class="button" onclick="parse()">=</button>
+        <button class="button" onclick="(()=>{$('input').value = ''})()">C</button>
+        <button class="button" onclick="(()=>{$('input').value = $('input').value.substr(-($('input').value).length,($('input').value).length-1)})()"><</button>
+        <br>
+        <button class="button" onclick="(()=>{$('input').value += '1'})()">1</button>
+        <button class="button" onclick="(()=>{$('input').value += '2'})()">2</button>
+        <button class="button" onclick="(()=>{$('input').value += '3'})()">3</button>
+        <br>
+        <button class="button" onclick="(()=>{$('input').value += '4'})()">4</button>
+        <button class="button" onclick="(()=>{$('input').value += '5'})()">5</button>
+        <button class="button" onclick="(()=>{$('input').value += '6'})()">6</button>
+        <br>
+        <button class="button" onclick="(()=>{$('input').value += '7'})()">7</button>
+        <button class="button" onclick="(()=>{$('input').value += '8'})()">8</button>
+        <button class="button" onclick="(()=>{$('input').value += '9'})()">9</button>
+        <br>
+        <button class="button" onclick="(()=>{$('input').value *= -1 })()">-</button>
+        <button class="button" onclick="(()=>{$('input').value += '0'})()">0</button>
+        <button class="button" onclick="(()=>{$('input').value += '.'})()">.</button>
+        <br>
+        <button class="button" onclick="(()=>{$('input').value += '('})()">(</button>
+        <button class="button" onclick="(()=>{$('input').value += ')'})()">)</button>
+    </div>
 </div>
 </body>
 
