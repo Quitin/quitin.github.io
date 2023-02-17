@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+
+    <body>
+        <style>
+body{
+        background-color:black;
+        color: white;
+        text-align:center
+    }
+p{
+        font-family:'MonospaceTypewriter';
+        font-size:15px;
+        margin:0px;
+}
+textarea{
+    outline:none;
+    border:2px solid black;
+    font-family:'MonospaceTypewriter';
+    font-size:20px;
+    width:300px;
+    height:400px;
+}
+button{
+    border:2px solid white;
+    background-color: black;
+    font-family: "MonospaceTypewriter";
+    color:white;
+}
+.gradient-border {
+    background: -webkit-linear-gradient(cyan, lightblue);
+    -webkit-background-clip: border-box;
+    -webkit-border-box-fill-color: transparent;
+}
+.gradient-text {
+    background: linear-gradient(to right, cyan 0%, crimson 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: -3px -3px 0px rgba(0,0,0,20%),3px 3px 0px rgba(255,255,255,20%)
+}
+
+@font-face {
+    font-family: 'MonospaceTypewriter';
+    src: url('../../media/fonts/MONOSPACETYPEWRITER.TTF')
+}
+        </style>
+
+        <p style="font-size:50px;font-weight:bold" class="gradient-text">Mathjs Grapher</p>
+        <div style="display:inline-block;position:relative;bottom:35px">
+            <textarea id="input"></textarea><br>
+            <button onclick="graph()" style="width:300px;height:80px;font-size:30px">Graph!</button>
+        </div>
+        <canvas id="graph" style="outline:2px solid black;border-radius:10px;box-shadow:10px 10px 0px rgba(255,255,255,10%);background-color:white" width="10" height="10"></canvas>
+    </body>
+    <head>
+        <script src="../lnls/math.js"></script>
+    <script>
+    var c = document.getElementById('graph');
+    var ctx = c.getContext('2d');
+    c.width = 500;
+    c.height = 500;
+    
+    ctx.font = "21px MonospaceTypeWriter";
+    ctx.fillStyle = "blue";
+    setTimeout(()=>{
+    ctx.fillText("Welcome to Mathjs Grapher", 100, 250);
+    ctx.lineWidth = 1;
+    },50)
+    function f(x,y) {return math.evaluate((x).replace(/x/g,'('+y+')'))};
+
+    
+
+    graph = (a) => {
+    
+    input = document.getElementById('input').value;
+    ctx.clearRect(0, 0, c.width, c.height);
+    ctx.strokeStyle = '#AAAAAA';
+    ctx.beginPath();
+    ctx.moveTo(0,250);
+    ctx.lineTo(500,250);
+    ctx.stroke();
+    ctx.moveTo(250,0);
+    ctx.lineTo(250,500);
+    ctx.stroke();
+    ctx.beginPath();
+    for (i=0;i<c.width;) {
+    ctx.moveTo(i, c.width/2-f('re('+input+')',(i-c.width/2)/20,i)*20);
+    i++
+    ctx.lineTo(i+1, c.width/2-f('re('+input+')',(i-c.width/2)/20,i)*20);
+    ctx.strokeStyle = '#0000FF';
+    ctx.stroke();
+    };
+    ctx.beginPath();
+    for (i=0;i<c.width;) {
+    ctx.moveTo(i, c.width/2-f('im('+input+')',(i-c.width/2)/20,i)*20);
+    i++
+    ctx.lineTo(i+1, c.width/2-f('im('+input+')',(i-c.width/2)/20,i)*20);
+    ctx.strokeStyle = '#FF0000';
+    ctx.stroke();
+    }
+    }
+    </script>
+    </head>
+</html>
