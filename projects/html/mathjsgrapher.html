@@ -18,7 +18,7 @@ textarea{
     border:2px solid black;
     font-family:'MonospaceTypewriter';
     font-size:20px;
-    width:300px;
+    width:500px;
     height:400px;
 }
 button{
@@ -38,6 +38,79 @@ button{
     -webkit-text-fill-color: transparent;
     text-shadow: -3px -3px 0px rgba(0,0,0,20%),3px 3px 0px rgba(255,255,255,20%)
 }
+.sliderx {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 25px;
+  background: #004444;
+  outline: none;
+  opacity: 0.7;
+  -webkit-transition: .2s;
+  transition: opacity .2s;
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  border-radius: 25px;
+}
+.sliderx:hover {
+  opacity: 1;
+}
+.sliderx::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 50px;
+  height: 25px;
+  background: #00FFFF;
+  cursor: pointer;
+  border-radius: 25px;
+}
+.sliderx::-moz-range-thumb {
+  width: 25px;
+  height: 25px;
+  background: #00201f;
+  cursor: pointer;
+}
+
+.slidery {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 25px;
+  background: #004444;
+  outline: none;
+  opacity: 0.7;
+  -webkit-transition: .2s;
+  transition: opacity .2s;
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  border-radius: 25px;
+}
+.slidery:hover {
+  opacity: 1;
+}
+.slidery::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 50px;
+  height: 25px;
+  background: #00FFFF;
+  cursor: pointer;
+  border-radius: 25px;
+}
+.slidery::-moz-range-thumb {
+  width: 25px;
+  height: 25px;
+  background: #00201f;
+  cursor: pointer;
+}
+#scaleinput{
+  width:85px;
+  height:20px;
+  overflow:hidden;
+  resize:none;
+  line-height: 16px;
+  text-overflow:ellipsis
+}
 
 @font-face {
     font-family: 'MonospaceTypewriter';
@@ -47,11 +120,18 @@ button{
 
         <p style="font-size:50px;font-weight:bold" class="gradient-text">Mathjs Grapher</p>
         <div style="display:inline-block;position:relative;bottom:35px">
-            <textarea id="input"></textarea><br>
-            <button onclick="graph()" style="width:300px;height:80px;font-size:30px">Graph!</button>
+            <textarea id="input" style="position:relative;top:0px;right:0px;resize:none"></textarea><br>
+            <button onclick="graph(mnx,mxx,mny,mxy)" style="width:500px;height:80px;font-size:30px;position:relative;top:0px;right:0px">Graph!</button>
         </div>
-        <canvas id="graph" style="outline:2px solid black;border-radius:10px;box-shadow:10px 10px 0px rgba(255,255,255,10%);background-color:white" width="10" height="10"></canvas>
+        <canvas id="graph" style="outline:2px solid black;border-radius:10px;box-shadow:10px 10px 0px rgba(255,255,255,10%);background-color:white;position:relative;top:0px;left:0px" width="10" height="10"></canvas>
     </body>
+    <div style="border:2px solid white;border-radius:25px;width:500px;height:25px;position:relative;top:-290px;left:950px;transform:rotate(-90deg)">
+        <input type="range" min="0" max="1" value="0.5" class="slidery" id="myRange">
+    </div>
+    <div style="border:2px solid white;border-radius:25px;width:500px;height:25px;position:relative;top:-45px;left:672px">
+        <input type="range" min="0" max="1" value="0.5" class="sliderx" id="myRange">
+    </div>
+    <textarea id="scaleinput" style="background-color:black;color:white;border:2px solid white"></textarea>
     <head>
         <script src="../lnls/math.js"></script>
     <script>
@@ -59,6 +139,10 @@ button{
     var ctx = c.getContext('2d');
     c.width = 500;
     c.height = 500;
+    mnx = -10;
+    mxx = 10;
+    mny = -10;
+    mxy = 10;
     
     ctx.font = "21px MonospaceTypeWriter";
     ctx.fillStyle = "blue";
@@ -68,37 +152,74 @@ button{
     },50)
     function f(x,y) {return math.evaluate((x).replace(/x/g,'('+y+')'))};
 
-    
+    drawgrid = (minX,maxX,minY,maxY) => {
 
-    graph = (a) => {
+    ctx.clearRect(0, 0, c.width, c.height);
+    ctx.fillStyle = "white";
+    ctx.fillRect(0, 0, c.width, c.height);
+
+    for (i=0;i<=(maxX-minX);) {
+    ctx.beginPath();
+    ctx.moveTo(i * c.width / (maxX - minX) - (c.width * ((minX % 1))) / (maxX - minX),0);
+    ctx.lineTo(i * c.width / (maxX - minX) - (c.width * ((minX % 1))) / (maxX - minX),c.height);
+    i += 10 ** (Math.floor(Math.log10(maxX - minX)-1));
+    ctx.strokeStyle = '#DDDDDD';
+    ctx.stroke();
+    };
+
+    for (i=0;i<=(maxY-minY);) {
+    ctx.beginPath();
+    ctx.moveTo(0,i * c.height / (maxY - minY) - (c.height * ((minY % 1))) / (maxY - minY));
+    ctx.lineTo(c.width,i * c.height / (maxY - minY) - (c.height * ((minY % 1))) / (maxY - minY));
+    i += 10 ** (Math.floor(Math.log10(maxY - minY)-1));
+    ctx.strokeStyle = '#DDDDDD';
+    ctx.stroke();
+    };
+
+    ctx.strokeStyle = '#000000';
+    ctx.beginPath();
+    ctx.moveTo(0,minY / (minY - maxY) * c.height);
+    ctx.lineTo(c.width,minY / (minY - maxY) * c.height);
+    ctx.stroke();
+    ctx.moveTo(minX / (minX - maxX) * c.width,0);
+    ctx.lineTo(minX / (minX - maxX) * c.width,c.height);
+    ctx.stroke();
+    }
+
+    graph = (minX,maxX,minY,maxY) => {
     
     input = document.getElementById('input').value;
     ctx.clearRect(0, 0, c.width, c.height);
-    ctx.strokeStyle = '#AAAAAA';
+    ctx.fillStyle = "white";
+    ctx.fillRect(0, 0, c.width, c.height);
+    
+    drawgrid(minX,maxX,minY,maxY);
+
+    ['re','im'].forEach((type)=>{
     ctx.beginPath();
-    ctx.moveTo(0,250);
-    ctx.lineTo(500,250);
+    for (i=0;i<c.width+1;) {
+    let xpos = (a) => {return (1 - a / c.width) * minX + (a / c.width) * maxX};
+    
+    ctx.lineTo(i, c.height / (minY - maxY) * (f(type + '(' + input + ')', xpos(i)) - maxY));
+
+    i += 1;
+    
+    ctx.lineTo(i + 1, c.height / (minY - maxY) * (f(type + '(' + input + ')', xpos(i+1)) - maxY));
+
+    ctx.strokeStyle = type=='re'?'#0000FF':'#FF0000';
     ctx.stroke();
-    ctx.moveTo(250,0);
-    ctx.lineTo(250,500);
-    ctx.stroke();
-    ctx.beginPath();
-    for (i=0;i<c.width;) {
-    ctx.moveTo(i, c.width/2-f('re('+input+')',(i-c.width/2)/20,i)*20);
-    i++
-    ctx.lineTo(i+1, c.width/2-f('re('+input+')',(i-c.width/2)/20,i)*20);
-    ctx.strokeStyle = '#0000FF';
-    ctx.stroke();
-    };
-    ctx.beginPath();
-    for (i=0;i<c.width;) {
-    ctx.moveTo(i, c.width/2-f('im('+input+')',(i-c.width/2)/20,i)*20);
-    i++
-    ctx.lineTo(i+1, c.width/2-f('im('+input+')',(i-c.width/2)/20,i)*20);
-    ctx.strokeStyle = '#FF0000';
-    ctx.stroke();
+    }})
     }
+
+    document.getElementsByClassName("input")[0].addEventListener("oninput",
+    ()=>{
+    mnx = -10;
+    mxx = 10;
+    mny = -10;
+    mxy = 10;
+      graph()
     }
+    )
     </script>
     </head>
 </html>
