@@ -6,7 +6,8 @@
 body{
         background-color:black;
         color: white;
-        text-align:center
+        text-align:center;
+        height:auto
     }
 p{
         font-family:'MonospaceTypewriter';
@@ -19,7 +20,7 @@ textarea{
     font-family:'MonospaceTypewriter';
     font-size:20px;
     width:500px;
-    height:400px;
+    height:300px;
 }
 button{
     border:2px solid white;
@@ -38,66 +39,36 @@ button{
     -webkit-text-fill-color: transparent;
     text-shadow: -3px -3px 0px rgba(0,0,0,20%),3px 3px 0px rgba(255,255,255,20%)
 }
-.sliderx {
+
+.slider {
   -webkit-appearance: none;
-  width: 100%;
+  width: calc(100% - 4px);
   height: 25px;
+  margin:auto;
+  text-align:center;
   background: #004444;
   outline: none;
   opacity: 0.7;
   -webkit-transition: .2s;
   transition: opacity .2s;
-  position: absolute;
-  top: -2px;
-  left: -2px;
-  border-radius: 25px;
+  position:relative;
+  top:2px;
+  padding:-2px;
+  border-radius:25px;
 }
-.sliderx:hover {
+.slider:hover {
   opacity: 1;
 }
-.sliderx::-webkit-slider-thumb {
+.slider::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
-  width: 50px;
-  height: 25px;
-  background: #00FFFF;
-  cursor: pointer;
-  border-radius: 25px;
-}
-.sliderx::-moz-range-thumb {
   width: 25px;
   height: 25px;
-  background: #00201f;
-  cursor: pointer;
-}
-
-.slidery {
-  -webkit-appearance: none;
-  width: 100%;
-  height: 25px;
-  background: #004444;
-  outline: none;
-  opacity: 0.7;
-  -webkit-transition: .2s;
-  transition: opacity .2s;
-  position: absolute;
-  top: -2px;
-  left: -2px;
-  border-radius: 25px;
-}
-.slidery:hover {
-  opacity: 1;
-}
-.slidery::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  appearance: none;
-  width: 50px;
-  height: 25px;
   background: #00FFFF;
   cursor: pointer;
   border-radius: 25px;
 }
-.slidery::-moz-range-thumb {
+.slider::-moz-range-thumb {
   width: 25px;
   height: 25px;
   background: #00201f;
@@ -109,7 +80,6 @@ button{
   overflow:hidden;
   resize:none;
   line-height: 16px;
-  text-overflow:ellipsis
 }
 
 @font-face {
@@ -117,39 +87,127 @@ button{
     src: url('../../media/fonts/MONOSPACETYPEWRITER.TTF')
 }
         </style>
-
         <p style="font-size:50px;font-weight:bold" class="gradient-text">Mathjs Grapher</p>
         <div style="display:inline-block;position:relative;bottom:35px">
-            <textarea id="input" style="position:relative;top:0px;right:0px;resize:none"></textarea><br>
-            <button onclick="graph(mnx,mxx,mny,mxy)" style="width:500px;height:80px;font-size:30px;position:relative;top:0px;right:0px">Graph!</button>
-        </div>
-        <canvas id="graph" style="outline:2px solid black;border-radius:10px;box-shadow:10px 10px 0px rgba(255,255,255,10%);background-color:white;position:relative;top:0px;left:0px" width="10" height="10"></canvas>
-    </body>
-    <div style="border:2px solid white;border-radius:25px;width:500px;height:25px;position:relative;top:-290px;left:950px;transform:rotate(-90deg)">
-        <input type="range" min="0" max="1" value="0.5" class="slidery" id="myRange">
+            <textarea id="input" style="position:relative;top:-150px;right:0px;resize:none" spellcheck="false"></textarea><br>
+          </div>
+        <canvas id="graph" onmousedown = graphdrag1(event) onmousemove = graphdrag2(event) onmouseup = graphdrag3(event) onwheel = onscrol(event)  style="outline:2px solid black;border-radius:10px;box-shadow:10px 10px 0px rgba(255,255,255,10%);background-color:white;position:relative;top:0px;left:0px" width="10" height="10"></canvas>
+        <div style="border:2px solid white;text-align:left;width:490px;position:relative;left:163px;bottom:190px;padding:5px">
+        <p style="font-size:18px;text-align:left">Precision: <span id="display1"></span>px</p>
+        <div style="border:3px solid white;border-radius:25px;width:150px;overflow:hidden;display:inline-block;text-align:center">
+        <input type="range" min="1" max="10" value="4" step="1" class="slider" id="precision">  
     </div>
-    <div style="border:2px solid white;border-radius:25px;width:500px;height:25px;position:relative;top:-45px;left:672px">
-        <input type="range" min="0" max="1" value="0.5" class="sliderx" id="myRange">
+    <p>Canvas Position: <span id="infopos"></span></p>
+    <p style="color:yellow" id="display2"></p>
     </div>
-    <textarea id="scaleinput" style="background-color:black;color:white;border:2px solid white"></textarea>
+
+    
+
+    
+    
+
+   </body> 
     <head>
         <script src="../lnls/math.js"></script>
     <script>
     var c = document.getElementById('graph');
     var ctx = c.getContext('2d');
+    const $ = (x) => {return document.getElementById(x)}
     c.width = 500;
     c.height = 500;
     mnx = -10;
     mxx = 10;
     mny = -10;
     mxy = 10;
-    
+    precision = 10;
     ctx.font = "21px MonospaceTypeWriter";
     ctx.fillStyle = "blue";
     setTimeout(()=>{
     ctx.fillText("Welcome to Mathjs Grapher", 100, 250);
     ctx.lineWidth = 1;
-    },50)
+    },50);
+
+
+var hold=false;
+
+function graphdrag1(e) { // Down
+setvalues=true
+mx1=e.clientX;
+my1=e.clientY;
+hold=true;
+};
+
+function graphdrag2(e) { // Move
+
+mx2=e.clientX;
+my2=e.clientY;
+if (hold) {
+
+
+let dx = (mx1 - mx2)*(mxx-mnx)/c.width;
+let dy = (my1 - my2)*(mxy-mny)/c.height;
+graph(mnx+dx,mxx+dx,mny+dy,mxy+dy)
+};
+};
+
+function graphdrag3(e) // Up
+{
+if (hold) {
+let dx = (mx1 - mx2)*(mxx-mnx)/c.width;
+let dy = (my1 - my2)*(mxy-mny)/c.height
+mnx+=dx
+mxx+=dx
+mny+=dy
+mxy+=dy
+}
+graph(mnx,mxx,mny,mxy)
+hold=false;
+setvalues=true;
+console.log('Release')
+};
+
+function onscrol(e)
+{
+  let posX = Math.floor(e.clientX-$('graph').getBoundingClientRect().x)/c.width;
+  let posY = Math.floor(e.clientY-$('graph').getBoundingClientRect().y)/c.height;
+  posX = mnx*(1-posX)+mxx*posX;
+  posY = mny*(1-posY)+mxy*posY;
+  
+  let zoom = 0.8;
+
+  if (e.deltaY < 0) { // Zoom in function
+  
+  mnx = (mnx + posX * (1 / zoom - 1)) * zoom;
+  mxx = (mxx + posX * (1 / zoom - 1)) * zoom;
+  mny = (mny + posY * (1 / zoom - 1)) * zoom;
+  mxy = (mxy + posY * (1 / zoom - 1)) * zoom;
+
+  } else { // Zoom out function
+
+  mnx = mnx / zoom - posX * (1 / zoom - 1);
+  mxx = mxx / zoom - posX * (1 / zoom - 1);
+  mny = mny / zoom - posY * (1 / zoom - 1);
+  mxy = mxy / zoom - posY * (1 / zoom - 1);
+  
+  }
+  
+  graph(mnx,mxx,mny,mxy)
+}
+
+function fixnum(n) {
+
+      a = (Math.abs(n)>=1e6 || Math.abs(n)<=1e-3 && n!=0)?
+
+      Math.round(1000*(n/(10**Math.floor(Math.log10(Math.abs(n)+(1-Math.sign(n)**2))))+1e-6*Math.sign(n)))/1000
+      
+      +'\u00d710^'+
+      
+      Math.floor(Math.log10(Math.abs(n)))
+      :Math.floor(n*1000+1e-7)/1000;
+
+      return a
+    }
+
     function f(x,y) {return math.evaluate((x).replace(/x/g,'('+y+')'))};
 
     drawgrid = (minX,maxX,minY,maxY) => {
@@ -158,22 +216,48 @@ button{
     ctx.fillStyle = "white";
     ctx.fillRect(0, 0, c.width, c.height);
 
-    for (i=0;i<=(maxX-minX);) {
-    ctx.beginPath();
-    ctx.moveTo(i * c.width / (maxX - minX) - (c.width * ((minX % 1))) / (maxX - minX),0);
-    ctx.lineTo(i * c.width / (maxX - minX) - (c.width * ((minX % 1))) / (maxX - minX),c.height);
-    i += 10 ** (Math.floor(Math.log10(maxX - minX)-1));
-    ctx.strokeStyle = '#DDDDDD';
-    ctx.stroke();
+    let autozoomFactor = 4;
+    let gridStepX = 10**(Math.floor(Math.log10((maxX-minX)/autozoomFactor)));
+
+    for (let i = gridStepX*Math.ceil(minX/gridStepX); i <= maxX; i+=gridStepX) {
+      ctx.beginPath();
+      const xPos = ((i - minX) / (maxX - minX)) * c.width;
+      ctx.moveTo(xPos, 0);
+      ctx.lineTo(xPos, c.height);
+      ctx.strokeStyle = '#BBBBBB';
+      ctx.stroke();
     };
 
-    for (i=0;i<=(maxY-minY);) {
-    ctx.beginPath();
-    ctx.moveTo(0,i * c.height / (maxY - minY) - (c.height * ((minY % 1))) / (maxY - minY));
-    ctx.lineTo(c.width,i * c.height / (maxY - minY) - (c.height * ((minY % 1))) / (maxY - minY));
-    i += 10 ** (Math.floor(Math.log10(maxY - minY)-1));
-    ctx.strokeStyle = '#DDDDDD';
-    ctx.stroke();
+    let gridStepY = 10**(Math.floor(Math.log10((maxY-minY)/autozoomFactor)));
+
+    for (let i = gridStepY*Math.ceil(minY/gridStepY); i <= maxY; i+=gridStepY) {
+      ctx.beginPath();
+      const yPos = ((i - minY) / (maxY - minY)) * c.height;
+      ctx.moveTo(0, yPos);
+      ctx.lineTo(c.height, yPos);
+      ctx.strokeStyle = '#BBBBBB';
+      ctx.stroke();
+    };
+    
+    // Axis Numbers
+    let axisgridStepX = [2,5,10][Math.floor((Math.log10((maxX-minX)/10)-Math.floor(Math.log10((maxX-minX)/10)))*3)]*10**(Math.floor(Math.log10((maxX-minX)/10)))
+
+    for (let i = axisgridStepX*Math.ceil(minX/axisgridStepX); i <= maxX; i+=axisgridStepX) {
+      ctx.beginPath();
+      const xPos = ((i - minX) / (maxX - minX)) * c.width;
+      ctx.font = "14px Arial";
+      ctx.fillStyle = "black";
+      if (Math.abs(xPos/i) <= 1e15) {ctx.fillText(fixnum(i), xPos,Math.min(Math.max(-2 + minY / (minY - maxY) * c.height,15),c.height-5))};
+    };
+
+    let axisgridStepY = [2,5,10][Math.floor((Math.log10((maxY-minY)/10)-Math.floor(Math.log10((maxY-minY)/10)))*3)]*10**(Math.floor(Math.log10((maxY-minY)/10)))
+
+    for (let i = axisgridStepY*Math.ceil(minY/axisgridStepY); i <= maxY; i+=axisgridStepY) {
+      ctx.beginPath();
+      const yPos = ((i - minY) / (maxY - minY)) * c.height;
+      ctx.font = "14px Arial";
+      ctx.fillStyle = "black";
+      if (Math.abs(yPos/i) <= 1e15) {ctx.fillText(fixnum(-i), Math.min(Math.max(minX / (minX - maxX) * c.width,2),c.width-12-(Math.abs(i)>=1e6?15:0)-8*Math.min(6,Math.floor(Math.log10(Math.abs(i)+1-Math.sign(i)**2)))), yPos)};
     };
 
     ctx.strokeStyle = '#000000';
@@ -200,26 +284,39 @@ button{
     for (i=0;i<c.width+1;) {
     let xpos = (a) => {return (1 - a / c.width) * minX + (a / c.width) * maxX};
     
-    ctx.lineTo(i, c.height / (minY - maxY) * (f(type + '(' + input + ')', xpos(i)) - maxY));
+    ctx.lineTo(i, c.height / (minY - maxY) * (f(type + '(' + input + ')', xpos(i)) + maxY - (maxY - minY)));
 
-    i += 1;
+    i += precision;
     
-    ctx.lineTo(i + 1, c.height / (minY - maxY) * (f(type + '(' + input + ')', xpos(i+1)) - maxY));
+    ctx.lineTo(i + 1, c.height / (minY - maxY) * (f(type + '(' + input + ')', xpos(i+1)) + maxY - (maxY - minY)));
 
     ctx.strokeStyle = type=='re'?'#0000FF':'#FF0000';
+    if (f(type + '(' + input + ')', xpos(i+1)) == 0 && type!='re') {
+    ctx.strokeStyle = 'rgba(0,0,0,0)'
+    }
     ctx.stroke();
     }})
     }
 
-    document.getElementsByClassName("input")[0].addEventListener("oninput",
-    ()=>{
-    mnx = -10;
-    mxx = 10;
-    mny = -10;
-    mxy = 10;
-      graph()
+    precision = [1,2,3,5,10,15,20,25,35,50][$("precision").value-1]
+    $("display1").innerHTML = precision;
+    document.getElementById('display1').parentElement.style.color = `hsl(${($('precision').value-1)**0.4*40},100%,50%)`
+
+
+    $("precision").oninput = () => {
+      precision = [1,2,3,5,10,15,20,25,35,50][$("precision").value-1];
+      $("display1").innerHTML = precision;
+      document.getElementById('display1').parentElement.style.color = `hsl(${($('precision').value-1)**0.4*40},100%,50%)`
+      graph(mnx,mxx,mny,mxy)
     }
-    )
+
+    $("input").oninput = () => {
+      graph(mnx,mxx,mny,mxy)
+    }
+
+    c.addEventListener("wheel", (event) => {
+    event.preventDefault();
+    }, { passive: false });
     </script>
     </head>
 </html>
