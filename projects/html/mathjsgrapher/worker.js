@@ -66,6 +66,10 @@ self.addEventListener('message', (event) => {
     m(f_x+'')
   };
 
+  fArray['canvas dim'] = ()=>{
+    m('Width: '+width+'\nHeight: '+height,'log')
+  };
+
   fArray['say'] = ()=>{
     m(data[1],'log')
   };
@@ -121,7 +125,10 @@ self.addEventListener('message', (event) => {
       ctx.clearRect(0, 0, c.width, c.height);
       ctx.fillStyle = "white";
       ctx.fillRect(0, 0, c.width, c.height);
-  
+      
+      let aspect = c.width / c.height // Aspect ratio of the viewport.
+      // A<1 = tall rectangle, A=1 = square, A>1 = wide rectangle
+
       let autozoomFactor = 4;
       let gridStepX = 10 ** (Math.floor(Math.log10((maxX - minX) / autozoomFactor)));
   
@@ -134,7 +141,7 @@ self.addEventListener('message', (event) => {
           ctx.stroke();
       };
   
-      let gridStepY = 10 ** (Math.floor(Math.log10((maxY - minY) / autozoomFactor)));
+      let gridStepY = 10 ** (Math.floor(Math.log10((maxY - minY) / autozoomFactor * aspect)));
   
       for (let i = gridStepY * Math.ceil(minY / gridStepY); i <= maxY; i += gridStepY) {
           ctx.beginPath();
@@ -158,7 +165,7 @@ self.addEventListener('message', (event) => {
           };
       };
   
-      let axisgridStepY = [2, 5, 10][Math.floor((Math.log10((maxY - minY) / 10) - Math.floor(Math.log10((maxY - minY) / 10))) * 3)] * 10 ** (Math.floor(Math.log10((maxY - minY) / 10)))
+      let axisgridStepY = [2, 5, 10][Math.floor((Math.log10((maxY - minY) / 10 * aspect) - Math.floor(Math.log10((maxY - minY) / 10 * aspect))) * 3)] * 10 ** (Math.floor(Math.log10((maxY - minY) / 10 * aspect)))
   
       for (let i = axisgridStepY * Math.ceil(minY / axisgridStepY); i <= maxY; i += axisgridStepY) {
           ctx.beginPath();
@@ -166,7 +173,7 @@ self.addEventListener('message', (event) => {
           ctx.font = "16px MonospaceTypewriter";
           ctx.fillStyle = "black";
           if (Math.abs(yPos / i) <= 1e15) {
-              ctx.fillText(fixnum(-i), Math.min(Math.max(minX / (minX - maxX) * c.width, 2), c.width - 12 - (Math.abs(i) >= 1e6 ? 15 : 0) - 10 * Math.min(6, Math.floor(Math.log10(Math.abs(i) + 1 - Math.sign(i) ** 2)))), yPos)
+              ctx.fillText(fixnum(-i), Math.min(Math.max(minX / (minX - maxX) * c.width, 2), c.width - 12 - (Math.abs(i) >= 1e6 ? 15 : 0) - (i>0?10:0) - 10 * Math.min(6, Math.floor(Math.log10(Math.abs(i) + 1 - Math.sign(i) ** 2)))), yPos)
           };
       };
   
@@ -209,7 +216,7 @@ drawgrid(minX, maxX, minY, maxY);
 
           i += precision;
 
-          ctx.lineTo(i + 1, c.height / (minY - maxY) * (f(type + '(' + data[6] + ')', xpos(i + 1)) + maxY - (maxY - minY)));
+          ctx.lineTo(i, c.height / (minY - maxY) * (f(type + '(' + data[6] + ')', xpos(i)) + maxY - (maxY - minY)));
 
           ctx.strokeStyle = type == 're' ? '#0000FF' : '#FF0000';
           if (f(type + '(' + data[6] + ')', xpos(i + 1)) == 0 && type != 're') {

@@ -29,8 +29,10 @@ setTimeout(() => {
 }, 100);
 
 let w = new Worker('./worker.js');
+// Mathjs Grapher uses web workers to optimize performance
+// of the grapher by executing background processes.
+
 w.addEventListener('message', (event) => {
-    // Handle message received from worker
     const data = event.data;
     console.log(data);
 
@@ -48,15 +50,9 @@ w.addEventListener('message', (event) => {
 
     };
     
-    
-
-    
-
   });
 
 var hold = false;
-
-
 
 w.m = function(x) {
     w.postMessage(x)
@@ -107,7 +103,6 @@ function graphdrag2(e) { // Move
         let dx = (mx1 - mx2) * (mxx - mnx) / c.width;
         let dy = (my1 - my2) * (mxy - mny) / c.height;
         drawgrid(mnx + dx, mxx + dx, mny + dy, mxy + dy)
-        //w.m(['graphAlpha', imgd, mnx + dx, mxx + dx, mny + dy, mxy+ dy, input])
     };
 };
 
@@ -121,7 +116,6 @@ function graphdrag3(e) // Up
         mny += dy
         mxy += dy
     }
-    //drawgrid(mnx, mxx, mny, mxy);
     w.m(['graphAlpha', imgd, mnx, mxx, mny, mxy, input]);
     hold = false;
     setvalues = true;
@@ -157,7 +151,6 @@ function onscrol(e) {
 
     drawgrid(mnx, mxx, mny, mxy);
     scrolling = true
-    //graph(mnx,mxx,mny,mxy);
 }
 
 setInterval(()=>{
@@ -166,13 +159,6 @@ setInterval(()=>{
         graph(mnx, mxx, mny, mxy)
     }
 },100)
-
-
-
-
-
-
-
 
 function fixnum(n) {
 
@@ -193,12 +179,46 @@ function f(x, y) {
     return math.evaluate((x).replace(/x/g, '(' + y + ')'))
 };
 
+function calcinput() {
+    let normaloutput = math.evaluate($('input').value);
+    let result;
+    result = normaloutput??""
+    if (["number","Complex"].includes(math.typeOf(normaloutput))) {
+    try {
+    let re = math.evaluate("re("+$('input').value+")");
+    let im = math.evaluate("im("+$('input').value+")");
+    let re1 = Math.round(re*1e6)/1e6;
+    let im1 = Math.round(im*1e6)/1e6;
+    let markup = (x,color) => {return `<span style='color:${color}'>`+x+`</span>`}
+    re = re1==0||Math.abs(re)>=1e10?re.toExponential(6):re1;
+    im = im1==0||Math.abs(im)>=1e10?im.toExponential(6):im1;
+    re = re==0?0:re;
+    im = im==0?0:im;
+    re = (Math.abs(re)<=1e-7||Math.abs(re)>=1e10)&&re!=0?(re*1).toExponential()+"":re;
+    im = (Math.abs(im)<=1e-7||Math.abs(im)>=1e10)&&im!=0?(im*1).toExponential()+"":im;
+    result = ""+re;
+    result = markup(result,"blue") + "" + ((im!=0)?(im>0?(" + "+(im!=1?(markup(im,"red")):"")+markup("i","red")):(" - "+(im!=-1?((Math.abs(im)<=1e-6||Math.abs(im)>=1e10?markup((-im).toExponential(),"red"):markup(-im,"red"))):"")+markup("i","red"))):"");
+    result = re==0?(markup(im + "i","red")):result;
+    result = re==0?(Math.abs(im)==1?(im>0?markup("i","red"):markup("-i","red")):result):result;
+    result = (result=='0i')?'0':result;
+    result = im==0?(re):result;
+    }
+    catch {result = ''}}
+
+    if (math.typeOf(normaloutput) == undefined) {}
+
+
+
+    $('calcresult').innerHTML = result
+}
+
 drawgrid = (minX, maxX, minY, maxY) => {
 
     ctx.clearRect(0, 0, c.width, c.height);
     ctx.fillStyle = "white";
     ctx.fillRect(0, 0, c.width, c.height);
 
+    let aspect = c.width / c.height;
     let autozoomFactor = 4;
     let gridStepX = 10 ** (Math.floor(Math.log10((maxX - minX) / autozoomFactor)));
 
@@ -211,7 +231,7 @@ drawgrid = (minX, maxX, minY, maxY) => {
         ctx.stroke();
     };
 
-    let gridStepY = 10 ** (Math.floor(Math.log10((maxY - minY) / autozoomFactor)));
+    let gridStepY = 10 ** (Math.floor(Math.log10((maxY - minY) / autozoomFactor * aspect)));
 
     for (let i = gridStepY * Math.ceil(minY / gridStepY); i <= maxY; i += gridStepY) {
         ctx.beginPath();
@@ -235,7 +255,7 @@ drawgrid = (minX, maxX, minY, maxY) => {
         };
     };
 
-    let axisgridStepY = [2, 5, 10][Math.floor((Math.log10((maxY - minY) / 10) - Math.floor(Math.log10((maxY - minY) / 10))) * 3)] * 10 ** (Math.floor(Math.log10((maxY - minY) / 10)))
+    let axisgridStepY = [2, 5, 10][Math.floor((Math.log10((maxY - minY) / 10 * aspect) - Math.floor(Math.log10((maxY - minY) / 10 * aspect))) * 3)] * 10 ** (Math.floor(Math.log10((maxY - minY) / 10 * aspect)))
 
     for (let i = axisgridStepY * Math.ceil(minY / axisgridStepY); i <= maxY; i += axisgridStepY) {
         ctx.beginPath();
@@ -243,7 +263,7 @@ drawgrid = (minX, maxX, minY, maxY) => {
         ctx.font = "16px MonospaceTypewriter";
         ctx.fillStyle = "black";
         if (Math.abs(yPos / i) <= 1e15) {
-            ctx.fillText(fixnum(-i), Math.min(Math.max(minX / (minX - maxX) * c.width, 2), c.width - 12 - (Math.abs(i) >= 1e6 ? 15 : 0) - 10 * Math.min(6, Math.floor(Math.log10(Math.abs(i) + 1 - Math.sign(i) ** 2)))), yPos)
+            ctx.fillText(fixnum(-i), Math.min(Math.max(minX / (minX - maxX) * c.width, 2), c.width - 12 - (Math.abs(i) >= 1e6 ? 15 : 0) - (i>0?10:0) - 10 * Math.min(6, Math.floor(Math.log10(Math.abs(i) + 1 - Math.sign(i) ** 2)))), yPos)
         };
     };
 
@@ -278,7 +298,7 @@ graph = (minX, maxX, minY, maxY) => {
 
             i += precision;
 
-            ctx.lineTo(i + 1, c.height / (minY - maxY) * (f(type + '(' + input + ')', xpos(i + 1)) + maxY - (maxY - minY)));
+            ctx.lineTo(i, c.height / (minY - maxY) * (f(type + '(' + input + ')', xpos(i)) + maxY - (maxY - minY)));
 
             ctx.strokeStyle = type == 're' ? '#0000FF' : '#FF0000';
             if (f(type + '(' + input + ')', xpos(i + 1)) == 0 && type != 're') {
@@ -300,10 +320,8 @@ $("precision").oninput = () => {
     $("display1").innerHTML = precision;
     document.getElementById('display1').parentElement.style.color = `hsl(${($('precision').value-1)**0.4*40},100%,50%)`;
     w.m(['set precision', precision]);
-    //w.m(['Give me the SCRIPTS']);
     input = document.getElementById('input').value;
     w.m(['graphAlpha', imgd, mnx, mxx, mny, mxy, input])
-    //graph(mnx, mxx, mny, mxy)
 }
 
 $("input").oninput = () => {
@@ -312,26 +330,28 @@ $("input").oninput = () => {
     let executable = true;
     try {f(input,0)} catch {executable = false};
     if (executable) {
-    //c.width = $('graphcontainer').clientWidth;
-    //c.height = $('graphcontainer').clientHeight;
     w.m(['set c dim',c.width,c.height])
-    //w.m(['Give me the SCRIPTS']);
-    
-    
-    w.m(['graphAlpha', imgd, mnx, mxx, mny, mxy, input])}
-    //graph(mnx, mxx, mny, mxy);
+    w.m(['graphAlpha', imgd, mnx, mxx, mny, mxy, input])};
+    calcinput()
 }
+
+$("upload").addEventListener('change', handleFile)
+
+
 
 window.onresize = () => {
     c.width = Math.min($('graphcontainer').clientWidth,window.innerWidth*.55);
     c.height = Math.min($('graphcontainer').clientHeight,window.innerHeight*.65);
-    //c.width = $('graphcontainer').clientWidth;
-    //c.height = $('graphcontainer').clientHeight;
+    c.width = $('graphcontainer').clientWidth;
+    c.height = $('graphcontainer').clientHeight;
     $('graphcontainer').style.width = ~~(window.innerWidth*.5)+'px';
     $('graphcontainer').style.height = ~~(window.innerHeight*.8)+'px';
-    w.m(['set c dim',c.width,c.height]);
+    w.m(['set c dim',
+    Math.min($('graphcontainer').clientWidth,window.innerWidth*.55),
+    Math.min($('graphcontainer').clientHeight,window.innerHeight*.65)
+]);
     w.m(['graphAlpha', imgd, mnx, mxx, mny, mxy, input])
-    //graph(mnx, mxx, mny, mxy)
+    graph(mnx, mxx, mny, mxy)
 }
 
 $("graphcontainer").ondblclick = () => {
@@ -343,13 +363,9 @@ $("graphcontainer").ondblclick = () => {
     mxy = 10/c.width*c.height;
     w.m(['set c dim',c.width,c.height]);
     w.m(['graphAlpha', imgd, mnx, mxx, mny, mxy, input])
-    //graph(mnx, mxx, mny, mxy)
 }
 
 $("graphcontainer").onmouseup = () => {
-    //c.width = $('graphcontainer').clientWidth;
-    //c.height = $('graphcontainer').clientHeight;
-    //graph(mnx, mxx, mny, mxy);
     w.m(['set c dim',c.width,c.height])
     input = document.getElementById('input').value;
     if (input == "") {input = "0"};
@@ -362,9 +378,51 @@ c.addEventListener("wheel", (event) => {
     passive: false
 });
 
+let currentcwidth = c.width;
+let currentcheight = c.height;
+
+setInterval(()=>{
+if (c.width != currentcwidth || c.height != currentcheight) {
+    currentcwidth = c.width;
+    currentcheight = c.height;
+    w.m(['set c dim',c.width,c.height])
+    w.m(['graphAlpha', ctx.getImageData(0,0,currentcwidth,currentcheight), mnx, mxx, mny, mxy, input])
+}
+},1)
+
+function writeFile(content,name) {
+    const filename = name+'.txt';
+  
+    const blob = new Blob([content], { type: 'text/plain' });
+    const url = window.URL.createObjectURL(blob);
+  
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = filename;
+    link.click();
+  
+    window.URL.revokeObjectURL(url);
+  }
+
+function savePreset() {
+    contents = '[\n'+
+    '"'+$('input').value+'",\n'+
+    '"'+$('title').value+'",\n'+
+    '"'+$('description').value+'",\n'+
+    '"'+mnx+'",\n'+
+    '"'+mxx+'",\n'+
+    '"'+mny+'",\n'+
+    '"'+mxy+'",\n'+
+    '"'+precision+'"\n]';
+    writeFile(contents,$('preset-name').value)
+}
+
 presetnames.forEach((i)=>{a = document.createElement('button');
 a.innerHTML = i;
 a.setAttribute('onclick', 'myFunction(this)');
+a.setAttribute('class', 'hoverable');
+a.setAttribute('class', 'presethoverglow');
+a.setAttribute('style', 'border-radius:5px');
 $('presetcontainer').appendChild(a)});
 
 function newPreset(expression, title, description) {
@@ -374,3 +432,144 @@ a = document.createElement('button');
 a.innerHTML = title;
 a.setAttribute('onclick', 'myFunction(this)');
 $('presetcontainer').appendChild(a)}
+
+function handleFile() {
+    const fileInput = $('upload');
+    const file = fileInput.files[0];
+  
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = function(event) {
+        const contents = event.target.result;
+        let parsedcontents;
+        try {JSON.parse(contents)+0} catch {parsedcontents = 'Error'};
+        if (parsedcontents != 'Error') {
+        parsedcontents = JSON.parse(contents)
+        };
+        let p = parsedcontents;
+        console.log(parsedcontents)
+        if (Array.isArray(parsedcontents) && parsedcontents.length == 8) {
+            $('input').innerHTML = p[0];
+            $('title').innerHTML = p[1];
+            $('description').innerHTML = p[2];
+            mnx=p[3]*1;mxx=p[4]*1;mny=p[5]*1;mxy=p[6]*1;
+            $('precision').innerHTML = p[7];
+            ['set precision', precision];
+            graph(mnx, mxx, mny, mxy);
+            document.location='#presetload'
+        } else {
+            console.log('This file is not a valid preset file.');
+            ctx.font = "21px MonospaceTypeWriter";
+            ctx.fillStyle = "red";
+            ctx.textAlign = "center";
+            if (c.width < 600) {
+                ctx.fillText("Error", c.width / 2, c.height / 2 - 10);
+                ctx.fillText("The file you provided is", c.width / 2, c.height / 2 + 5);
+                ctx.fillText("not a valid preset file.", c.width / 2, c.height / 2 + 20)
+            } else {
+                ctx.fillText("The file you provided is not a valid preset file.", c.width / 2, c.height / 2);
+            };
+            document.location='#presetload';
+            ctx.lineWidth = 1;
+        }
+      };
+      reader.readAsText(file);
+    } else {
+      console.log('No file selected.');
+    }
+  }
+
+  // Popup systems
+
+$('popup-settings-x').addEventListener("click", function() {
+    $('popup-settings').style.opacity = "0";
+    $('popup-background').style.opacity = "0";
+
+  setTimeout(function() {
+    $('popup-settings').setAttribute("fading", "true");
+    $('popup-background').hidden = true
+  }, 200);
+});
+
+$('popup-settings-ok').addEventListener("click", function() {
+    $('popup-settings').style.opacity = "0";
+    $('popup-background').style.opacity = "0";
+
+  setTimeout(function() {
+    $('popup-settings').setAttribute("fading", "true");
+    $('popup-background').hidden = true
+  }, 200);
+
+['mnx','mxx','mny','mxy'].forEach((i)=>{
+    Function(i + " = " + $('settings-'+i).value * (['mny','mxy'].includes(i)?-1:1))()
+});
+w.m(['graphAlpha', imgd, mnx, mxx, mny, mxy, input])
+})
+
+$('button-settings').addEventListener("click", function () {
+    $('popup-background').hidden = false;
+    $('popup-settings').hidden = false;
+    ['mnx','mxx','mny','mxy'].forEach((i)=>{
+    $('settings-'+i).value=(Function('return '+i)().toPrecision(6))*(['mny','mxy'].includes(i)?-1:1)
+    })
+
+    setTimeout(function() {
+    $('popup-settings').setAttribute("fading", "true");
+    $('popup-settings').style.opacity = "1";
+    $('popup-background').style.opacity = "1";
+    },0)
+});
+
+$('button-save').addEventListener("click", function () {
+    $('popup-background').hidden = false;
+    $('popup-save').hidden = false;
+    $('preset-name').value = 'MathjsGrapher_'+$('title').value+""+(($('title').value == '')?"Untitled":"")
+
+    setTimeout(function() {
+    $('popup-save').setAttribute("fading", "true");
+    $('popup-save').style.opacity = "1";
+    $('popup-background').style.opacity = "1";
+    },0)
+});
+
+$('popup-save-x').addEventListener("click", function() {
+    $('popup-save').style.opacity = "0";
+    $('popup-background').style.opacity = "0";
+
+  setTimeout(function() {
+    $('popup-save').setAttribute("fading", "true");
+    $('popup-background').hidden = true
+  }, 200);
+});
+
+$('popup-save-ok').addEventListener("click", function() {
+    $('popup-save').style.opacity = "0";
+    $('popup-background').style.opacity = "0";
+    savePreset();
+    $('notification').innerHTML = "Saved as: "+$('preset-name').value+".txt";
+    $('notification').style.right = "0vh"
+    setTimeout(()=>{$('notification').style.right = "-100vh";},3000)
+
+  setTimeout(function() {
+    $('popup-save').setAttribute("fading", "true");
+    $('popup-background').hidden = true
+  }, 200);
+});
+ctx.font = c.width/25+'px "Pixeleum 48 Extended"';
+$('button-copy').addEventListener("click", function () {
+
+    ctx.font = c.width/25+'px "Pixeleum 48 Extended"';
+    ctx.fillStyle = "rgba(0,0,0,25%)";
+    ctx.textAlign = "left";
+    ctx.fillText("Made with",0,c.height-10-c.width/25);
+    ctx.fillText("Mathjs Grapher",0,c.height-5);
+
+    c.toBlob(function(blob) { 
+        const item = new ClipboardItem({ "image/png": blob });
+        navigator.clipboard.write([item]); 
+    }); 
+
+    $('notification').innerHTML = "Copied to clipboard!";
+    $('notification').style.right = "0vh"
+    setTimeout(()=>{$('notification').style.right = "-100vh";},3000)
+})

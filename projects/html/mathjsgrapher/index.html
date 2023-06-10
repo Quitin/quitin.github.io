@@ -5,118 +5,25 @@
         <script src="main.js" defer></script>
         <script type="module" src="worker.js" ></script>
         <script src="presets.js"></script>
+        <link rel="stylesheet" href="style.css">
     </head>
     <body>
-        <style>
-body{
-        background-color:black;
-        color: white;
-        height:auto;
-        text-align:center;
-        overflow-y:scroll
-    }
-p{
-        font-family:'MonospaceTypewriter';
-        margin:0px;
-}
-textarea{
-    outline:none;
-    border:2px solid black;
-    font-family:'MonospaceTypewriter';
-    font-size:20px;
-    width:500px;
-    height:300px;
-}
-
-::selection{
-  background-color:black;
-  color:white;
-  cursor:copy;
-}
-
-button{
-    border:2px solid white;
-    background-color: black;
-    font-family: "MonospaceTypewriter";
-    color:white;
-    font-size:3vh;
-}
-.gradient-border {
-    background: -webkit-linear-gradient(cyan, lightblue);
-    -webkit-background-clip: border-box;
-    -webkit-border-box-fill-color: transparent;
-}
-.gradient-text {
-    background: linear-gradient(to top, cyan 0%, crimson 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    text-shadow: -3px -3px 0px rgba(255,255,255,100%),2px 2px 0px rgba(155,155,255,20%)
-}
-
-.slider {
-  -webkit-appearance: none;
-  width: calc(100% - 4px);
-  height: 25px;
-  margin:auto;
-  text-align:center;
-  background: #004444;
-  outline: none;
-  opacity: 0.7;
-  -webkit-transition: .2s;
-  transition: opacity .2s;
-  position:relative;
-  top:2px;
-  padding:-2px;
-  border-radius:25px;
-}
-.slider:hover {
-  opacity: 1;
-}
-.slider::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  appearance: none;
-  width: 25px;
-  height: 25px;
-  background: #00FFFF;
-  cursor: pointer;
-  border-radius: 25px;
-}
-.slider::-moz-range-thumb {
-  width: 25px;
-  height: 25px;
-  background: #00201f;
-  cursor: pointer;
-}
-#scaleinput{
-  width:85px;
-  height:20px;
-  overflow:hidden;
-  resize:none;
-  line-height: 16px;
-}
-
-@font-face {
-    font-family: 'MonospaceTypewriter';
-    src: url('../../../media/fonts/MONOSPACETYPEWRITER.TTF')
-}
-@font-face {
-    font-family: 'Roboto Regular';
-    src: url('../../../media/fonts/ROBOTO-REGULAR.TTF')
-}
-        </style>
         <title>Mathjs Grapher</title>
-        <p id="presetload" style="font-size:10vh;font-family:'Roboto Regular'" class="gradient-text">Mathjs Grapher Beta</p>
+        <p id="presetload" style="font-size:5vw;font-family:'Roboto Regular'" class="gradient-text">Mathjs Grapher Beta</p>
         
         <div style="width:50%;margin:auto">
           <div style="position:absolute;width:45%;right:50%;text-align:left">
             <div style="display:inline;position:relative">
             
             <textarea id="input" style="resize:none;width:80%;height:40vh" spellcheck="false"></textarea>
+            <div style="border:2px solid lightgray;background-color:rgb(250,250,250);border-radius:1vh;right:20%;top:-10%;position:absolute;width:auto;height:5vh">
+              <p id="calcresult"></p>
+            </div>
             <textarea id="title" style="resize:none;width:80%;height:4vh;overflow:hidden" spellcheck="false"></textarea>
             <textarea id="description" style="resize:none;width:80%;height:16vh;font-size:92%;color:#555555" spellcheck="false"></textarea>
-            <div style="border:2px solid white;text-align:left;width:50vh;height:18vh;padding:5px;background-color:black">
+            <div style="border:2px solid white;text-align:left;width:75%;height:18vh;padding:5px;background-color:black">
         <p style="font-size:3vh;text-align:left">Precision: <span id="display1"></span>px</p>
-        <div style="border:3px solid white;border-radius:25px;width:49vh;overflow:hidden;display:inline-block;text-align:center">
+        <div style="border:3px solid white;border-radius:25px;width:97%;overflow:hidden;display:inline-block;text-align:center">
         <input type="range" min="1" max="10" value="4" step="1" class="slider" id="precision">  
     </div>
     <p style="color:yellow" id="display2"></p>
@@ -130,16 +37,69 @@ button{
 
           <div style="position:absolute;width:50%;left:45%;overflow:visible;padding:5px;text-align:right">
             <div style='width:55%;height:80vb'>
-            <div id="graphcontainer" style="border-radius:15px;width:182%;height:100%;display:block;overflow:hidden;background-color:rgba(30,48,50,100%);resize:both;border:2px solid white;outline:5px solid #00AAFF">
-              <canvas id="graph" onmousedown = graphdrag1(event) onmousemove = graphdrag2(event) onmouseup = graphdrag3(event) onwheel = onscrol(event)  style="outline:2px solid black;border-radius:10px;box-shadow:10px 10px 0px rgba(255,255,255,30%);background-color:white;position:relative;top:0px;left:0px;width:100%;height:100%"></canvas>  
+            <div id="graphcontainer" style="border-radius:15px;width:182%;height:100%;display:block;overflow:hidden;background-color:rgba(30,48,50,100%);resize:both;border:2px solid white;outline:5px solid #00AAFF;position:relative">
+              <div style="pointer-events:none;text-align:right;padding-right:4vh;overflow:hidden;width:100%;height:100%;z-index:2;position:absolute">
+                <p style="display:inline-block;font-size:3vh;margin-left:1vh;color:black"> 2023 June Version</p>
+                <button id="button-copy" class="ingraph" style="font-size:3vh;display:inline-block">Copy Image</button>
+                <button id="button-save" class="ingraph" style="font-size:3vh;display:inline-block">Save Preset</button>
+                <button id="button-settings" class="ingraph">Settings
+                <img style="margin:-2vh;margin-right:-1vh;display:inline-block;height:6vh"; src="icons/Settings2.png">
+              </button>
+              </div>
+
+              <!-- Popup systems -->
+              <div id="popup-background" hidden style="position:absolute;width:100%;height:100%;background-color:rgba(0,0,0,50%);z-index:1;opacity:0">
+                
+                <!-- Settings popup -->
+                <div id="popup-settings" hidden style="border-radius:3vh;overflow:hidden;padding:1vh;width:50%;height:50%;background-color:black;top:50%;left:50%;transform:translate(-50%,-50%);border:2px solid white;position:absolute;z-index:2;text-align:left;font-size:3vh">
+                  <p class="inpopup" style="font-size:5vh">Settings</button><br>
+                    <div>
+                    <textarea id="settings-mnx" class="inputarea"></textarea>
+                    <p style="display:inline-block;position:relative;bottom:1vh">&le; x &le;</p>
+                    <textarea id="settings-mxx" class="inputarea"></textarea><br>
+                    <textarea id="settings-mxy" class="inputarea"></textarea>
+                    <p style="display:inline-block;position:relative;bottom:1vh">&le; y &le;</p>
+                    <textarea id="settings-mny" class="inputarea"></textarea>
+                    </div>
+
+                    <button id="popup-settings-x" class="hoverable" style="position:absolute;right:0;top:0;margin:1vh;border-radius:5vh;width:5vh;height:5vh;">X</button>
+                    <button id="popup-settings-ok" class="hoverable" style="position:absolute;border-radius:1vh;width:50%;bottom:2vh;left:50%;transform:translate(-50%,0%)">OK</button>
+                  
+                </div>
+
+                <!-- Save Preset popup -->
+                <div id="popup-save" hidden style="border-radius:3vh;overflow:hidden;padding:1vh;width:50%;height:50%;background-color:black;top:50%;left:50%;transform:translate(-50%,-50%);border:2px solid white;position:absolute;z-index:2;text-align:left;font-size:3vh">
+                  <p class="inpopup" style="font-size:5vh">Save as Preset</button><br>
+                    <p style="font-size:2vh">Your preset will be saved as:</p>
+                    <textarea id="preset-name" class="inputarea" style="width:70%;font-size:2vh"></textarea><p style="display:inline">.txt</p>
+                    <button id="popup-save-x" class="hoverable" style="position:absolute;right:0;top:0;margin:1vh;border-radius:5vh;width:5vh;height:5vh;">X</button>
+                    <button id="popup-save-ok" class="hoverable" style="position:absolute;border-radius:1vh;width:50%;bottom:2vh;left:50%;transform:translate(-50%,0%)">OK</button>    
+                </div>   
+
+            </div><!-- End of popup systems -->
+
+
+
+
+
+              <canvas id="graph" onmousedown = graphdrag1(event) onmousemove = graphdrag2(event) onmouseup = graphdrag3(event) onwheel = onscrol(event)  style="outline:2px solid black;border-radius:10px;box-shadow:10px 10px 0px rgba(255,255,255,30%);background-color:white;position:relative;top:0px;left:0px;width:100%;height:100%"></canvas> 
             </div>
 
           </div>
           </div>
   </div>
-  <div style="background-color:#001117;margin-top:100vh;height:50vh">
+  <div style="margin-top:100vh;height:50vh">
   <p style="font-size:5vh">Presets</p>
-  <div id="presetcontainer" style="background-color:#110000;text-align:left;width:200vh;height:70%;margin:auto"></div>
+  <div id="presetcontainer" style="border:5px solid white;border-radius:15px;padding:5px;text-align:left;width:200vh;height:70%;margin:auto"></div>
+  <input id="upload" type="file" hidden="true"></input>
+  <button id="fileupload" onclick="document.getElementById('upload').click()">Upload preset file...</button>
+  
+  </div>
+
+  <div id="notification"></div>
+  <div id="infocontainer">
+    <p class="info">About</p><p class="info">Help</p>
+    
   </div>
   
    </body> 

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<head>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body style="text-align:left">
+<style>
+    ::selection{
+    background-color:white;
+    color:black;
+    cursor:copy;
+}
+</style>
+<p style="font-size:10vh">Mathjs Grapher Help</p>
+<br><br>
+<p style="font-size:5vh">1. Introduction</p>
+<br>
+<p>Mathjs Grapher is a graphing calculator that plots mathematical functions (just like <a href="https://desmos.com/calculator/">Desmos</a>).<br><br>It can support complex numbers, and it is powered by <a href="https://mathjs.org/">the Math.js Javascript library</a>.
+<br>It can also be just a calculator that can evaluate expressions with complex numbers.
+<br><br>
+    To begin using the grapher, simply type in a mathematical expression in the large box (e.g. sqrt(x)).<br>
+    This will plot a curve of y=sqrt(x). </p>
+<br><p>
+    The blue curve is the real part of y, and the red curve is the imaginary part of y.
+    </p>
+<br><p>
+    You can pan and zoom in the graph by dragging and scrolling on the graph.<br>
+    To reset the zoom, double-click the graph.<br>
+    You can also set your own bounds by going to Settings with the gear icon in the top right.<br><br>
+
+    If you type in a expression without using the variable "x", the expression will be evaluated and displayed in
+</p><br><br>
+
+<p style="font-size:5vh">2. Syntax</p>
+<br>
+<p>
+    Since the parser is evaluated using Math.js, the parser is flexible. It accepts many variations of input.<br>
+    However, since the RegEx of this grapher is basic, don't use the letter x in functions.<br>
+    Instead of max(x,5), use min(-x,-5).<br>
+    x is meant to be replaced with a value from minimum to maximum x in the graphing process.<br><br>
+    Possible syntax:<br>
+    5x = 5*x<br>
+    x5 = x*5<br>
+    sinx = sin(x)<br>
+    xx = x*x = x^2<br>
+    xxx = x*x*x = x^3<br>
+    sinx^2 = sin(x)^2<br>
+</p><br><br>
+<p style="font-size:5vh">3. Functions</p>
+<br>
+<p>
+Arithmetic: <br>
+add(...), subtract(x,y), multiply(...), divide(x,y), pow(x,y)<br><br>
+Trigonometry:<br>
+sin(x), cos(x), tan(x), sec(x), csc(x), cot(x)<br>
+asin(x), acos(x), atan(x), atan2(x,y), asec(x), acsc(x), acot(x)<br>
+asinh(x), acosh(x), atanh(x), asech(x), acsch(x), acoth(x)<br><br>
+Calculus:<br>
+exp(x), log(x,y), log2(x), log(x), log10(x)<br><br>
+Number theory:<br>
+floor(x,y), round(x,y), ceil(x,y), lcm(...), gcd(...)<br><br>
+Bitwise functions:<br>
+bitAnd(x,y), bitOr(x,y), bitNot(x), leftShift(x,y), rightArithShift(x,y), rightLogShift(x,y)<br><br>
+Statistical functions:<br>
+min(...), mode(...), mean(...), median(...)<br>
+max is only compatible for numbers than the variable x due to the basic regex replacing every x with a number.<br><br>
+Misc functions:<br>
+range(x,y,z) - creates an matrix of numbers from x to y in increments of z. y and z are optional<br>
+map(array,function) - applies a function to an matrix. example: map([1,2,3],v=v^2) outputs [1,4,9]<br><br>
+
+There are much more functions in Math.js. <a href="https://mathjs.org/docs/reference/functions.html">Here is a detailed list.</a> 
+</p><br><br>
+
+
+</body>

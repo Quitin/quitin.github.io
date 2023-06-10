@@ -1,0 +1,246 @@
+body{
+    background-color:black;
+    color: white;
+    height:auto;
+    text-align:center;
+    overflow-y:scroll;
+    overflow-x:hidden;
+}
+
+body::-webkit-scrollbar {
+width: 10px;               /* width of the entire scrollbar */
+}
+
+body::-webkit-scrollbar-track {
+background: #111111;        /* color of the tracking area */;
+
+}
+
+body::-webkit-scrollbar-thumb {
+background-color: #222222;
+width: 10px;
+}
+
+p{
+    font-family:'MonospaceTypewriter';
+    margin:0px;
+}
+
+textarea{
+outline:none;
+border:2px solid black;
+font-family:'MonospaceTypewriter';
+font-size:20px;
+width:500px;
+height:300px;
+}
+
+a{
+    color:cyan;
+    text-shadow: 0px 0px 5px cyan
+}
+
+::selection{
+background-color:black;
+color:white;
+cursor:copy;
+}
+
+button{
+border:2px solid white;
+background-color: black;
+font-family: "MonospaceTypewriter";
+color:white;
+font-size:3vh;
+}
+
+.ingraph{
+border:2px solid rgba(0,0,0,100%);
+background-color: rgba(255,255,255,50%);
+color: black;
+box-shadow: 1vh 1vh 0vh rgba(0,0,0,25%);
+border-radius:1vh;
+pointer-events:auto;
+transition-duration: 0.25s;
+}
+.ingraph:hover{
+background-color:#44DDFF;
+transition-duration: 0.25s;
+}
+.ingraph:active{
+background-color:black;
+color:#44DDFF;
+}
+
+.inpopup{
+border-radius:1vh;
+margin:5px;
+}
+.inpopup:hover{
+background-color:#444444;
+transition-duration: 0.25s;
+}
+.inpopup:active{
+background-color:white;
+color:black;
+}
+
+.inputarea{
+width: 30%;
+height: 4vh;
+overflow:hidden;
+white-space:nowrap;
+display:inline-block;
+resize:none;
+outline:none;
+border:none;
+}
+
+.hoverable:hover{
+background-color: white;
+color: black;
+transition-duration: 0.2s;
+}
+.hoverable{
+transition-duration: 0.2s;
+}
+
+.presethoverglow{
+transition-duration: 0.5s;
+box-shadow: 0px 0px 0px white;
+color: white;
+}
+.presethoverglow:hover{
+transition-duration: 0.5s;
+box-shadow: 0px 0px 10px white;
+background-color: #001115;
+color: cyan;
+text-shadow: 0px 0px 10px cyan;
+}
+
+
+
+.gradient-border {
+background: -webkit-linear-gradient(cyan, lightblue);
+-webkit-background-clip: border-box;
+-webkit-border-box-fill-color: transparent;
+}
+.gradient-text {
+background: linear-gradient(to top, cyan 0%, crimson 100%);
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+text-shadow: -3px -3px 0px rgba(255,255,255,100%),2px 2px 0px rgba(155,155,255,50%)
+}
+
+.slider {
+-webkit-appearance: none;
+width: calc(100% - 4px);
+height: 25px;
+margin:auto;
+text-align:center;
+background: #004444;
+outline: none;
+opacity: 0.7;
+-webkit-transition: .2s;
+transition: opacity .2s;
+position:relative;
+top:2px;
+padding:-2px;
+border-radius:25px;
+}
+.slider:hover {
+opacity: 1;
+}
+.slider::-webkit-slider-thumb {
+-webkit-appearance: none;
+appearance: none;
+width: 25px;
+height: 25px;
+background: #00FFFF;
+cursor: pointer;
+border-radius: 25px;
+}
+.slider::-moz-range-thumb {
+width: 25px;
+height: 25px;
+background: #00201f;
+cursor: pointer;
+}
+#scaleinput{
+width:85px;
+height:20px;
+overflow:hidden;
+resize:none;
+line-height: 16px;
+}
+
+#popup-settings, #popup-background{
+transition: opacity 0.2s ease
+}
+
+.fading{
+opacity: 0;
+}
+
+.upload {
+background-color: white;
+border: 2px solid white
+}
+
+#notification {
+width: 25vw;
+height: 10vh;
+border: 5px solid rgba(0,255,180,100%);
+background-color: rgba(0,64,45,100%);
+color: rgba(0,255,180,100%);
+font-family: "Pixeleum 48";
+position: absolute;
+top: 0vh;
+right: -100vh;
+margin: 2vh;
+font-size: 3vh;
+transition: right 1.5s ease
+}
+
+#calcresult {
+font-size: 4vh;
+color: black
+}
+
+#infocontainer {
+position: absolute;
+top: 0px;
+left: 0px;
+width: 10vw;
+height: 5vh;
+padding: 0.5vw;
+text-align:left;
+}
+
+.info {
+color: white;
+font-size: 2vw;
+transition-duration: 0.5s;
+text-decoration: underline;
+display:inline;
+margin:10px
+}
+.info:hover{
+text-shadow: 0px 0px 2vh white;
+transition-duration: 0.5s
+}
+
+@font-face {
+font-family: 'Pixeleum 48 Extended';
+src: url('../../../media/fonts/PIXELEUM-48-EXTENDED.TTF')
+}
+
+@font-face {
+font-family: 'MonospaceTypewriter';
+src: url('../../../media/fonts/MONOSPACETYPEWRITER.TTF')
+}
+
+@font-face {
+font-family: 'Roboto Regular';
+src: url('../../../media/fonts/ROBOTO-REGULAR.TTF')
+}
