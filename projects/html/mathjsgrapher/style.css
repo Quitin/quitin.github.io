@@ -118,7 +118,19 @@ color: cyan;
 text-shadow: 0px 0px 10px cyan;
 }
 
+.ultraglow{
+    color: white;
+    text-shadow: 2px 2px 0px rgba(255,255,255,25%),1.5px 1.5px 2px hsla(180,100%,50%,100%),0 0 15px hsla(200,100%,50%,100%)
+}
 
+.line{
+    border: 2px solid white;
+    margin:20px;
+    width:50%;
+    margin-left:0;
+    border-radius:2px;
+    box-shadow: 0px 0px 10px white;
+}
 
 .gradient-border {
 background: -webkit-linear-gradient(cyan, lightblue);
@@ -202,9 +214,30 @@ font-size: 3vh;
 transition: right 1.5s ease
 }
 
+:root {--primary-calcresult-height: auto}
+
 #calcresult {
 font-size: 4vh;
-color: black
+color: black;
+
+}
+
+#calcresultcontainer {
+    border:2px solid lightgray;
+    background-color:rgb(250,250,250);
+    border-radius:1vh;
+    right:20%;
+    top:1vh;
+    position:absolute;
+    width:auto;
+    height:var(--primary-calcresult-height);
+    max-width:35vw;
+    max-height:16vh;
+    overflow:hidden;
+    overflow-y:auto;
+    transform: translateY(-100%);
+    word-wrap: break-word;
+    transition: opacity 0.3s ease-in-out;
 }
 
 #infocontainer {

@@ -206,6 +206,8 @@ function calcinput() {
     catch {result = ''}}
 
     if (math.typeOf(normaloutput) == undefined) {}
+    if (math.typeOf(normaloutput) == "function")
+    {result = 'Function'}
 
 
 
@@ -572,4 +574,28 @@ $('button-copy').addEventListener("click", function () {
     $('notification').innerHTML = "Copied to clipboard!";
     $('notification').style.right = "0vh"
     setTimeout(()=>{$('notification').style.right = "-100vh";},3000)
-})
+});
+
+const div1 = document.getElementById('input');
+const div2 = document.getElementById('calcresultcontainer');
+
+window.addEventListener('scroll', handleScroll);
+
+function handleScroll() {
+  const div1Bottom = div1.getBoundingClientRect().bottom + window.pageYOffset;
+  const div2Top = div2.getBoundingClientRect().top + window.pageYOffset;
+  const div1TextBottom = div1.getBoundingClientRect().bottom;
+
+  if (div1TextBottom >= div2Top && div1TextBottom <= div2Top + div1.offsetHeight) {
+    const proximity = div1TextBottom - div2Top;
+    const opacity = 1 - proximity / div1.offsetHeight;
+    div2.style.opacity = opacity;
+  } else {
+    div2.style.opacity = 1;
+  }
+}
+  
+  
+  
+  
+  
