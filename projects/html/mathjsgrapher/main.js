@@ -10,7 +10,7 @@ let mxx = 10;
 let mny = -10/c.width*c.height;
 let mxy = 10/c.width*c.height;
 precision = 10;
-ctx.font = "21px MonospaceTypeWriter";
+ctx.font = "21px MonospaceTypewriter";
 ctx.fillStyle = "blue";
 ctx.textAlign = "center";
 
@@ -176,17 +176,22 @@ function fixnum(n) {
 }
 
 function f(x, y) {
-    return math.evaluate((x).replace(/x/g, '(' + y + ')'))
+    result = math.evaluate((x).replace(/x/g, '(' + y + ')'));
+    return result
 };
 
 function calcinput() {
-    let normaloutput = math.evaluate($('input').value);
+    let date = Date.now();
+    let normaloutput = $('input').value;
+    normaloutput = (normaloutput).replace(/Date/g,"("+date+")*1");
+    normalinput = normaloutput;
+    normaloutput = math.evaluate(normaloutput);
     let result;
     result = normaloutput??""
     if (["number","Complex"].includes(math.typeOf(normaloutput))) {
     try {
-    let re = math.evaluate("re("+$('input').value+")");
-    let im = math.evaluate("im("+$('input').value+")");
+    let re = math.evaluate("re("+normalinput+")");
+    let im = math.evaluate("im("+normalinput+")");
     let re1 = Math.round(re*1e6)/1e6;
     let im1 = Math.round(im*1e6)/1e6;
     let markup = (x,color) => {return `<span style='color:${color}'>`+x+`</span>`}
@@ -326,7 +331,37 @@ $("precision").oninput = () => {
     w.m(['graphAlpha', imgd, mnx, mxx, mny, mxy, input])
 }
 
+String.prototype.lines = function() { return this.split(/\r*\n/); };
+var isHovered = false;
+
+    $('calcresultcontainer').addEventListener('mouseenter', function() {
+        isHovered = true;
+    });
+
+    $('calcresultcontainer').addEventListener('mouseleave', function() {
+        isHovered = false;
+    });
+
+var inputlineCount = 0;
+
+setInterval(()=>{
+    inputlineCount = $('input').value.lines().map((v)=>{return Math.ceil((v.length)/(~~($('input').getBoundingClientRect().width / 12.5)))}).reduce((a,b)=>{return a+b},0);
+    if (inputlineCount > 5 && !$('settings-opacify').checked) {
+        $('calcresultcontainer').style.boxShadow = "0px 0px 10px rgba(0,0,0,25%)";
+        if (isHovered) {  
+            $('calcresultcontainer').style.opacity = "100%";
+        } else {
+            $('calcresultcontainer').style.opacity = "25%";
+            
+        }
+    } else {
+        $('calcresultcontainer').style.boxShadow = "";
+        $('calcresultcontainer').style.opacity = "100%";
+    }}
+,100)
+
 $("input").oninput = () => {
+
     input = document.getElementById('input').value;
     if (input == "") {input = "0"};
     let executable = true;
@@ -421,7 +456,7 @@ function savePreset() {
 
 presetnames.forEach((i)=>{a = document.createElement('button');
 a.innerHTML = i;
-a.setAttribute('onclick', 'myFunction(this)');
+a.setAttribute('onclick', 'loadPreset(this)');
 a.setAttribute('class', 'hoverable');
 a.setAttribute('class', 'presethoverglow');
 a.setAttribute('style', 'border-radius:5px');
@@ -432,7 +467,7 @@ presetnames.push(title);
 Presets.push([expression, title, description]);
 a = document.createElement('button');
 a.innerHTML = title;
-a.setAttribute('onclick', 'myFunction(this)');
+a.setAttribute('onclick', 'loadPreset(this)');
 $('presetcontainer').appendChild(a)}
 
 function handleFile() {
@@ -557,10 +592,10 @@ $('popup-save-ok').addEventListener("click", function() {
     $('popup-background').hidden = true
   }, 200);
 });
-ctx.font = c.width/25+'px "Pixeleum 48 Extended"';
 $('button-copy').addEventListener("click", function () {
 
-    ctx.font = c.width/25+'px "Pixeleum 48 Extended"';
+    ctx.font = ''+(c.width/25).toString()+'px "Pixeleum 48 Extended"';
+    setTimeout(()=>{
     ctx.fillStyle = "rgba(0,0,0,25%)";
     ctx.textAlign = "left";
     ctx.fillText("Made with",0,c.height-10-c.width/25);
@@ -574,26 +609,34 @@ $('button-copy').addEventListener("click", function () {
     $('notification').innerHTML = "Copied to clipboard!";
     $('notification').style.right = "0vh"
     setTimeout(()=>{$('notification').style.right = "-100vh";},3000)
+    },100)
 });
 
-const div1 = document.getElementById('input');
-const div2 = document.getElementById('calcresultcontainer');
+setInterval(
+    ()=>{
+        try{
+            if($('input').value.match(/Date/g) != undefined){
+                if($('input').value.match(/Date/g).length>0 && !hold){
+                    precision = 10;
+                    w.m(['graphAlpha', imgd, mnx, mxx, mny, mxy, input]);
+            }
+        }
+        } catch {}
+    }
+,100);
+setInterval(
+    ()=>{
+        try{
+            if($('input').value.match(/Date/g).length>0){
+                calcinput()
+            }
+        } catch {}
+    }
+,10)
 
-window.addEventListener('scroll', handleScroll);
 
-function handleScroll() {
-  const div1Bottom = div1.getBoundingClientRect().bottom + window.pageYOffset;
-  const div2Top = div2.getBoundingClientRect().top + window.pageYOffset;
-  const div1TextBottom = div1.getBoundingClientRect().bottom;
 
-  if (div1TextBottom >= div2Top && div1TextBottom <= div2Top + div1.offsetHeight) {
-    const proximity = div1TextBottom - div2Top;
-    const opacity = 1 - proximity / div1.offsetHeight;
-    div2.style.opacity = opacity;
-  } else {
-    div2.style.opacity = 1;
-  }
-}
+
   
   
   

@@ -51,6 +51,8 @@ self.addEventListener('message', (event) => {
     importScripts('../../lnls/math.js');
     m('Done.' + Testvalue, 'log');
     function f(x, y) {
+      //date = Date.now();
+      //x = x.replace(/Date/g, '(' + date + ')');
       return math.evaluate((x).replace(/x/g, '(' + y + ')'))
   };
     m(f('x^0.5',-1))
@@ -109,6 +111,8 @@ self.addEventListener('message', (event) => {
   };
 
   fArray['graphAlpha'] = ()=>{
+    date = Date.now();
+    data[6] = data[6].replace(/Date/g, '(' + date + ')');
     c = new OffscreenCanvas(data[1].width,data[1].height);
     ctx = c.getContext('2d');
     ctx.clearRect(0, 0, c.width, c.height);
@@ -201,13 +205,14 @@ self.addEventListener('message', (event) => {
     return a
 };
 drawgrid(minX, maxX, minY, maxY);
-
     ['re', 'im'].forEach((type) => {
       ctx.beginPath();
       for (i = 0; i < c.width + 1;) {
           let xpos = (a) => {
               return (1 - a / c.width) * minX + (a / c.width) * maxX
           };
+          
+          
           function f(x, y) {
             return math.evaluate((x).replace(/x/g, '(' + y + ')'))
           };

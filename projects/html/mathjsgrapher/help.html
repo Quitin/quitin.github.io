@@ -45,7 +45,7 @@
     xxx = x*x*x = x^3<br>
     sinx^2 = sin(x)^2<br>
 </p><br><br>
-<p style="font-size:5vh">3. Functions</p>
+<p style="font-size:5vh">3.1. Functions</p>
 <br>
 <p>
 Arithmetic: <br>
@@ -57,18 +57,59 @@ asinh(x), acosh(x), atanh(x), asech(x), acsch(x), acoth(x)<br><br>
 Calculus:<br>
 exp(x), log(x,y), log2(x), log(x), log10(x)<br><br>
 Number theory:<br>
-floor(x,y), round(x,y), ceil(x,y), lcm(...), gcd(...)<br><br>
+floor(x,y), round(x,y), ceil(x,y), abs(x), lcm(...), gcd(...)<br><br>
 Bitwise functions:<br>
 bitAnd(x,y), bitOr(x,y), bitNot(x), leftShift(x,y), rightArithShift(x,y), rightLogShift(x,y)<br><br>
 Statistical functions:<br>
 min(...), mode(...), mean(...), median(...)<br>
 max is only compatible for numbers than the variable x due to the basic regex replacing every x with a number.<br><br>
+min(...) - smallest number<br>
+mode(...) - most frequently occurring number<br>
+mean(...) - geometric mean of all arguments<br>
+median(...) - the number or the mean of two numbers separating two halves of the array
+<br><br>
 Misc functions:<br>
-range(x,y,z) - creates a matrix of numbers from x to y in increments of z. y and z are optional<br>
-map(array,function) - applies a function to a matrix. example: map([1,2,3],v=v^2) outputs [1,4,9]<br><br>
+
+range(x,y,z) or x:y:z - creates a matrix of numbers from x to y in increments of z. y and z are optional<br>
+map(array,function) - applies a function to each item in an array or matrix. example: map([1,2,3],v=v^2) outputs [1,4,9]<br><br>
 
 There are much more functions in Math.js. <a class="style" href="https://mathjs.org/docs/reference/functions.html">Here is a detailed list.</a> 
 </p><br><br>
+<p style="font-size:5vh">3.2. Constants</p><br>
+<p>
+    pi, PI <span class="s">= 3.1415926535...</span><br>
+    e, E <span class="s">= 2.7182818284...</span><br>
+    phi (golden ratio) <span class="s">= 1.6180339887...</span><br>
+    SQRT2 (square root of 2) <span class="s">= 1.4142135623...</span><br>
+    i (imaginary number, sqrt(-1)) <br>
+    SQRT1_2 (square root of 1/2) <span class="s">= 0.7071067811...</span><br>
+    tau <span class="s">= 6.2831853071...</span><br>
+    More constants: LN2, LN10, LOG2E, LOG10E
+</p>
+<br>
+<p style="font-size:5vh">4. Datatypes</p><br>
+<p>
+    The calculator can also handle other datatypes than numbers. It can also handle strings, arrays (matrices), functions and objects.<br><br>
+    {} returns an empty object, {a:3, b:2} returns an object with two properties (a and b). You can access them using the property accessor ".", for example: {a:2,b:3}.a returns 2.<br><br>
+    [] returns an empty array (matrix). [1,2,3] is a matrix containing the numbers 1, 2, and 3. Matrices can contain anything, even itself.<br><br>
+    "" returns an empty string. "String" returns a string which says String. Strings can be indexed, concatenated and even styled.
 
+</p>
+<br>
+<p style="font-size:5vh">5. Strings</p><br>
+<p>
+    Mathjs Grapher can handle strings. You can use quotation marks to denote a string, for example: "Hello World".<br><br>
+    You can index letters in a string by putting in a number in square brackets []. For example: "My String"[1] returns M, "My String"[5] returns m, etc.<br><br>
+    You can also index substrings using arrays. For example: "String"[3:6] is ring and "listen"[[3,2,1,5,6,4]] is silent.<br><br>
+    You can also concatenate strings by using the concat(...) function. For example: concat("apple","banana") returns applebanana.<br><br>
+    You can style strings by using HTML span tag. For example: "&lt;span style='color:red'>Red Text&lt;/span>" returns <span style='color:red'>Red Text</span>.<br><br>
+    Numbers and other data types can also be formatted as a string using the string(x) function.
+</p>
+<br>
+<p style="font-size:5vh">6. Other Features</p><br>
+<p>
+    You can explore many other features by browsing the 50 built-in presets.
+</p>
+<br><br><br>
 
 </body>
