@@ -1,5 +1,5 @@
 var c = document.getElementById('graph');
-var ctx = c.getContext('2d')
+var ctx = c.getContext('2d',{willReadFrequently:true})
 const $ = (x) => {
     return document.getElementById(x)
 };

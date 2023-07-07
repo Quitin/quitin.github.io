@@ -78,7 +78,7 @@ self.addEventListener('message', (event) => {
 
   fArray['draw text'] = ()=>{
     c = new OffscreenCanvas(data[1].width,data[1].height);
-    ctx = c.getContext('2d');
+    ctx = c.getContext('2d',{willReadFrequently:true});
     ctx.clearRect(0, 0, c.width, c.height);
     ctx.fillStyle = "white";
     ctx.fillRect(0, 0, c.width, c.height);
@@ -95,7 +95,7 @@ self.addEventListener('message', (event) => {
 
   fArray['graph'] = ()=>{
     c = new OffscreenCanvas(data[1].width,data[1].height);
-    ctx = c.getContext('2d');
+    ctx = c.getContext('2d',{willReadFrequently:true});
     ctx.clearRect(0, 0, c.width, c.height);
     ctx.fillStyle = "white";
     ctx.fillRect(0, 0, c.width, c.height);
@@ -114,7 +114,7 @@ self.addEventListener('message', (event) => {
     date = Date.now();
     data[6] = data[6].replace(/Date/g, '(' + date + ')');
     c = new OffscreenCanvas(data[1].width,data[1].height);
-    ctx = c.getContext('2d');
+    ctx = c.getContext('2d',{willReadFrequently:true});
     ctx.clearRect(0, 0, c.width, c.height);
     ctx.fillStyle = "white";
     ctx.fillRect(0, 0, c.width, c.height);
