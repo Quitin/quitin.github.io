@@ -1,0 +1,369 @@
+body {
+    background-color: black;
+    text-align:center
+}
+
+a {
+  text-shadow: 0 0 15px;
+  font-size:2vw;
+  text-decoration:none;
+  width: auto;
+  color: unset;
+}
+
+a p{
+  font-size:4vh;
+}
+
+*::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;               /* width of the entire scrollbar */
+}
+  
+*::-webkit-scrollbar-track {
+background: #111;        /* color of the tracking area */;
+  
+}
+  
+*::-webkit-scrollbar-thumb {
+background-color: white;
+width: 5px;
+height: 10px;
+}
+
+textarea, button, input[type='submit'] {
+    font-family: 'MonospaceTypewriter';
+    font-size: 18px;
+}
+
+button, input[type='submit'] {
+    border:2px solid white;
+    background-color: black;
+    color:white;
+    border-radius: 5px;
+    font-size: 3vh;
+    transition-duration: 0.25s;
+}
+
+#upload2 {
+  color:cyan;
+  font-family:MonospaceTypewriter;
+  border: 2px dashed cyan;
+}
+
+input[type="file"] {
+  display: none;
+}
+
+button:hover, input[type='submit']:hover{
+    color: black;
+    background-color: white;
+}
+
+button:active, input[type='submit']:active{
+    background-color: #eee
+}
+
+textarea {
+    border: none;
+    resize: none;
+    outline: none;
+    border-radius: 5px;
+    width: 95%;
+    height: 20vh;
+    font-size: 14px;
+    border: 2px solid #333;
+    background-color: #080808;
+    color: white;
+}
+
+canvas {
+    outline: 2px solid white;
+}
+
+p, h1, h2, h3, h4, h5, h6, label {
+    font-family: 'MonospaceTypewriter';
+    color: white;
+    font-weight: normal;
+    margin:0px;
+}
+
+p, label {font-size: 3vh}
+h1 {font-size: 4em; font-weight:bold}
+h2 {font-size: 3em}
+h3 {font-size: 2.5em}
+h4 {font-size: 2em}
+h5 {font-size: 1.5em}
+h6 {font-size: 1em}
+
+@font-face {
+    font-family: 'MonospaceTypewriter';
+    src: url('../../../media/fonts/MONOSPACETYPEWRITER.TTF')
+}
+
+div#container {
+    display: flex;
+    width:95%;
+    border: 2px solid #111;
+    border-radius: 10px;
+    margin:auto;
+    margin-top:7vh;
+    height:85vh;
+}
+
+#left-half {
+    flex: 1;
+    overflow: hidden;
+    overflow-y: scroll;
+}
+
+#right-half {
+    flex: 1;
+    display:flex;
+    overflow: auto;
+    justify-content:center;
+    align-items:center;
+    position:relative;
+}
+
+#displayc {
+    transform: scale(100%);
+    z-index: -1;
+}
+
+#effectsheader > p {
+  display: inline-block;
+  margin-right: 1vw;
+  text-shadow: 0 0 3px white;
+}
+
+#effectsheader > button {
+  display: inline-block;
+  margin-bottom: 1vh;
+  margin-right: 1vw;
+  box-shadow: 0 0 3px white
+}
+
+.checkc {
+    display: inline-block;
+    position: relative;
+    padding-left: 35px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    font-size: 22px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+  
+
+  .checkc input {
+    position: relative;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+  }
+  
+  .checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 25px;
+    width: 25px;
+    background-color: #000;
+    transition: background-color 0.2s ease-in-out;
+    border-radius: 5px;
+    box-shadow: 4px 4px #111;
+    border: 2px solid white
+  }
+  
+  .checkc:hover input ~ .checkmark {
+    background-color: #222;
+  }
+  
+  .checkc input:checked ~ .checkmark {
+    background-color: #0AD;
+  }
+  
+  .checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+  }
+  
+  .checkc input:checked ~ .checkmark:after {
+    display: block;
+  }
+  
+  .checkc .checkmark:after {
+    left: 9px;
+    top: 5px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+  }
+
+  #effectsc {
+    border: 2px solid #ddd;
+    width: 95%;
+    margin: 2vh;
+    margin-left: 2%;
+    border-radius: 5px;
+    height:10vh;
+    text-align: left;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    white-space: nowrap;
+  }
+
+.effect {
+    border: 0.4vh solid #800;
+    background-color: #200;
+    border-radius:5vh;
+    width:auto;
+    height:20%;
+    margin:1vh;
+    margin-right:0;
+    padding:0.5vh;
+    display:inline-block;
+    user-select:none;
+}
+
+.bypass {
+    opacity: 50%
+}
+
+#top-left {
+  position:absolute;
+  top:0;
+  left:0;
+  width:90%;
+  text-align:left;
+}
+
+#top-left > p, label {
+  color: hsla(180,100%,50%,100%);
+  display:inline-block;
+  margin: 10px;
+  margin-top: 5px;
+  margin-right: 1vw;
+}
+
+.select {
+  border: 0.4vh solid #fff;
+  background-color: #ddd;
+}
+
+.select > p {
+  color: black;
+  font-weight: bold
+}
+
+p.small {
+  font-size: 2vh;
+  margin:0.5vh;
+  margin:-0.4vh;
+  margin-left:0vh;
+  margin-right:0.2vh;
+}
+
+#pagecontainer {
+  border: 1px solid white;
+  height: 15vh;
+  margin-bottom: 3vh;
+  padding: 1vh;
+}
+
+.inputfield {
+  display:inline-block;
+  margin-right: 1vw;
+}
+
+input {
+  outline: none;
+  size: 5;
+  border: 2px solid #333;
+  background-color: #111;
+  border-radius:5px;
+  color: white;
+  font-size: 3vh;
+  font-family: MonospaceTypewriter;
+  overflow:hidden;
+}
+
+.border {
+  border: 2px solid;
+  padding: 1vh;
+  border-radius: 10px;
+}
+
+.red {
+  color: red
+}
+
+.yellow {
+  color: yellow
+}
+
+.green {
+  color: lime
+}
+
+.cyan {
+  color: cyan
+}
+
+.blue {
+  color: blue
+}
+
+.magenta {
+  color: magenta
+}
+
+.white {
+  color: white
+}
+
+.tabs {
+  display:flex;
+  height: 50%;
+  width: 100%;
+  white-space:nowrap;
+  margin-top: 1vh;
+  overflow-x: scroll;
+}
+
+.tabs > p {
+  flex:1;
+  display: inline-block;
+  border-radius: 2vh;
+  background-color:#222;
+  border: 2px solid black;
+  user-select: none;
+  padding: 1.5vh 0;
+  transition-duration: 0.2s
+}
+
+.tabs > p:hover {
+  background-color:white;
+  color:black;
+}
+
+.tabs::-webkit-scrollbar {
+  display:none;
+}
+
+.tabs > p.select {
+  background-color:#0cf;
+  color:white;
+}
+
+
+
