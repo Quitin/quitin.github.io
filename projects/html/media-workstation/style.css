@@ -33,7 +33,7 @@ height: 10px;
 
 textarea, button, input[type='submit'] {
     font-family: 'MonospaceTypewriter';
-    font-size: 18px;
+    font-size: 3vh;
 }
 
 button, input[type='submit'] {
@@ -107,7 +107,7 @@ div#container {
     border: 2px solid #111;
     border-radius: 10px;
     margin:auto;
-    margin-top:7vh;
+    margin-top:5vh;
     height:85vh;
 }
 
@@ -124,6 +124,7 @@ div#container {
     justify-content:center;
     align-items:center;
     position:relative;
+    transform-origin: 0 0
 }
 
 #displayc {
@@ -143,6 +144,21 @@ div#container {
   margin-right: 1vw;
   box-shadow: 0 0 3px white
 }
+
+#infobox {
+  display: inline-block;
+  margin-top: 1vh;
+  padding: 0.5vh;
+  border: 2px solid #222;
+  border-radius: 10px;
+  width:97vw;
+  height:1.5em
+}
+
+#infobox > p {
+  transition: opacity 0.5s
+}
+
 
 .checkc {
     display: inline-block;
@@ -341,13 +357,14 @@ input {
 }
 
 .tabs > p {
+  font-size:2.2vh;
   flex:1;
   display: inline-block;
   border-radius: 2vh;
   background-color:#222;
   border: 2px solid black;
   user-select: none;
-  padding: 1.5vh 0;
+  padding: 2.2vh 0;
   transition-duration: 0.2s
 }
 
@@ -361,8 +378,22 @@ input {
 }
 
 .tabs > p.select {
-  background-color:#0cf;
+  background-color:black;
+  text-shadow: 0 0 3px white,0 0 20px white;
   color:white;
+  border: 2px solid #0cf
+}
+
+#export, #export2 {
+  padding-top:3vh;
+  padding-bottom:3vh;
+  padding-left:5vw;
+  padding-right:5vw;
+  border: 2px solid
+}
+
+#export:hover, #export2:hover {
+  box-shadow: 0 0 1vw
 }
 
 
