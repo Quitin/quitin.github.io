@@ -72,14 +72,18 @@
                 </div>
 
                 <div id="page-3" hidden>
-                    <p style="font-size:calc(min(5vw,7.5vh))">Export</p><br>
+                    <p style="font-size:calc(min(4vw,6vh))">Export</p><br>
+                    <p style="font-size:1.6vh;padding-left:4vw;padding-right:4vw">To preserve GIF duration, your FPS must be such that 100/FPS is an integer.<br>Possible gif framerates: 10, 14.28, 16.67, 20, 25, 33.33, 50, 100<br><br>Also, lower number in GIF quality = better quality.</p><br>
                     <label style="display:inline-block">Frames:</label>
                     <input id="frames" size="6" value="100"></input>
                     <label style="display:inline-block">FPS:</label>
                     <input id="fps" size="6" value="30"></input>
                     <label style="display:inline-block">Quality:</label>
                     <input id="quality" size="6" value="32"></input><br>
-                    <p id="calclength"></p><br>
+                    <label style="display:inline-block">Rendering speed:</label>
+                    <input id="render-speed" size="6" value="100"></input>
+                    <p style="display:inline-block">ms</p><br>
+                    <p id="calclength"></p>
                     <label style="display:inline-block">File name:</label>
                     <input id="gifname" size="20" value="Untitled"></input>
                     <label style="display:inline-block">.gif</label><br>

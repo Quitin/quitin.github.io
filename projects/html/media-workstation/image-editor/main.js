@@ -2,7 +2,7 @@ $ = (x) => {return document.getElementById(x+"")};
 
 c = $('display');
 ctx = $('display').getContext('2d', {willReadFrequently: true});
-var auto = true, effects = [], seindex = 0, efscc, selectedelement, V = 1, g = !1, vd = g
+var auto = true, effects = [], seindex = 0, efscc, selectedelement, V = 1, g = !1, vd = g, ctype
 let autorender
 l = localStorage
 
@@ -111,6 +111,7 @@ function loadImg() { // this initializes the source image and the image for the 
 function newCanvas(w,h,src) { // creates an empty canvas of any size
     c.width = 256;
     c.height = 256;
+    ctype = !!src?'image':'blank'
     imgd = ctx.getImageData(0,0,c.width,c.height)
     img = new Image(w,h);
     img.src = src || '';
@@ -145,7 +146,7 @@ $('s-auto').oninput = setAR
 
 function setAR() {
     clearInterval(autorender)
-    autorender = setInterval(()=>{try{auto?render(true):0}catch{}},g?500:10) // Execute scripts automatically (by default) if auto is true.
+    autorender = setInterval(()=>{try{auto?render(true):0}catch{}},g?($('render-speed').value||100):10) // Execute scripts automatically (by default) if auto is true.
 }
 
 function getPixel(x,y) { // gets the rgba data of the specified pixel from the source (or the image the code is currently applying effects to)
@@ -251,15 +252,6 @@ function render(takefromEffects,...efs) {
     if (takefromEffects) {
         efs = effects.map((v)=>{return v.effect})
     };
-    if (g) {
-        const frames = $('frames').value
-        var progress = round((V+1) / frames * 1e4) / 100
-        gifenc.addFrame(ctx, false); V++
-        $('infobox').innerHTML = '<p>' + `Rendering ${V} / ${frames} frames (${progress} %)` + '<button style="display:inline" onclick=stopexport()>Cancel</button>' + '</p>'
-    };
-    if (vd) {
-        gifenc.addFrame(ctx, false); V++
-    };
     ctx.clearRect(0,0,c.width,c.height);
     ctx.drawImage(img,0,0,img.width,img.height,0,0,c.width,c.height);
     image = ctx.getImageData(0,0,c.width,c.height);
@@ -295,6 +287,15 @@ function render(takefromEffects,...efs) {
         ii++
     })
     ctx.putImageData(image, 0, 0);
+    if (g) {
+        const frames = $('frames').value
+        var progress = round((V+1) / frames * 1e4) / 100
+        gifenc.addFrame(ctx, false); V++
+        $('infobox').innerHTML = '<p>' + `Rendering ${V} / ${frames} frames (${progress} %)` + '</p>'
+    };
+    if (vd) {
+        gifenc.addFrame(ctx, false); V++
+    };
 };
 
 $('s-auto').oninput = () => {auto = $('s-auto').checked}
@@ -333,6 +334,7 @@ $('upload').oninput = function() {
                     height = image.height;
                     updateCSS();
                 }
+                ctype = 'image'
             };
         reader.readAsDataURL(file);
     }
@@ -393,25 +395,30 @@ setInterval(() => {
 switchPage(1)
 
 function exportgif() {
-    g = !0
-    setAR()
-    gifenc = new GIFEncoder()
-    gifenc.setSize(c.width,c.height)
-    gifenc.setDelay(1e3 / ($('fps').value * 1 || 30))
-    gifenc.setQuality($('quality').value || 32)
-    gifenc.setRepeat(0)
-    auto = true
-    gifenc.start()
-    rendering = setInterval(()=>{
-        if (V >= (($('frames').value * 1) || 100)) {
-            gifenc.finish()
-            g = !1, V = 1, auto = false
-            vg = gifenc;
-            gifenc.download($('gifname').value || 'Untitled')
-            clearInterval(rendering)
-            $('infobox').innerHTML = '<p class="green">Render complete!</p>'
-        }
-    },10)
+    if (!g) {
+        V = 1
+        g = !0
+        setAR()
+        gifenc = new GIFEncoder()
+        gifenc.setSize(c.width,c.height)
+        gifenc.setDelay(1e3 / ($('fps').value * 1) || 30)
+        gifenc.setQuality($('quality').value || 32)
+        gifenc.setRepeat(0)
+        auto = true
+        gifenc.start()
+        rendering = setInterval(()=>{
+            if (V > (($('frames').value * 1) || 100)) {
+                gifenc.finish()
+                g = !1, V = 1, auto = false
+                vg = gifenc;
+                gifenc.download($('gifname').value || 'Untitled')
+                clearInterval(rendering)
+                $('infobox').innerHTML = '<p class="green">Render complete!</p>'
+            }
+        },10)
+    } else {
+        stopexport()
+    }
 }
 
 function stopexport() {
@@ -419,6 +426,7 @@ function stopexport() {
     g = !1, V = 1, auto = false
     vg = gifenc;
     clearInterval(rendering)
+    setAR()
     $('infobox').innerHTML = ''
 }
 
@@ -446,17 +454,20 @@ function stopexport() {
 function saveSession() {
     l.setItem('effects', JSON.stringify(effects))
     l.setItem('image',img.src+'')
+    l.setItem('ctype',ctype)
     l.setItem('imgdims','['+[img.width,img.height]+']')
 }
 
 function loadSession() {
     let [w1,w2] = JSON.parse(l.getItem('imgdims'));
-    let src2 = l.getItem('image')
+    let ct = l.getItem('ctype')
+    let src2 = ct=='blank'?'':l.getItem('image')
     img.src = src2
     newCanvas(w1,w2,src2)
     effects = JSON.parse(l.getItem('effects'))
     displayAllEffects()
     selectEffect(0)
+    ctype = ct
 }
 
 function updateInfo() {
@@ -494,6 +505,7 @@ function tick() {
     updateInfo()
     updateCSS()
     fitImage($('s-fitimage').checked)
+    $('export').innerHTML = g?'Cancel':'Export as GIF!'
 }
 
 function writeFile(content,name) {
@@ -511,6 +523,8 @@ function writeFile(content,name) {
 }
 
 $('upload-project').addEventListener('change', handleFile)
+
+setInterval(()=>{if(V!=1&&!g){V=1,render(true)}},1)
 
 function handleFile() {
     const fileInput = $('upload-project');
@@ -532,10 +546,12 @@ function handleFile() {
         let p1 = parsedcontents, p2 = parsedeffects;
         globaltestp = [p1, p2]
         console.log(parsedcontents)
-        if (Array.isArray(p1) && typeof p2 == 'object' && p1.length == 3) {
-            img.src = p1[2]
-            newCanvas(p1[0], p1[1], p1[2])
+        if (Array.isArray(p1) && typeof p2 == 'object' && p1.length == 4) {
+            debugger
+            img.src = p1[0]=='blank'?'':p1[2]
+            newCanvas(p1[1], p1[2], p1[3])
             effects = p2
+            if (ctype == 'blank') {loadImg()}
             displayAllEffects()
             selectEffect(0)
         } else {
@@ -549,11 +565,12 @@ function handleFile() {
   }
 
 function saveProject() {
-    let [i1,iw,ih] = [img.src, c.width, c.height];
+    let [i1,ct,iw,ih] = [img.src, ctype, c.width, c.height];
     let efs = JSON.stringify(effects)
     let cn = efs+
         '\n#DELIMITER#\n'+
         '[\n'+
+        '"'+ct+'",\n'+
         '"'+iw+'",\n'+
         '"'+ih+'",\n'+
         '"'+i1+'"\n]';
