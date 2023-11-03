@@ -533,7 +533,6 @@ function handleFile() {
     if (file) {
       const reader = new FileReader();
       reader.onload = function(event) {
-        debugger
         const contents = event.target.result;
         let contents1 = contents.split('#DELIMITER#')
         let parsedcontents = contents1[1], parsedeffects = contents1[0];
@@ -547,7 +546,6 @@ function handleFile() {
         globaltestp = [p1, p2]
         console.log(parsedcontents)
         if (Array.isArray(p1) && typeof p2 == 'object' && p1.length == 4) {
-            debugger
             img.src = p1[0]=='blank'?'':p1[2]
             newCanvas(p1[1], p1[2], p1[3])
             effects = p2

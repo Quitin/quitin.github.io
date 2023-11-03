@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Audio Editor</title>
+        <link rel="stylesheet" href="../style.css">
+        <script src="main.js" defer></script>
+        <script src="convert.js"></script>
+        
+    </head>
+    <body>
+        <div id="container">
+            <div id="left-half">
+
+                <div id="pagecontainer">
+
+                    <p style="font-size:calc(min(4vw,5vh))">Audio Editor</p>
+                    <div id="tabs" class="tabs">
+                        <p onclick=switchPage(0)>Project</p>
+                        <p class="select" onclick=switchPage(1)>Effects</p>
+                        <p onclick=switchPage(2)>New Audio</p>
+                        <p onclick=switchPage(3)>About</p>
+                        <p onclick=switchPage(4)>Help</p>
+                    </div>
+
+                </div>
+
+                <div id="page-1" hidden>
+                    <p style="font-size:calc(min(5vw,7.5vh))">Project</p><br>
+                        <p style="font-size:1.6vh;padding-left:4vw;padding-right:4vw">
+                            Audio Editor project files are stored as .txt files which contains the JSON of effects, their code and the samples of the source audio.
+                        </p><br>
+                        <input id="upload-project" type="file" hidden="true"></input>
+                        <button style="display:inline-block;margin-right:7vw" onclick="newProject()">New Project</button>
+                        <button style="display:inline-block" onclick="document.getElementById('upload-project').click()">Load Project</button><br><br>
+                        <label style="display:inline-block">Save as:</label>
+                        <input id="project-name" size="30" value="Audio-Editor-Project"></input>
+                        <label style="display:inline-block">.txt</label><br>
+                        <button onclick="saveProject()">Save Project</button><br></br>
+                        <p style="font-size:1.6vh;padding-left:4vw;padding-right:4vw">
+                            Projects and their sessions will only store your effects. Audio files are often too huge for this Audio Editor to be handled.
+                            <br><br>
+                            This project's session autosaves every 10 seconds. Your effects will be reloaded after refreshing your page.
+                        </p><br>
+                        <button onclick="saveSession()">Save this Session</button><br><br>
+                    <p></p>
+                </div>
+
+                <div id="page-2">
+                    <div id="effectsheader">
+                        <p>Effects</p><br><br>
+                        <button onclick="addeffect()">+ Add</button>
+                        <button onclick="deleteeffect()">- Delete</button>
+                        <button onclick="cloneeffect()">* Clone</button>
+                        <button onclick="bypasseffect()">/ Bypass</button>
+                        <button onclick="renameeffect()">Rename</button>
+                        <button onclick="moveLeft()">&lt;- Move Left</button>
+                        <button onclick="moveRight()">Move Right -&gt;</button>
+                    </div>
+                    <div id="effectsc">
+                    </div>
+                    <textarea spellcheck=false id="input">return v</textarea><br>
+                    <button onclick="render(true)">Render Audio</button>
+                    <label>Sample Rate:</label>
+                    <input id="sr" size="6" value="48000"></input>
+                    <label>Length:</label>
+                    <input id="length" size="5" value="5"></input>
+                </div>
+
+                <div id="page-3" hidden>
+                    <p style="font-size:calc(min(5vw,7.5vh))">New Audio</p><br>
+
+                    <label class="border yellow">Upload Audio
+                        <input type='file' id="upload"></input>
+                    </label>
+
+                </div>
+
+                <div id="page-4" hidden>
+                    <p style="font-size:calc(min(5vw,7.5vh))">About</p><br>
+                    <p>
+                        This Audio Editor was created by <span class="cyan">Deca Quitin</span>.<br><br>
+                        Inspired by <span class="yellow">BonesYT</span> who made an audio editor too.<br><br>
+
+                        <a href="https://quitin.github.io"> <p class="cyan">Deca Quitin's home page</p></a><br>
+                        <a href="https://bonesyt.github.io"> <p class="yellow">BonesYT's home page</p></a><br>
+                    </p>
+                </div>
+    
+                    <div id="page-5" hidden>
+                        <div style="overflow:auto;height:60vh;border:2px solid white">
+                        <p style="font-size:calc(min(5vw,7.5vh))">Help</p><br>
+                        <p>This is an audio editor which uses<br>
+                            JavaScript to generate effects.</p><br>
+                        <p>Effects are executed from left to right.</p><br>
+                        <p>To edit the values of the sound, you have to edit one channel at a time like this: <br>v[0] = v[0] * 2;<br>v[1] = sin(t/100)<br>, etc.<br><br>
+                            Or you can assign an array of values to v, for example: <br> v = [0.967, 0.984]<br><br>
+                            You need to use the return keyword to pass something into the next effect's v variable (like return v). You should do it in the end of each effects code.</p>
+                            
+                            <br>
+                        <h4>Variables</h4><br>
+                        <p>v - Sample data of the source or the output of previous effect. Stored as an array of floats that represent the stereo channels in this form:</p>
+                        
+                        <h4>[<span class="red">L</span>, <span class="blue">R</span>]</h4><br>
+                            
+                        <p><span class="cyan">t</span> - Integer denoting the index of the current sample.<br>
+                            Minimum is 0.</p><br>
+    
+                        <p><span class="yellow">sr</span> - Specified sample rate.</p><br><br>
+    
+                        <p>getSample(index) - Function which returns sample data in a given position.<br>You can plug <span class="cyan">t</span> into the function,<br>and it'll act like v.</p><br>
+                        <h4>Example Effects</h4><br>
+                        <h6>Sine Wave</h5><br>
+                        <p style="text-align:left;margin-left:1vw;font-size:0.8em;background-color:rgb(10,10,10)">
+                        v[0] = sin(t/30)<br>
+                        v[1] = v[0]<br>
+                        return v
+                        </p><br><br>
+
+                        <h6>Amplify</h5><br>
+                        <p style="text-align:left;margin-left:1vw;font-size:0.8em;background-color:rgb(10,10,10)">
+                            v[0] *= 2<br>
+                            v[1] *= 2<br>
+                            return v
+                        </p><br><br>
+
+                        <h6>Decimation</h5><br>
+                        <p style="text-align:left;margin-left:1vw;font-size:0.8em;background-color:rgb(10,10,10)">
+                            return getSample(t|16)
+                        </p><br><br>
+
+                        <h6>Echo</h5><br>
+                        <p style="text-align:left;margin-left:1vw;font-size:0.8em;background-color:rgb(10,10,10)">
+                            [v[0],v[1]]=[0,0]<br>
+                            for (let k=1;k&lt;=15;k++) {<br>
+                            v[0] += getSample(max(t-k*1e4,0))[0]/(2**k)<br>
+                            v[1] += getSample(max(t-k*1e4,0))[1]/(2**k)<br>
+                            }<br>
+                            return v<br>
+                        </p><br><br>
+
+                            
+                        
+                    
+                        </div>         
+                    </div>
+
+            </div>
+
+            <div id="right-half">
+                <div style="display:block">
+                    <p>Input:</p>
+                    <div id="in-c">
+                        <audio id="srcaudio" controls style="display:inline-block">
+                            <source src="sounds/oof.mp3"></source>
+                        </audio>
+                    </div><br><br>
+                    <p>Output:</p>
+                    <div id="out-c">
+                        <audio controls style="display:inline-block">
+                            <source src="sounds/oof.mp3"></source>
+                        </audio>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+        <div id="infobox"></div>
+
+
+    </body>
+</html>
