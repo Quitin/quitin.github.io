@@ -4,7 +4,7 @@ body{
     rgba(0, 0, 0, 0.9), 
     rgba(0, 0, 0, 0.9)
     ),
-    url(https://cdn.discordapp.com/attachments/905465775253499936/907219589237198898/Quitin_YT_Banner_2020.07.02_-_Background_only.png);
+    url(../media/images/qbg.png);
     background-size:cover;
     z-index: -1000;
     background-attachment: fixed;
