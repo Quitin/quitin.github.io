@@ -99,3 +99,13 @@ text-align: center;
     font-family: Roboto;
     src: url('../fonts/Roboto/Roboto-Regular.ttf')
 }
+
+@font-face {
+    font-family: Roboto Mono;
+    src: url('../fonts/Roboto Mono/ROBOTOMONO-VARIABLEFONT_WGHT.TTF')
+}
+
+@font-face {
+    font-family: MonospaceTypewriter;
+    src: url('../fonts/Monospace Typewriter/monospacetypewriter.ttf')
+}

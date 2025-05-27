@@ -27,8 +27,8 @@ border-radius: 3px;
 box-shadow: 0px 0px 10px 1px rgba( 0, 220, 255, 0.5 );
 }
 
-.smallbar {width: 25%}
-.bigbar {width: 100%}
+.smallbar {width: 25rem}
+.bigbar {width: 25rem}
 
 
   </style>
@@ -62,9 +62,9 @@ box-shadow: 0px 0px 10px 1px rgba( 0, 220, 255, 0.5 );
   -webkit-transform: translateX(50%);
   transform: translateX(50%);
   
-  -moz-animation: my-animation 15s linear infinite;
-  -webkit-animation: my-animation 15s linear infinite;
-  animation: my-animation 15s linear infinite;
+  -moz-animation: my-animation 20s linear infinite;
+  -webkit-animation: my-animation 20s linear infinite;
+  animation: my-animation 20s linear infinite;
 }
 
 #navigation-bar{
@@ -115,14 +115,15 @@ box-shadow: 0px 0px 10px 1px rgba( 0, 220, 255, 0.5 );
   from {
     -moz-transform: translateX(100%);
     -webkit-transform: translateX(100%);
-    transform: translateX(100%);
+    transform: translateX(100%)
   }
   to {
     -moz-transform: translateX(-200%);
     -webkit-transform: translateX(-200%);
     transform: translateX(-200%);
+	opacity: 100%;
+	color: inherit
   }}
-
   .usericon{
     font-size: 24px;
         background-color: black;
@@ -221,14 +222,15 @@ var newsmessages =
 "Hi, i'm a news ticker and I tick. Tick. Tock. Tick. Tock.", // By Quitin
 "Next news message in 15 seconds.", // By Quitin
 "i have beat 38,249 hookjumps in a row and now i will complete 84,487,473 tjumps", // By Quitin
-"spongebob spongebob patrick patrick sandy sandy sandy mr krabs mr krabs mr krabs squidward squidward squidward plankton plankton plankton plankton plankton plankton gary gary", // By Quitin
-"What I if told you that you read this sentence wrong?" // By Quitin
+"Fun fact: t*(42&t>>10) in ByteBeat is called the 42 melody, and t*(42&t>>42) also results in the 42 melody!", // By Quitin
+"What I if told you that you read this sentence wrong?", // By Quitin
+"You have -0.154i δ." // By Quitin
 ];
 var currentnewsmessage = newsmessages[Math.floor(Math.random()*newsmessages.length)];
 setInterval(function changeNewsMessage() {
 currentnewsmessage = newsmessages[Math.floor(Math.random()*newsmessages.length)];
 document.getElementById("changeNewsMessage").innerHTML = currentnewsmessage;
-},15e3);
+},20e3);
 
 function timein(loc) {
 const date = new Date();
@@ -243,17 +245,19 @@ setInterval(function funcarA() {
 
 <div id="navigation-bar">
 <button id="navbar-content" onclick="document.location='#'">Home</button>
-<button id="navbar-content" onclick="document.location='https://quitin.github.io/incrementals/index.html'">Incrementals</button>
-<button id="navbar-content" onclick="document.location='https://quitin.github.io/projects/index.html'">My Stuff</button>
-<button id="navbar-content" onclick="document.location='https://quitin.github.io/support/'">Support</button>
+<button id="navbar-content" onclick="document.location='incrementals/index.html'">Incrementals</button>
+<button id="navbar-content" onclick="document.location='projects/index.html'">My Stuff</button>
+<button id="navbar-content" onclick="document.location='support/index.html'">Support</button>
 <button id="navbar-content" onclick="document.location='https://youtube.com/channel/UCbyYGDg7isVWn3qadcP4nrA'"><span id="subs"></span> Subscribers on YT</button>
 <button id="navbar-content" onclick="document.location='#page_so'" >Support others</button>
+<button id="navbar-content" onclick="document.location='projects/html/media-workstation/audio-editor/audio-editor.html'">Image Editor</button>
+<button id="navbar-content" onclick="document.location='projects/html/media-workstation/audio-editor/audio-editor.html'">Audio Editor</button>
 </div>
 
 
 <!--News ticker-->
 
-<div id="news-container"><div id="news"><p style="font-family:'Pixeleum 48';font-size:20px;margin-top:0px;width:400%"><span id="changeNewsMessage">Welcome to Quitin's Home page! This is a news ticker, and it will show many random things. Also the news messages will change every 15 seconds. Anyways I hope that my news messages will entertain you.</span></p></div></div>
+<div id="news-container"><div id="news"><p style="font-family:'Pixeleum 48';font-size:20px;margin-top:0px;width:400%"><span id="changeNewsMessage">Welcome to Quitin's Home page! This is a news ticker, and it will show many random things. Also the news messages will change every 20 seconds. Anyways I hope that my news messages will entertain you.</span></p></div></div>
 
 
 
@@ -277,7 +281,7 @@ setInterval(function funcarA() {
 	I made 3,000+ sound variations, of which there are 2,000 Everybody Edits Coin Variations<br>
 	and 1,000 Roblox OOF variations. All of them are available on my YouTube channel.
 	<br><br>
-	This page was last updated May 25, 2025.
+	This page was last updated May 27, 2025.
 	</br></br>
 	
 	</p></br></br></br></br>
@@ -295,9 +299,9 @@ setInterval(function funcarA() {
 	
 	
 <!--Progress-->
-	
+<p hidden id="subCount" style="color:rgb(0,0,0,0)"></p><p style="color:rgb(0,0,0,0)"></p>	
 	<h2 style="font-family: Rubik">Progress</h2>
-<p hidden id="subCount" style="color:rgb(0,0,0,0)"></p><p style="color:rgb(0,0,0,0)"></p>
+
     <script>
 const youtubeKey = 'AIzaSyBLX0n0eWR7xIvBm-STKkj36TTswoeiZg4'
     const youtubeUser = "UCbyYGDg7isVWn3qadcP4nrA";
@@ -314,29 +318,45 @@ const youtubeKey = 'AIzaSyBLX0n0eWR7xIvBm-STKkj36TTswoeiZg4'
 			subs = subCount.innerHTML;
 			document.getElementById("sub progress bar1").value = subCount.innerHTML;
 			document.getElementById("sub progress bar2").value = subCount.innerHTML;
-			document.getElementById("subs").innerHTML = subCount.innerHTML;
-			document.getElementById("subs2").innerHTML = subCount.innerHTML;
-			document.getElementById("subs to 10000").innerHTML = Math.floor((subCount.innerHTML / 10000)*10000)/100;
-			document.getElementById("subs to 100000").innerHTML = Math.floor(((subCount.innerHTML+1) / 100000)*1000)/100;
+			document.getElementById("subs").innerHTML = (subCount.innerHTML*1).toLocaleString('en-us');
+			document.getElementById("subs2").innerHTML = (subCount.innerHTML*1).toLocaleString('en-us');
+			document.getElementById("subs to 10000").innerHTML = Math.floor((subCount.innerHTML / 10000)*10000)/100+'%';
+			document.getElementById("subs to 100000").innerHTML = Math.floor(((subCount.innerHTML+1) / 100000)*1000)/100+'%';
         })
 
     }
 	getSubscribers();
     </script>
-	<p style="font-size:40px;font-family:Roboto">Deca Quitin</p>
-	<p style="font-family: Rubik">Amount of Subscribers on YouTube: <span id="subs2"></span><br><span id="subs to 10000"></span>% to 10,000 Subscribers</p>
+	<p style="font-size:3rem;font-family:Roboto;margin-bottom:20px">Deca Quitin</p>
+	<p style="font-family: Roboto;font-size:1.5rem;font-weight: 400;margin:0px">YouTube Subscribers: <span id="subs2" style="color:white;text-shadow:rgba(255,255,255,0.5) 0 0 10px, rgba(255,255,255,0.1) .2rem .2rem 0;vertical-align: center;font-weight:1000"></span></p>
+	<p style="font-family: Roboto;margin-bottom:.5vh;font-weight:300"><span id="subs to 10000" style="color:white;font-weight:400;font-family:Roboto Mono"></span> to 10,000 Subscribers</p>
 	<progress class="smallbar" value="0" id="sub progress bar1" max="10000">0</progress>
 	
-	<p style="font-family: Rubik"><span id="subs to 100000"></span>% to 100,000 Subscribers</p>
+	<p style="font-family: Roboto;margin-bottom:.5vh;font-weight:300"><span id="subs to 100000" style="color:white;font-weight:400;font-family:Roboto Mono"></span> to 100,000 Subscribers</p>
 	<progress class="bigbar" value="0" id="sub progress bar2" max="100000">0</progress>
 	
 <!--Pages-->
 
 	<div class="center">
 	<h2 style="font-family: Rubik">Pages</h2>
-	<button class="button" onclick="document.location='incrementals/index.html'">My Incrementals</button><button class="button" onclick="document.location='projects/index.html'">My Stuff</button><br>
+	<button class="button" onclick="document.location='incrementals/index.html'">My Incrementals</button>
+	<button class="button" onclick="document.location='projects/index.html'">My Stuff</button>
 	<button class="button" onclick="document.location='support/index.html'">Contact & Support</button>
-	</div>
+	
+<br><br>
+
+<h2 style="font-family: Rubik;margin-bottom:-15px">Audio & Image Editor</h2>
+<p style="font-family:Rubik;font-size:20px;color:#FFFFFF">Generate or edit images and sounds by parsing JavaScript expressions!<br>
+Code is executed for every pixel and you can run multiple scripts by adding effects!</p>
+	<img src = "media/images/isgjs_100.gif" width = "64", height = "auto", style="margin-bottom:-20px"/>
+<button class="button" onclick="document.location='projects/html/media-workstation/image-editor/image-editor.html'"><span style='font-size: 150%;'>   Image Editor</span></button>
+<br>
+<div style="margin:1vh"></div>
+<img src = "media/images/isgjs_90.gif" width = "64", height = "auto", style="margin-bottom:-20px"/>
+<button class="button" onclick="document.location='projects/html/media-workstation/audio-editor/audio-editor.html'"><span style='font-size: 150%;'>   Audio Editor</span></button>
+
+
+</div>
 	
 	
 	
