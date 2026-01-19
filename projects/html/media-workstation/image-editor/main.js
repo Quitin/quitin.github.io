@@ -80,7 +80,8 @@ function selectEffect(index) {
     'asinh','acosh','atanh',
     'abs','max','min','sign',
     'floor','round','ceil','trunc',
-    'pow','log10','log2','exp'
+    'pow','log10','log2','exp',
+    'and','or','xor','mod'
 ].forEach((i)=>{
     Function(i+' = (...x) => {return Math.'+i+'(...x)}')();
 })
